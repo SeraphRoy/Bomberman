@@ -54,7 +54,13 @@ while True:
 
     pressed_Key = pygame.key.get_pressed()
 
-    if pressed_Key[K_LEFT]:
+    if pressed_Key[K_SPACE]:
+        if(bomb_placed==False):
+            count_down=300
+            bomb_placed = True
+            bomb_x = x+12
+            bomb_y = y+35
+    elif pressed_Key[K_LEFT]:
         if((x-speed)<0):
             x=0
         else:
@@ -78,12 +84,6 @@ while True:
         else:
             y+=speed
         player = pygame.image.load(player_image_down).convert_alpha()
-    elif pressed_Key[K_SPACE]:
-        if(bomb_placed==False):
-            count_down=300
-            bomb_placed = True
-            bomb_x = x+12
-            bomb_y = y+35
     else:
         player = pygame.image.load(player_image).convert_alpha()
 
