@@ -35,6 +35,8 @@ burst_x = 0
 burst_y = 10
 burst_count_down = 100
 
+speed = 5
+
 clock = pygame.time.Clock()
 
 while True:    
@@ -53,19 +55,28 @@ while True:
     pressed_Key = pygame.key.get_pressed()
 
     if pressed_Key[K_LEFT]:
-        if((x-1)<0):
+        if((x-speed)<0):
             x=0
         else:
-            x-=1
+            x-=speed
         player = pygame.image.load(player_image_left).convert_alpha()
     elif pressed_Key[K_RIGHT]:
-        x+=1
+        if ((x+speed)>980):
+            x = 980
+        else:
+            x+=speed
         player = pygame.image.load(player_image_right).convert_alpha()
     elif pressed_Key[K_UP]:
-        y-=1
+        if ((y-speed<0)):
+            y = 0
+        else:
+            y-=speed
         player = pygame.image.load(player_image_up).convert_alpha()
     elif pressed_Key[K_DOWN]:
-        y+=1
+        if ((y+speed)>630):
+            y = 630
+        else:
+            y+=speed
         player = pygame.image.load(player_image_down).convert_alpha()
     elif pressed_Key[K_SPACE]:
         if(bomb_placed==False):
