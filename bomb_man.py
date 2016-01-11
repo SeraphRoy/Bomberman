@@ -1,11 +1,11 @@
-back_ground_name = 'Background02.jpg'
-player_image = 'down1.png'
-player_image_right = 'right2.png'
-player_image_up = 'up2.png'
-player_image_left = 'left2.png'
-player_image_down = 'down4.png'
-bomb_image = 'bomb.png'
-burst_iamge = 'burst.png'
+back_ground_name = 'img/Background02.jpg'
+player_image = 'img/down1.png'
+player_image_right = 'img/right2.png'
+player_image_up = 'img/up2.png'
+player_image_left = 'img/left2.png'
+player_image_down = 'img/down4.png'
+bomb_image = 'img/bomb.png'
+burst_iamge = 'img/burst.png'
 
 import pygame
 from pygame.locals import *
