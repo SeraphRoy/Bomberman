@@ -38,7 +38,7 @@ def ChangeNextIndex(current, key):
             return 13
 
     elif key == 4:
-        if current<8:
+        if current<8 and current>3:
             if current ==7:
                 return 4
             else:
