@@ -60,8 +60,8 @@ class Player:
         self.images = []
         for names in image_names:
             temp = pygame.image.load(names).convert_alpha()
-            temp = pygame.transform.scale(temp, (temp.get_width()/2,
-                                                 temp.get_height()/2))
+            temp = pygame.transform.scale(temp, (temp.get_width(),
+                                                 temp.get_height()))
             self.images.append(temp)
         
         self.bomb_name = bomb_name
@@ -110,6 +110,7 @@ class Player:
             if switch == True or self.image_index<4 or self.image_index>7:
                 self.image_index = ChangeNextIndex(self.image_index,4)
         else:
-            self.image_index = (self.image_index/4)*4
+            #self.image_index = (self.image_index/4)*4
+            self.image_index =8
         screen.blit(self.images[self.image_index],(self.x,self.y))
     

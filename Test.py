@@ -1,21 +1,21 @@
 from Player import Player
 
-player_up1 = 'img/n_up1.png'
-player_up2 = 'img/n_up2.png'
-player_up3 = 'img/n_up3.png'
-player_up4 = 'img/n_up4.png'
-player_down1 = 'img/n_down1.png'
-player_down2 = 'img/n_down2.png'
-player_down3 = 'img/n_down3.png'
-player_down4 = 'img/n_down4.png'
-player_left1 = 'img/n_left1.png'
-player_left2 = 'img/n_left2.png'
-player_left3 = 'img/n_left3.png'
-player_left4 = 'img/n_left4.png'
-player_right1 = 'img/n_right1.png'
-player_right2 = 'img/n_right2.png'
-player_right3 = 'img/n_right3.png'
-player_right4 = 'img/n_right4.png'
+player_up1 = 'img/r_up1.png'
+player_up2 = 'img/r_up2.png'
+player_up3 = 'img/r_up3.png'
+player_up4 = 'img/r_up4.png'
+player_down1 = 'img/r_down1.png'
+player_down2 = 'img/r_down2.png'
+player_down3 = 'img/r_down3.png'
+player_down4 = 'img/r_down4.png'
+player_left1 = 'img/r_left1.png'
+player_left2 = 'img/r_left2.png'
+player_left3 = 'img/r_left3.png'
+player_left4 = 'img/r_left4.png'
+player_right1 = 'img/r_right1.png'
+player_right2 = 'img/r_right2.png'
+player_right3 = 'img/r_right3.png'
+player_right4 = 'img/r_right4.png'
 
 bomb_image = 'img/bomb.png'
 burst_iamge = 'img/burst.png'
@@ -39,10 +39,10 @@ burst = pygame.transform.scale(burst,(64,59))
 
 player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_down1,player_down2,player_down3,player_down4,
-                 player_left1,player_left2,player_left3,player_left4,
+                 player_left1,player_left2,player_left3,player_left2,
                  player_right1,player_right2,player_right3,player_right4]
 
-p = Player(player_images,bomb_image,80,10,20,1,1)
+p = Player(player_images,bomb_image,150,10,20,1,1)
 
 bomb_queue = []
 total_time = 0.05
