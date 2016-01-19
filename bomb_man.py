@@ -14,7 +14,7 @@ from sys import exit
 
 pygame.init()
 
-screen = pygame.display.set_mode((1024,698),0,32)
+screen = pygame.display.set_mode((768,768),0,32)
 
 background = pygame.image.load(back_ground_name).convert()
 player = pygame.image.load(player_image).convert_alpha()

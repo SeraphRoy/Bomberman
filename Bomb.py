@@ -11,7 +11,6 @@ class Bomb:
         self.time = 2.0
         self.x = x
         self.y = y
-
     def TimePassed(self,t):
         self.time-=t
         if self.time<=0:
