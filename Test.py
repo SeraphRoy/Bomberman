@@ -7,7 +7,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 
-screen = pygame.display.set_mode((1024,698),0,32)
+screen = pygame.display.set_mode((768,768),0,32)
 
 background = pygame.image.load(back_ground_name).convert()
 bomb = pygame.image.load(bomb_image).convert_alpha()

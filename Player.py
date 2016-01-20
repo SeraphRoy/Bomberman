@@ -110,7 +110,6 @@ class Player:
             if switch == True or self.image_index<4 or self.image_index>7:
                 self.image_index = ChangeNextIndex(self.image_index,4)
         else:
-            #self.image_index = (self.image_index/4)*4
-            self.image_index =8
+            self.image_index = (self.image_index/4)*4
         screen.blit(self.images[self.image_index],(self.x,self.y))
     
