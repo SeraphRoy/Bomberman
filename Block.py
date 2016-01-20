@@ -1,4 +1,5 @@
 import pygame
+import pygame.locals
 from pygame.locals import *
 from sets import Set
 from Img import *
@@ -9,10 +10,10 @@ class Block:
 
     #posSet is a set of positions, e.g. [(2,1), (4,3)]
     #default value of image_name is for TEST ONLY
-    def __init__(self, image_name = bomb_image, posSet = []):
+    def __init__(self, image_name, posSet = []):
         temp = pygame.image.load(image_name).convert_alpha()
-        self.image = pygame.transfrom.scale(temp, (self.image_x, self.image_y))
-        self.posSet = set(posList)
+        self.image = pygame.transform.scale(temp, (self.image_x, self.image_y))
+        self.posSet = set(posSet)
 
     def SetImage(self, image_name):
         temp = pygame.image.load(image_name).convert_alpha()
@@ -38,3 +39,9 @@ class Block:
 
     def ClearBlock(self):
         self.posSet.clear()
+
+    def PutsOnScreen(self, screen):
+        for point in self.posSet:
+            screen.blit(self.image, point)
+
+            

@@ -3,6 +3,8 @@ from Img import *
 import pygame
 from pygame.locals import *
 from sys import exit
+import Block
+from Block import Block
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -22,6 +24,9 @@ player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_right1,player_right2,player_right3,player_right4]
 
 p = Player(player_images,bomb_image,150,10,20,1,1)
+
+setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
+blocks = Block(block_image, setOfBlocks)
 
 bomb_queue = []
 total_time = 0.05
@@ -54,6 +59,8 @@ while True:
 
     pressed_Key = pygame.key.get_pressed()
 
+    blocks.PutsOnScreen(screen)
+    
     #third argument pass how many time hada passed since last tiem
     p.Action(screen,pressed_Key,current_time, bomb_queue)
 

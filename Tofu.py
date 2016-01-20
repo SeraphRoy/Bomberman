@@ -22,7 +22,7 @@ class Tofu:
     #posSet is a set of positions, e.g. [(2,1), (4,3)]
     def __init__(self, image_name, x, y):
         temp = pygame.image.load(image_name).convert_alpha()
-        self.image = pygame.transfrom.scale(temp, (self.image_x, self.image_y))
+        self.image = pygame.transform.scale(temp, (self.image_x, self.image_y))
         temp = randint(0,1)
 	#0<->shoe, 1<->numbomb, 2<->bombdmg
         if(temp):

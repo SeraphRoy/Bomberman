@@ -18,4 +18,4 @@ player_right4 = 'img/r_right4.png'
 bomb_image = 'img/bomb.png'
 burst_iamge = 'img/burst.png'
 back_ground_name = 'img/bg.png'
-
+block_image = 'img/block2.png'
