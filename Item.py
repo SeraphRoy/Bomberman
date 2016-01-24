@@ -20,7 +20,9 @@ class Item:
         item_pos[(x,y)]=item
         item.display=True
 
-    
+    def invoked(self, player):
+        pass
+  
     def draw(self,screen):
         if self.display:
             screen.blit(self.image,(self.x*50,self.y*50))
@@ -43,8 +45,7 @@ class Sadako(Item):
     def __init__(self):
         pass
     def invoked(self, player):
-        #player.speed *= (-1) <- will go out of the screen
-        pass
+        player.speed *= (-1)
 
 def collectItem(player):
     x=(player.x+player.image_x/2)//50

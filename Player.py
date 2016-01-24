@@ -102,20 +102,36 @@ class Player:
             self.bomb_since_last = 0
             new_bomb = Bomb(self.bomb_name,int(self.x+25),int(self.y+25))
             bomb_map.AddBomb(new_bomb)
-        if (pressed_Key[K_LEFT]) and (self.x >= 15):
+        if pressed_Key[K_LEFT]:
             self.x-=distance
+            if self.x < 0:
+                self.x = 0
+            if self.x > 726:
+                self.x = 726
             if switch == True or self.image_index<8 or self.image_index>11:
                 self.image_index = ChangeNextIndex(self.image_index,1)
-        elif (pressed_Key[K_RIGHT])and(self.x <= background_x-25):
+        elif pressed_Key[K_RIGHT]:
             self.x+=distance
+            if self.x < 0:
+                self.x = 0
+            if self.x > 726:
+                self.x = 726
             if switch == True or self.image_index<12:
                 self.image_index = ChangeNextIndex(self.image_index,3)
-        elif (pressed_Key[K_UP])and(self.y >= 15):
+        elif pressed_Key[K_UP]:
             self.y-=distance
+            if self.y < 0:
+                self.y = 0
+            if self.y > 605:
+                self.y = 605
             if switch == True or self.image_index>3:
                 self.image_index =ChangeNextIndex(self.image_index,2)
-        elif (pressed_Key[K_DOWN])and(self.y <= background_y-25):
+        elif pressed_Key[K_DOWN]:
             self.y+=distance
+            if self.y < 0:
+                self.y = 0
+            if self.y > 605:
+                self.y = 605
             if switch == True or self.image_index<4 or self.image_index>7:
                 self.image_index = ChangeNextIndex(self.image_index,4)
         else:
