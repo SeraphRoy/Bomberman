@@ -5,6 +5,7 @@ from pygame.locals import *
 from sys import exit
 import Block
 from Block import Block
+from Bomb import BombMatrix
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -28,10 +29,15 @@ p = Player(player_images,bomb_image,150,10,20,1,1)
 setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
 blocks = Block(block_image, setOfBlocks)
 
-bomb_queue = []
+X_INDEX = 13
+Y_INDEX = 15
+
+bomb_map = BombMatrix(X_INDEX,Y_INDEX)
 total_time = 0.05
 current_time = 0.0
 exploded_queue = []
+
+
 
 while True:    
     time_passed = clock.tick()
@@ -45,16 +51,16 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
-    
 
     screen.blit(background, (0,0))
 
-    for b in bomb_queue:
-        if b.TimePassed(current_time) == True :
-            screen.blit(burst,(b.GetX(),b.GetY()))
-            bomb_queue.remove(b)
-        else:
-            screen.blit(b.GetImage(),(b.GetX(),b.GetY()))
+    for x in range(X_INDEX):
+        for y in range(Y_INDEX):
+            if bomb_map.bombMatrix[y][x].TimePassed(current_time) == True :
+                screen.blit(burst,(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
+                bomb_map.RemoveBomb(x,y)
+            else:
+                screen.blit(bomb_map.bombMatrix[y][x].GetImage(),(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
 
 
     pressed_Key = pygame.key.get_pressed()
@@ -62,7 +68,7 @@ while True:
     blocks.PutsOnScreen(screen)
     
     #third argument pass how many time hada passed since last tiem
-    p.Action(screen,pressed_Key,current_time, bomb_queue)
+    p.Action(screen,pressed_Key,current_time, bomb_map)
 
     #Reset current time
     current_time = 0.0
