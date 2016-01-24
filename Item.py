@@ -30,21 +30,21 @@ class Nike(Item):
     def __init__(self):
         pass
     def invoked(self,player):
-        player.speed += 3
+        player.speed += 50
 
 
 class Low_speed_field(Item):
     def __init__(self):
         pass
     def invoked(self,player):
-        player.speed -= 3
-
+        player.speed -= 50
 
 class Sadako(Item):
     def __init__(self):
         pass
     def invoked(self, player):
-        player.speed *= (-1)
+        #player.speed *= (-1) <- will go out of the screen
+        pass
 
 def collectItem(player):
     x=(player.x+player.image_x/2)//50
@@ -52,4 +52,5 @@ def collectItem(player):
     if (x,y) in item_pos:
         item_pos[(x,y)].display=False
         item_pos[(x,y)].invoked(player)
+        del item_pos[(x,y)]
 
