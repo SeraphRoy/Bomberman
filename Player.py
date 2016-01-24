@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from Bomb import Bomb
+from Bomb import *
 
 #1->left is pressed, 2->up, 3->right, 4->down
 def ChangeNextIndex(current, key):
@@ -79,7 +79,7 @@ class Player:
         self.bomb_since_last = 0
 
 
-    def Action(self, screen, pressed_Key,seconds, bomb_queue):
+    def Action(self, screen, pressed_Key,seconds, bomb_map):
         self.time+=seconds
         self.bomb_since_last+=seconds
         switch = False
@@ -91,8 +91,8 @@ class Player:
 
         if pressed_Key[K_SPACE] and self.bomb_since_last>=0.5:
             self.bomb_since_last = 0
-            temp_bomb = Bomb(self.bomb_name,self.x,self.y)
-            bomb_queue.append(temp_bomb)
+            new_bomb = Bomb(self.bomb_name,int(self.x+25),int(self.y+25))
+            bomb_map.AddBomb(new_bomb)
         if pressed_Key[K_LEFT]:
             self.x-=distance
             if switch == True or self.image_index<8 or self.image_index>11:
