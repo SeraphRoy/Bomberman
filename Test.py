@@ -7,6 +7,9 @@ import Block
 from Block import Block
 from Bomb import BombMatrix
 from Enemy import Enemy
+from Item import *
+import random
+
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -18,6 +21,7 @@ bomb = pygame.image.load(bomb_image).convert_alpha()
 bomb = pygame.transform.scale(bomb, (32,32))
 burst = pygame.image.load(burst_iamge).convert_alpha()
 burst = pygame.transform.scale(burst,(64,59))
+item_images = [nike_image,low_speed_image,sadako_image]
 
 
 player_images = [player_up1,player_up2,player_up3,player_up4,
@@ -41,6 +45,10 @@ total_time = 0.05
 current_time = 0.0
 exploded_queue = []
 
+for i in range(7):
+   item_x = random.randint(0,14)
+   item_y = random.randint(0,12)
+   Item(item_x,item_y,item_images)
 
 
 while True:    
@@ -66,6 +74,8 @@ while True:
             else:
                 screen.blit(bomb_map.bombMatrix[y][x].GetImage(),(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
 
+    for i in item_pos:
+        item_pos[i].draw(screen)
 
     pressed_Key = pygame.key.get_pressed()
 
@@ -75,6 +85,7 @@ while True:
     p.Action(screen,pressed_Key,current_time, bomb_map)
 
     e.Action(screen, p, current_time)
+    collectItem(p)
 
     #Reset current time
     current_time = 0.0

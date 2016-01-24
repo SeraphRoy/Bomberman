@@ -21,3 +21,7 @@ burst_iamge = 'img/burst.png'
 back_ground_name = 'img/bg.png'
 block_image = 'img/block2.png'
 transparent_image = 'img/transparent.png'
+
+sadako_image = 'img/sadako_temp.bmp'
+low_speed_image = 'img/low_speed_temp.bmp'
+nike_image = 'img/nike_temp.bmp'
