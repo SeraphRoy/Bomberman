@@ -79,6 +79,12 @@ class Player:
         #used to restirct putting too many bomb at a moment
         self.bomb_since_last = 0
 
+    def GetX(self):
+        return self.x
+
+    def GetY(self):
+        return self.y
+
 
     def Action(self, screen, pressed_Key,seconds, bomb_map):
         background_x = 740

@@ -14,6 +14,7 @@ player_right1 = 'img/r_right1.png'
 player_right2 = 'img/r_right2.png'
 player_right3 = 'img/r_right3.png'
 player_right4 = 'img/r_right4.png'
+enemy = 'img/Saber.png'
 
 bomb_image = 'img/bomb.png'
 burst_iamge = 'img/burst.png'

@@ -6,6 +6,7 @@ from sys import exit
 import Block
 from Block import Block
 from Bomb import BombMatrix
+from Enemy import Enemy
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -25,6 +26,9 @@ player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_right1,player_right2,player_right3,player_right4]
 
 p = Player(player_images,bomb_image,150,10,20,1,1)
+
+e = Enemy(256,256,50,200, enemy, 300,300)
+
 
 setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
 blocks = Block(block_image, setOfBlocks)
@@ -70,10 +74,12 @@ while True:
     #third argument pass how many time hada passed since last tiem
     p.Action(screen,pressed_Key,current_time, bomb_map)
 
+    e.Action(screen, p, current_time)
+
     #Reset current time
     current_time = 0.0
 
     pygame.display.update()
 
 
-print "import success"
+
