@@ -15,7 +15,7 @@ from Global import *
 pygame.init()
 
 while True:
-    opening = Opening(upimage, downimage, (300,400))
+    opening = Opening(upimage, downimage, (380,400))
     if stage_num == 0:
     	stage_num = opening.OpeningScene(screen)
     else:
