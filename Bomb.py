@@ -5,7 +5,7 @@ from Img import transparent_image
 class Bomb:
 
 
-    def __init__(self,image, x = -50, y = -50):
+    def __init__(self,image, x = -50, y = -50,length = 2):
         BOMB_IMG_X = 50
         BOMB_IMG_Y = 50
         temp = pygame.image.load(image).convert_alpha()
@@ -15,6 +15,10 @@ class Bomb:
         self.x = self.x_Index * BOMB_IMG_X
         self.y_Index = int(y//BOMB_IMG_Y)
         self.y = self.y_Index * BOMB_IMG_Y
+
+        self.length = length
+
+
 
     def TimePassed(self,t):
         self.time-=t

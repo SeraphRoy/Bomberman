@@ -51,7 +51,8 @@ def ChangeNextIndex(current, key):
 class Player:
     image_x = 42
     image_y = 73
-
+    background_x = 600
+    background_y = 700
     #image in the order of up, down, left, right
     def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage):
         if(len(image_names)!=16):
@@ -80,6 +81,8 @@ class Player:
 
 
     def Action(self, screen, pressed_Key,seconds, bomb_map):
+        background_x = 740
+        background_y = 630
         self.time+=seconds
         self.bomb_since_last+=seconds
         switch = False
@@ -93,19 +96,19 @@ class Player:
             self.bomb_since_last = 0
             new_bomb = Bomb(self.bomb_name,int(self.x+25),int(self.y+25))
             bomb_map.AddBomb(new_bomb)
-        if pressed_Key[K_LEFT]:
+        if (pressed_Key[K_LEFT]) and (self.x >= 15):
             self.x-=distance
             if switch == True or self.image_index<8 or self.image_index>11:
                 self.image_index = ChangeNextIndex(self.image_index,1)
-        elif pressed_Key[K_RIGHT]:
+        elif (pressed_Key[K_RIGHT])and(self.x <= background_x-25):
             self.x+=distance
             if switch == True or self.image_index<12:
                 self.image_index = ChangeNextIndex(self.image_index,3)
-        elif pressed_Key[K_UP]:
+        elif (pressed_Key[K_UP])and(self.y >= 15):
             self.y-=distance
             if switch == True or self.image_index>3:
                 self.image_index =ChangeNextIndex(self.image_index,2)
-        elif pressed_Key[K_DOWN]:
+        elif (pressed_Key[K_DOWN])and(self.y <= background_y-25):
             self.y+=distance
             if switch == True or self.image_index<4 or self.image_index>7:
                 self.image_index = ChangeNextIndex(self.image_index,4)
