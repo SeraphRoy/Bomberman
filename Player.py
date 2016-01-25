@@ -105,9 +105,9 @@ class Player:
             new_bomb = Bomb(self.bomb_name,int(self.x+23),int(self.y+23))
 
             bomb_map.AddBomb(new_bomb)
-            print (self.x)
-            print (",")
-            print (self.y)
+            #print (self.x)
+            #print (",")
+            #print (self.y)
         if pressed_Key[K_LEFT]:
             self.x-=distance
             if self.x < 0:
