@@ -28,9 +28,14 @@ player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_left1,player_left2,player_left3,player_left2,
                  player_right1,player_right2,player_right3,player_right4]
 
+enemy_images = [ghost_up1,ghost_up2,ghost_up3,ghost_up4,
+				ghost_down1, ghost_down2,ghost_down3,ghost_down4,
+				ghost_left1, ghost_left2, ghost_left3, ghost_left4,
+				ghost_right1,ghost_right2,ghost_right3,ghost_right4]
+
 p = Player(player_images,bomb_image,150,10,20,1,1)
 
-e = Enemy(256,256,50,200, enemy, 300,300)
+e = Enemy(256,256,50,200, enemy_images, 300,300)
 
 
 setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]

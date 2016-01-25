@@ -1,13 +1,67 @@
 import pygame
 from pygame.locals import *
 
+def ChangeNextIndex(current, key):
+    if current<0 or current>15:
+        print "incorrect current image index"
+        return
+    if key == 1:
+        if current>7 and current<12:
+            if current == 11:
+                return 8
+            else:
+                return current+1
+            
+        else:
+             return 9
+    
+
+    elif key == 2:
+        if current<4:
+            if current == 3:
+                return 0
+            else:
+                return current+1
+        else:
+            return 1
+
+
+    elif key==3:
+        if current>11 and current<16:
+            if current == 15:
+                return 12
+            else:
+                return current+1
+        else:
+            return 13
+
+    elif key == 4:
+        if current<8 and current>3:
+            if current ==7:
+                return 4
+            else:
+                return current+1
+        else:
+            return 5
+
+
+
 class Enemy:
 		image_x = 51
 		image_y = 51 
 
-		def __init__(self, x,y,speed,rushingSpeed, imagename, radarx, radary):
-			temp = pygame.image.load(imagename).convert_alpha()
-			self.image = pygame.transform.scale(temp, (self.image_x,self.image_y))
+		def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
+
+			if len(imagenames)!=16:
+				print("Number of images is wrong")
+
+			self.images = []
+
+			for name in imagenames:
+				temp = pygame.image.load(name).convert_alpha()
+				temp = pygame.transform.scale(temp, (self.image_x,self.image_y))
+				self.images.append(temp)
+
 			self.speed = speed
 			self.rushingSpeed = rushingSpeed
 			self.x = x
@@ -19,6 +73,9 @@ class Enemy:
 			self.warning = False
 			#0 = left, 1 = right, 2 = up, 3 = down
 			self.lastcommand = 0
+			self.image_index = 5
+			self.timetochange = 4
+			self.changeedDirection = False
 
 
 		def Action(self, screen, player, seconds):
@@ -32,12 +89,19 @@ class Enemy:
 
 			distance = seconds * self.speed
 
+			if self.timetochange>0:
+				self.timetochange-=1
+			else:
+				self.timetochange = 4
+
 			if(warning):
 				if abs(xDistance)>self.speed/2 or abs(yDistance)>self.speed/2:
 					if self.time<self.timeChange:
-						if self.lastcommand == 0:
+						if self.timetochange==0:
+							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
+						if self.lastcommand == 1:
 							self.x-=distance
-						elif self.lastcommand == 1:
+						elif self.lastcommand == 3:
 							self.x+=distance
 						elif self.lastcommand == 2:
 							self.y-=distance
@@ -48,16 +112,18 @@ class Enemy:
 						if (abs(xDistance)-abs(yDistance))>self.speed/4:
 							if xDistance>distance:
 								self.x+=distance
-								self.lastcommand = 1
+								self.lastcommand = 3
 							elif xDistance<distance:
 								self.x-=distance
-								self.lastcommand = 0
+								self.lastcommand = 1
+							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)	
 						else:
 							if yDistance>distance:
 								self.y+=distance
-								self.lastcommand = 3
+								self.lastcommand = 4
 							elif yDistance<distance:
 								self.y-=distance
 								self.lastcommand = 2
+							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
 
-			screen.blit(self.image, (self.x, self.y))
+			screen.blit(self.images[self.image_index], (self.x, self.y))
