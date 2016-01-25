@@ -49,6 +49,8 @@ def ChangeNextIndex(current, key):
 class Enemy:
 		image_x = 51
 		image_y = 51 
+		map_x = 768
+		map_y = 666
 
 		def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 
@@ -76,6 +78,10 @@ class Enemy:
 			self.image_index = 5
 			self.timetochange = 4
 			self.changeedDirection = False
+
+			#for patrol
+			self.down = True
+			self.up = False
 
 
 		def Action(self, screen, player, seconds):
@@ -125,5 +131,26 @@ class Enemy:
 								self.y-=distance
 								self.lastcommand = 2
 							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
+			else:
+				if self.down==True :
+					if (self.y+distance)<(self.map_y-self.images[0].get_height()):
+						self.y+=distance
+						self.lastcommand = 4
+						if self.timetochange==0:
+							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
+					else:
+						self.down = False
+						self.up = True
+						self.image_index = 0
+				else:
+					if (self.y-distance)>0:
+						self.y-=distance
+						self.lastcommand=2
+						if self.timetochange==0:
+							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
+					else:
+						self.up = False
+						self.down = True
+						self.image_index = 4
 
 			screen.blit(self.images[self.image_index], (self.x, self.y))
