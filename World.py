@@ -11,13 +11,16 @@ from Item import *
 import random
 from Opening import *
 from Global import *
-
+from SelectMode import *
 pygame.init()
 
 while True:
     opening = Opening(upimage, downimage, (380,400))
+    adventure_mode = SelectMode(adventure_mode1, adventure_mode2, (380,400))
     if stage_num == 0:
-    	stage_num = opening.OpeningScene(screen)
+   	stage_num = opening.OpeningScene(screen)
+    elif stage_num == 1:
+        stage_num = adventure_mode.OpeningScene(screen)
     else:
        time_passed = clock.tick()
        time_passed_seconds = time_passed / 1000.0
