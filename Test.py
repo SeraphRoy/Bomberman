@@ -30,13 +30,7 @@ while True:
 
     screen.blit(background, (0,0))
 
-    for x in range(X_INDEX):
-        for y in range(Y_INDEX):
-            if bomb_map.bombMatrix[y][x].TimePassed(current_time) == True :
-                screen.blit(burst,(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
-                bomb_map.RemoveBomb(x,y)
-            else:
-                screen.blit(bomb_map.bombMatrix[y][x].GetImage(),(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
+    bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst)
 
     for i in item_pos:
         item_pos[i].draw(screen)
