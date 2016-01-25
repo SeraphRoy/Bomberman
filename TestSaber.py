@@ -24,7 +24,7 @@ player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_left1,player_left2,player_left3,player_left2,
                  player_right1,player_right2,player_right3,player_right4]
 
-p = Player(player_images,bomb_image,150,10,20,1,1)
+p = Player(player_images,bomb_image,150,10,20,9,1)
 
 setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
 blocks = Block(block_image, setOfBlocks)
@@ -54,14 +54,8 @@ while True:
 
     screen.blit(background, (0,0))
 
-    for x in range(X_INDEX):
-        for y in range(Y_INDEX):
-            if bomb_map.bombMatrix[y][x].TimePassed(current_time) == True :
-                screen.blit(burst,(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
-                bomb_map.RemoveBomb(x,y)
-            else:
-                screen.blit(bomb_map.bombMatrix[y][x].GetImage(),(bomb_map.bombMatrix[y][x].GetX(),bomb_map.bombMatrix[y][x].GetY()))
 
+    bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst)
 
     pressed_Key = pygame.key.get_pressed()
 
