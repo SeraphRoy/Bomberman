@@ -87,8 +87,8 @@ class Player:
 
 
     def Action(self, screen, pressed_Key,seconds, bomb_map):
-        background_x = 726
-        background_y = 605
+        background_x = 720
+        background_y = 615
         self.time+=seconds
         self.bomb_since_last+=seconds
         switch = False

@@ -6,8 +6,8 @@ class Bomb:
 
 
     def __init__(self,image, x = -50, y = -50,damageLength = 1, isNull = False):
-        BOMB_IMG_X = 50
-        BOMB_IMG_Y = 50
+        BOMB_IMG_X = 51
+        BOMB_IMG_Y = 51
         temp = pygame.image.load(image).convert_alpha()
         self.damageLength = 1
         self.image = pygame.transform.scale(temp,(BOMB_IMG_X,BOMB_IMG_Y))
