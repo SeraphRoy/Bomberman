@@ -98,7 +98,7 @@ class Player:
 
         distance = seconds * self.speed
 
-        if pressed_Key[K_SPACE] and self.bomb_since_last>=0.5:
+        if pressed_Key[K_SPACE] and self.bomb_since_last>=0.2:
             self.bomb_since_last = 0
 
             # Becareful with this line, need to check index out of bound exception
