@@ -48,7 +48,8 @@ while True:
        #third argument pass how many time hada passed since last tiem
        p.Action(screen,pressed_Key,current_time, bomb_map)
 
-       e.Action(screen, p, current_time)
+       for e in enemys:
+            e.Action(screen, p, current_time)
        collectItem(p)
 
        #Reset current time

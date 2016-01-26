@@ -35,7 +35,11 @@ enemy_images = [ghost_up1,ghost_up2,ghost_up3,ghost_up4,
 
 p = Player(player_images,bomb_image,150,10,20,1,1)
 
-e = Enemy(256,256,50,150, enemy_images, 200,200)
+e1 = Enemy(256,256,50,150, enemy_images, 200,200)
+e2 = Enemy(512,256,50,150, enemy_images, 200,200)
+e3 = Enemy(256,512,50,150, enemy_images, 200,200)
+
+enemys = {e1, e2, e3}
 
 
 setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
