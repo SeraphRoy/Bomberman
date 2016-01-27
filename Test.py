@@ -32,8 +32,8 @@ while True:
 
     bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst)
 
-    for i in item_pos:
-        item_pos[i].draw(screen)
+    #for i in item_pos:
+     #   item_pos[i].draw(screen)
 
     pressed_Key = pygame.key.get_pressed()
 
@@ -42,9 +42,10 @@ while True:
     #third argument pass how many time hada passed since last tiem
     p.Action(screen,pressed_Key,current_time, bomb_map)
 
-    e1.Action(screen, p, current_time)
+    for e in enemys:
+        e.Action(screen, p, current_time)
     
-    collectItem(p)
+    #collectItem(p)
 
     #Reset current time
     current_time = 0.0
