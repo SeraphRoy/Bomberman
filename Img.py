@@ -33,6 +33,23 @@ ghost_right2 = 'img/g_right2.png'
 ghost_right3 = 'img/g_right3.png'
 ghost_right4 = 'img/g_right4.png'
 
+duck_up1 = 'img/d_up1.png';
+duck_up2 = 'img/d_up2.png';
+duck_up3 = 'img/d_up3.png';
+duck_up4 = 'img/d_up4.png';
+duck_down1 = 'img/d_down1.png';
+duck_down2 = 'img/d_down2.png';
+duck_down3 = 'img/d_down3.png';
+duck_down4 = 'img/d_down4.png';
+duck_left1 = 'img/d_left1.png';
+duck_left2 = 'img/d_left2.png';
+duck_left3 = 'img/d_left3.png';
+duck_left4 = 'img/d_left4.png';
+duck_right1 = 'img/d_right1.png';
+duck_right2 = 'img/d_right2.png';
+duck_right3 = 'img/d_right3.png';
+duck_right4 = 'img/d_right4.png';
+
 
 bomb_image = 'img/bomb.png'
 burst_iamge = 'img/burst.png'

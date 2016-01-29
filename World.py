@@ -7,6 +7,7 @@ import Block
 from Block import Block
 from Bomb import BombMatrix
 from Enemy import Enemy
+from Ghost import Ghost
 from Item import *
 import random
 from Opening import *

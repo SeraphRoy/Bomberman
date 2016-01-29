@@ -7,6 +7,7 @@ import Block
 from Block import Block
 from Bomb import BombMatrix
 from Enemy import Enemy
+from Ghost import Ghost
 from Item import *
 import random
 
@@ -28,16 +29,21 @@ player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_left1,player_left2,player_left3,player_left2,
                  player_right1,player_right2,player_right3,player_right4]
 
-enemy_images = [ghost_up1,ghost_up2,ghost_up3,ghost_up4,
+ghost_images = [ghost_up1,ghost_up2,ghost_up3,ghost_up4,
 				ghost_down1, ghost_down2,ghost_down3,ghost_down4,
 				ghost_left1, ghost_left2, ghost_left3, ghost_left4,
 				ghost_right1,ghost_right2,ghost_right3,ghost_right4]
 
+duck_images = [duck_up1,duck_up2,duck_up3,duck_up4,
+			   duck_down1,duck_down2,duck_down3,duck_down4,
+			   duck_left1,duck_left2,duck_left3,duck_left4,
+			   duck_right1,duck_right2,duck_right3,duck_right4]
+
 p = Player(player_images,bomb_image,150,10,20,1,1)
 
-e1 = Enemy(256,256,50,150, enemy_images, 200,200)
-e2 = Enemy(512,256,50,150, enemy_images, 200,200)
-e3 = Enemy(256,512,50,150, enemy_images, 200,200)
+e1 = Ghost(256,256,50,150, ghost_images, 200,200)
+e2 = Ghost(512,256,50,150, ghost_images, 200,200)
+e3 = Ghost(256,512,50,150, duck_images, 200,200)
 
 enemys = {e1, e2, e3}
 
