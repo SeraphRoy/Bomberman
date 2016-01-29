@@ -8,6 +8,7 @@ from Block import Block
 from Bomb import BombMatrix
 from Enemy import Enemy
 from Ghost import Ghost
+from Duck import Duck
 from Item import *
 import random
 
@@ -42,8 +43,8 @@ duck_images = [duck_up1,duck_up2,duck_up3,duck_up4,
 p = Player(player_images,bomb_image,150,10,20,1,1)
 
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-e2 = Ghost(512,256,50,150, ghost_images, 200,200)
-e3 = Ghost(256,512,50,150, duck_images, 200,200)
+e2 = Duck(512,256,50,150, duck_images, 20,20)
+e3 = Duck(256,512,50,150, duck_images, 20,20)
 
 enemys = {e1, e2, e3}
 
