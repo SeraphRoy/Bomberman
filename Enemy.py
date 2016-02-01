@@ -2,47 +2,47 @@ import pygame
 from pygame.locals import *
 
 def ChangeNextIndex(current, key):
-    if current<0 or current>15:
-        print "incorrect current image index"
-        return
-    if key == 1:
-        if current>7 and current<12:
-            if current == 11:
-                return 8
-            else:
-                return current+1
-            
-        else:
-             return 9
-    
+	if current<0 or current>15:
+		print "incorrect current image index"
+		return
+	if key == 1:
+		if current>7 and current<12:
+			if current == 11:
+				return 8
+			else:
+				return current+1
+			
+		else:
+			 return 9
+	
 
-    elif key == 2:
-        if current<4:
-            if current == 3:
-                return 0
-            else:
-                return current+1
-        else:
-            return 1
+	elif key == 2:
+		if current<4:
+			if current == 3:
+				return 0
+			else:
+				return current+1
+		else:
+			return 1
 
 
-    elif key==3:
-        if current>11 and current<16:
-            if current == 15:
-                return 12
-            else:
-                return current+1
-        else:
-            return 13
+	elif key==3:
+		if current>11 and current<16:
+			if current == 15:
+				return 12
+			else:
+				return current+1
+		else:
+			return 13
 
-    elif key == 4:
-        if current<8 and current>3:
-            if current ==7:
-                return 4
-            else:
-                return current+1
-        else:
-            return 5
+	elif key == 4:
+		if current<8 and current>3:
+			if current ==7:
+				return 4
+			else:
+				return current+1
+		else:
+			return 5
 
 
 
@@ -84,6 +84,9 @@ class Enemy:
 			#for patrol
 			self.down = True
 			self.up = False
+
+			#damge when touch the player
+			self.damage = 50
 
 
 		def Action(self, screen, player, seconds):

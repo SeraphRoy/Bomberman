@@ -4,9 +4,10 @@ class Duck(Enemy):
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
 		self.charging = False
-		self.chargetime = 5
+		self.chargetime = 15
 		self.chargeleft = 20
 		self.chargeDirection =1
+		self.damage = 60
 
 	def Action(self, screen, player, seconds):
 		#distance in x direction between player and enemy
@@ -18,6 +19,10 @@ class Duck(Enemy):
 				self.timetochange-=1
 			else:
 				self.timetochange = 4
+
+			if abs(xDistance)<self.speed/2 and abs(yDistance)<self.speed/2:
+				player.GetDamge(self.damage)
+				player.KnockBack(self.chargeDirection)
 
 			#distance that this move is going to travel
 			distance =0;
@@ -40,7 +45,7 @@ class Duck(Enemy):
 			#charge time ended
 			if self.chargeleft<=0:
 				self.charging = False
-				self.chargetime = 5
+				self.chargetime = 15
 				self.chargeleft = 20
 				if self.down == True:
 					self.image_index = 4

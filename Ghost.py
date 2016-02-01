@@ -75,6 +75,9 @@ class Ghost(Enemy):
 									self.y = 0
 								self.lastcommand = 2
 							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
+				else:
+					player.GetDamge(self.damage)
+					player.KnockBack(self.lastcommand)
 			else:
 				distance = seconds * self.speed
 				if self.down==True :

@@ -46,7 +46,7 @@ e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 e2 = Duck(512,256,50,150, duck_images, 20,20)
 e3 = Duck(256,512,50,150, duck_images, 20,20)
 
-enemys = {e1, e2, e3}
+enemys = {e1,e2,e3}
 
 
 setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]

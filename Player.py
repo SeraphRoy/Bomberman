@@ -4,143 +4,182 @@ from Bomb import *
 
 #1->left is pressed, 2->up, 3->right, 4->down
 def ChangeNextIndex(current, key):
-    if current<0 or current>15:
-        print "incorrect current image index"
-        return
-    if key == 1:
-        if current>7 and current<12:
-            if current == 11:
-                return 8
-            else:
-                return current+1
-            
-        else:
-             return 9
-    
+	if current<0 or current>15:
+		print "incorrect current image index"
+		return
+	if key == 1:
+		if current>7 and current<12:
+			if current == 11:
+				return 8
+			else:
+				return current+1
+			
+		else:
+			 return 9
+	
 
-    elif key == 2:
-        if current<4:
-            if current == 3:
-                return 0
-            else:
-                return current+1
-        else:
-            return 1
+	elif key == 2:
+		if current<4:
+			if current == 3:
+				return 0
+			else:
+				return current+1
+		else:
+			return 1
 
 
-    elif key==3:
-        if current>11 and current<16:
-            if current == 15:
-                return 12
-            else:
-                return current+1
-        else:
-            return 13
+	elif key==3:
+		if current>11 and current<16:
+			if current == 15:
+				return 12
+			else:
+				return current+1
+		else:
+			return 13
 
-    elif key == 4:
-        if current<8 and current>3:
-            if current ==7:
-                return 4
-            else:
-                return current+1
-        else:
-            return 5
-        
-        
+	elif key == 4:
+		if current<8 and current>3:
+			if current ==7:
+				return 4
+			else:
+				return current+1
+		else:
+			return 5
+		
+		
 
 class Player:
-    image_x = 42
-    image_y = 73
-    background_x = 600
-    background_y = 700
-    #image in the order of up, down, left, right
-    def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage):
-        if(len(image_names)!=16):
-            print "incorrect size of the iamge_names\n"
-        
-        self.images = []
-        for names in image_names:
-            temp = pygame.image.load(names).convert_alpha()
-            temp = pygame.transform.scale(temp, (temp.get_width(),
-                                                 temp.get_height()))
-            self.images.append(temp)
-        
-        self.bomb_name = bomb_name
+	image_x = 42
+	image_y = 73
+	background_x = 700
+	background_y = 615
+	#image in the order of up, down, left, right
+	def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage):
+		if(len(image_names)!=16):
+			print "incorrect size of the iamge_names\n"
+		
+		self.images = []
+		for names in image_names:
+			temp = pygame.image.load(names).convert_alpha()
+			temp = pygame.transform.scale(temp, (temp.get_width(),
+												 temp.get_height()))
+			self.images.append(temp)
+		
+		self.bomb_name = bomb_name
 
-        self.speed = speed
-        self.x = x;
-        self.y =y;
-        self.max_bomb = max_bomb
-        self.bomb_damage = bomb_damage
-        self.current_image = self.images[4]
-        self.image_index = 4
-        self.time = 0
+		self.speed = speed
+		self.x = x;
+		self.y =y;
+		self.max_bomb = max_bomb
+		self.bomb_damage = bomb_damage
+		self.current_image = self.images[4]
+		self.image_index = 4
+		self.time = 0
+		self.HP = 100
 
-        #used to restirct putting too many bomb at a moment
-        self.bomb_since_last = 0
+		#used to restirct putting too many bomb at a moment
+		self.bomb_since_last = 0
 
-    def GetX(self):
-        return self.x
+		#knock turn, indicate how many turns the player will be knock back
+		self.knock = 0
+		self.knockDirection = 0
+		self.knockspeed = 450
 
-    def GetY(self):
-        return self.y
+	def GetX(self):
+		return self.x
+
+	def GetY(self):
+		return self.y
+
+	def GetDamge(self, damage):
+		self.HP-=damage
+
+	def KnockBack(self,direction):
+		self.knock = 3
+		self.knockDirection = direction
 
 
-    def Action(self, screen, pressed_Key,seconds, bomb_map):
-        background_x = 720
-        background_y = 615
-        self.time+=seconds
-        self.bomb_since_last+=seconds
-        switch = False
-        if self.time >= 0.2:
-            switch = True
-            self.time = 0
+	def Action(self, screen, pressed_Key,seconds, bomb_map):
+		if self.knock>0:
+			self.knock-=1
+			distance = self.knockspeed * seconds
+			if self.knockDirection == 1:
+				if self.x - distance >0:
+					self.x-=distance
+				else:
+					self.x = 0
+			elif self.knockDirection == 3:
+				if self.x + distance <self.background_x:
+					self.x+=distance
+				else:
+					self.x = self.image_x
+			elif self.knockDirection == 2:
+				if self.y - distance>0:
+					self.y-=distance
+				else:
+					self.y = 0
+			elif self.knockDirection == 4:
+				if self.y+distance<self.background_y:
+					self.y+=distance
+				else:
+					self.y = self.background_y
+			screen.blit(self.images[self.image_index],(self.x,self.y))
+			return;
 
-        distance = seconds * self.speed
+		background_x = 720
+		background_y = 615
+		self.time+=seconds
+		self.bomb_since_last+=seconds
+		switch = False
+		if self.time >= 0.2:
+			switch = True
+			self.time = 0
 
-        if pressed_Key[K_SPACE] and self.bomb_since_last>=0.2:
-            self.bomb_since_last = 0
+		distance = seconds * self.speed
 
-            # Becareful with this line, need to check index out of bound exception
-            new_bomb = Bomb(self.bomb_name,int(self.x+23),int(self.y+23))
+		if pressed_Key[K_SPACE] and self.bomb_since_last>=0.2:
+			self.bomb_since_last = 0
 
-            bomb_map.AddBomb(new_bomb)
-            #print (self.x)
-            #print (",")
-            #print (self.y)
-        if pressed_Key[K_LEFT]:
-            self.x-=distance
-            if self.x < 0:
-                self.x = 0
-            if self.x > background_x:
-                self.x = background_x
-            if switch == True or self.image_index<8 or self.image_index>11:
-                self.image_index = ChangeNextIndex(self.image_index,1)
-        elif pressed_Key[K_RIGHT]:
-            self.x+=distance
-            if self.x < 0:
-                self.x = 0
-            if self.x > background_x:
-                self.x = background_x
-            if switch == True or self.image_index<12:
-                self.image_index = ChangeNextIndex(self.image_index,3)
-        elif pressed_Key[K_UP]:
-            self.y-=distance
-            if self.y < 0:
-                self.y = 0
-            if self.y > background_y:
-                self.y = background_y
-            if switch == True or self.image_index>3:
-                self.image_index =ChangeNextIndex(self.image_index,2)
-        elif pressed_Key[K_DOWN]:
-            self.y+=distance
-            if self.y < 0:
-                self.y = 0
-            if self.y > background_y:
-                self.y = background_y
-            if switch == True or self.image_index<4 or self.image_index>7:
-                self.image_index = ChangeNextIndex(self.image_index,4)
-        else:
-            self.image_index = (self.image_index/4)*4
-        screen.blit(self.images[self.image_index],(self.x,self.y))
-    
+			# Becareful with this line, need to check index out of bound exception
+			new_bomb = Bomb(self.bomb_name,int(self.x+23),int(self.y+23))
+
+			bomb_map.AddBomb(new_bomb)
+			#print (self.x)
+			#print (",")
+			#print (self.y)
+		if pressed_Key[K_LEFT]:
+			self.x-=distance
+			if self.x < 0:
+				self.x = 0
+			if self.x > background_x:
+				self.x = background_x
+			if switch == True or self.image_index<8 or self.image_index>11:
+				self.image_index = ChangeNextIndex(self.image_index,1)
+		elif pressed_Key[K_RIGHT]:
+			self.x+=distance
+			if self.x < 0:
+				self.x = 0
+			if self.x > background_x:
+				self.x = background_x
+			if switch == True or self.image_index<12:
+				self.image_index = ChangeNextIndex(self.image_index,3)
+		elif pressed_Key[K_UP]:
+			self.y-=distance
+			if self.y < 0:
+				self.y = 0
+			if self.y > background_y:
+				self.y = background_y
+			if switch == True or self.image_index>3:
+				self.image_index =ChangeNextIndex(self.image_index,2)
+		elif pressed_Key[K_DOWN]:
+			self.y+=distance
+			if self.y < 0:
+				self.y = 0
+			if self.y > background_y:
+				self.y = background_y
+			if switch == True or self.image_index<4 or self.image_index>7:
+				self.image_index = ChangeNextIndex(self.image_index,4)
+		else:
+			self.image_index = (self.image_index/4)*4
+		screen.blit(self.images[self.image_index],(self.x,self.y))
+	
