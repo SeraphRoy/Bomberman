@@ -86,7 +86,7 @@ class Enemy:
 			self.up = False
 
 			#damge when touch the player
-			self.damage = 50
+			self.damage = 20
 
 
 		def Action(self, screen, player, seconds):

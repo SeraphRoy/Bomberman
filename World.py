@@ -16,6 +16,8 @@ from SelectMode import *
 pygame.init()
 
 while True:
+    if p.CheckAlive() == False:
+      break;
     opening = Opening(upimage, downimage, (380,400))
     adventure_mode = SelectMode(adventure_mode1, adventure_mode2, (380,400))
     if stage_num == 0:
@@ -58,4 +60,10 @@ while True:
 
        pygame.display.update()
 
+screen.blit(gameover, (290,250))
+pygame.display.update()
+while True:
+  for event in pygame.event.get():
+           if event.type == QUIT:
+               exit()
 

@@ -7,7 +7,7 @@ class Duck(Enemy):
 		self.chargetime = 15
 		self.chargeleft = 20
 		self.chargeDirection =1
-		self.damage = 60
+		self.damage = 25
 
 	def Action(self, screen, player, seconds):
 		#distance in x direction between player and enemy

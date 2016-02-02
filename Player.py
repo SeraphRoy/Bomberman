@@ -1,4 +1,5 @@
 import pygame
+import math
 from pygame.locals import *
 from Bomb import *
 
@@ -54,7 +55,7 @@ class Player:
 	background_x = 700
 	background_y = 615
 	#image in the order of up, down, left, right
-	def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage):
+	def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage, hp_image):
 		if(len(image_names)!=16):
 			print "incorrect size of the iamge_names\n"
 		
@@ -84,6 +85,12 @@ class Player:
 		self.knock = 0
 		self.knockDirection = 0
 		self.knockspeed = 450
+		self.hp_image = pygame.image.load(hp_image).convert_alpha()
+		self.hp_image = pygame.transform.scale(self.hp_image, (self.image_x-4,10))
+		self.alive = True
+
+	def CheckAlive(self):
+		return self.alive
 
 	def GetX(self):
 		return self.x
@@ -92,12 +99,19 @@ class Player:
 		return self.y
 
 	def GetDamge(self, damage):
-		self.HP-=damage
+		if(self.HP-damage<=0):
+			self.hp = 0
+			self.alive = False
+		else:
+			self.HP-=damage
+
+		new_width = (self.HP / 100.0) * (self.image_x-4)
+		self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
+		
 
 	def KnockBack(self,direction):
 		self.knock = 3
 		self.knockDirection = direction
-
 
 	def Action(self, screen, pressed_Key,seconds, bomb_map):
 		if self.knock>0:
@@ -181,5 +195,6 @@ class Player:
 				self.image_index = ChangeNextIndex(self.image_index,4)
 		else:
 			self.image_index = (self.image_index/4)*4
-		screen.blit(self.images[self.image_index],(self.x,self.y))
+		screen.blit(self.hp_image,(self.x,self.y-13))
+		screen.blit(self.images[self.image_index],(self.x-5,self.y))
 	

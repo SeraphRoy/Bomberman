@@ -40,7 +40,7 @@ duck_images = [duck_up1,duck_up2,duck_up3,duck_up4,
 			   duck_left1,duck_left2,duck_left3,duck_left4,
 			   duck_right1,duck_right2,duck_right3,duck_right4]
 
-p = Player(player_images,bomb_image,150,10,20,1,1)
+p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
 
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 e2 = Duck(512,256,50,150, duck_images, 20,20)
@@ -68,5 +68,6 @@ for i in range(7):
 
 stage_num = 0
 opening_bg = pygame.image.load(open_image).convert()
+gameover   = pygame.image.load(gameover_image).convert()
 
 

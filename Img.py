@@ -51,11 +51,14 @@ duck_right3 = 'img/d_right3.png';
 duck_right4 = 'img/d_right4.png';
 
 
+hp_image = 'img/hp.png'
+
 bomb_image = 'img/bomb.png'
 burst_iamge = 'img/burst.png'
 back_ground_name = 'img/bg.png'
 block_image = 'img/block2.png'
 transparent_image = 'img/transparent.png'
+gameover_image = 'img/gameover.png'
 
 sadako_image = 'img/sadako_temp.bmp'
 low_speed_image = 'img/low_speed_temp.bmp'
