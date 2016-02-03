@@ -54,4 +54,3 @@ def collectItem(player):
         item_pos[(x,y)].display=False
         item_pos[(x,y)].invoked(player)
         del item_pos[(x,y)]
-

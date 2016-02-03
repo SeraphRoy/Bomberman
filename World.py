@@ -1,3 +1,4 @@
+import time
 from Player import Player
 from Img import *
 import pygame
@@ -13,17 +14,21 @@ import random
 from Opening import *
 from Global import *
 from SelectMode import *
+from Menu import *
 pygame.init()
 
 while True:
     if p.CheckAlive() == False:
       break;
     opening = Opening(upimage, downimage, (380,400))
-    adventure_mode = SelectMode(adventure_mode1, adventure_mode2, (380,400))
+    mode_select = SelectMode(adventure_mode1, adventure_mode2, (380,200))
+#    menu = Menu(back1, back2, (200, 200))
     if stage_num == 0:
    	stage_num = opening.OpeningScene(screen)
     elif stage_num == 1:
-        stage_num = adventure_mode.OpeningScene(screen)
+        stage_num = mode_select.OpeningScene(screen)
+#    elif stage_num == 3:
+#        stage_num = menu.OpeningScene(screen)
     else:
        time_passed = clock.tick()
        time_passed_seconds = time_passed / 1000.0
@@ -38,13 +43,15 @@ while True:
                exit()
 
        screen.blit(background, (0,0))
-
+       screen.blit(normal_face, (665, 665))
        bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst)
 
        for i in item_pos:
            item_pos[i].draw(screen)
 
        pressed_Key = pygame.key.get_pressed()
+       if pressed_Key[pygame.K_ESCAPE]:
+           stage_num = 3
 
        blocks.PutsOnScreen(screen)
 

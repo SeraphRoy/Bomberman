@@ -1,3 +1,5 @@
+from Global import *
+from Img import *
 from Enemy import *
 
 class Duck(Enemy):
@@ -21,7 +23,7 @@ class Duck(Enemy):
 				self.timetochange = 4
 
 			if abs(xDistance)<self.speed/2 and abs(yDistance)<self.speed/2:
-				player.GetDamge(self.damage)
+			        player.GetDamge(self.damage)
 				player.KnockBack(self.chargeDirection)
 
 			#distance that this move is going to travel

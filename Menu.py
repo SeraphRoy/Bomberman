@@ -2,10 +2,11 @@ import pygame
 from pygame.locals import *
 from Global import *
 from Opening import *
-class SelectMode(Opening):
+class Menu(Opening):
     def OpeningScene(self, screen):
-    	screen.blit(opening_bg, (0,0))
-        select_exit = Opening(exit_1, exit_2, (380, 500))
+    	screen.blit(menu, (0,0))
+#        select_exit = Opening(menu_exit_1, menu_exit_2, (380, 500))
+#        select_help = Open(help1, help2, (380, 600))
     	self.render()
         select_exit.render()
     	for event in pygame.event.get():
@@ -16,4 +17,4 @@ class SelectMode(Opening):
             	stage_num = 2
                 return stage_num
         pygame.display.update()
-        return 1
+        return 3

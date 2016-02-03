@@ -69,5 +69,12 @@ for i in range(7):
 stage_num = 0
 opening_bg = pygame.image.load(open_image).convert()
 gameover   = pygame.image.load(gameover_image).convert()
-
-
+normal_face = pygame.image.load(normal_face).convert()
+hurt_face = pygame.image.load(hurt_face).convert()
+menu = pygame.image.load(menu).convert()
+back1 = pygame.image.load(back1).convert()
+back2 = pygame.image.load(back2).convert()
+help1 = pygame.image.load(help1).convert()
+help2 = pygame.image.load(help2).convert()
+menu_exit_1 = pygame.image.load(menu_exit_1).convert()
+menu_exit_2 = pygame.image.load(menu_exit_2).convert()
