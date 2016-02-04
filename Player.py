@@ -77,6 +77,7 @@ class Player:
 		self.image_index = 4
 		self.time = 0
 		self.HP = 100
+		self.hurt_turn = 0;
 
 		#used to restirct putting too many bomb at a moment
 		self.bomb_since_last = 0
@@ -88,6 +89,7 @@ class Player:
 		self.hp_image = pygame.image.load(hp_image).convert_alpha()
 		self.hp_image = pygame.transform.scale(self.hp_image, (self.image_x-4,10))
 		self.alive = True
+		self.hurt_face = pygame.image.load('img/hurt_face.png').convert()
 
 	def CheckAlive(self):
 		return self.alive
@@ -104,16 +106,19 @@ class Player:
 			self.alive = False
 		else:
 			self.HP-=damage
-
+		self.hurt_turn = 10;
 		new_width = (self.HP / 100.0) * (self.image_x-4)
 		self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
-		
+
 
 	def KnockBack(self,direction):
 		self.knock = 3
 		self.knockDirection = direction
 
 	def Action(self, screen, pressed_Key,seconds, bomb_map):
+		if(self.hurt_turn>0):
+			self.hurt_turn-=1
+			screen.blit(self.hurt_face, (665, 665))
 		if self.knock>0:
 			self.knock-=1
 			distance = self.knockspeed * seconds
