@@ -56,9 +56,11 @@ class Duck(Enemy):
 
 			#if still prepare charging or charging
 			if self.charging == True:
+				#charging
 				if self.chargetime>0:
 					self.chargetime-=1
 
+				#start rushing
 				else:
 					distance = 2*self.rushingSpeed*seconds
 					self.chargeleft-=1
@@ -86,6 +88,7 @@ class Duck(Enemy):
 							self.y+=distance
 						else:
 							self.y = (self.map_y-self.image_y)
+			#warning is false, just move up and down
 			else:
 				distance = seconds * self.speed
 				if self.down==True :

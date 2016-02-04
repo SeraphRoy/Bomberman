@@ -78,6 +78,7 @@ class Player:
 		self.time = 0
 		self.HP = 100
 		self.hurt_turn = 0;
+		#when show =0, program will not display player's image, flashing
 		self.show = 1;
 
 		#used to restirct putting too many bomb at a moment
@@ -126,18 +127,27 @@ class Player:
 		self.knockDirection = direction
 
 	def Action(self, screen, pressed_Key,seconds, bomb_map):
+		#check if player is invincible 
 		if self.invincible_turn>0:
+			#flashing affect
 			if(self.show==1):
 				self.show = 0
 			else:
 				self.show = 1
 			self.invincible_turn-=1
+
+		#count down for the time that hurt_face will display
 		if(self.hurt_turn>0):
 			self.hurt_turn-=1
 			screen.blit(self.hurt_face, (665, 665))
+
+		#check if player is currently being knock
 		if self.knock>0:
+			#decrease the turn
 			self.knock-=1
 			distance = self.knockspeed * seconds
+
+			#check knock direction
 			if self.knockDirection == 1:
 				if self.x - distance >0:
 					self.x-=distance
@@ -161,11 +171,11 @@ class Player:
 			screen.blit(self.images[self.image_index],(self.x,self.y))
 			return;
 
-		background_x = 720
-		background_y = 615
 		self.time+=seconds
 		self.bomb_since_last+=seconds
 		switch = False
+
+		#check if it is time to change the image index 
 		if self.time >= 0.2:
 			switch = True
 			self.time = 0
@@ -182,36 +192,40 @@ class Player:
 			#print (self.x)
 			#print (",")
 			#print (self.y)
+
+		# 1 = left, 2 = up, 3 = right, 4 = down
 		if pressed_Key[K_LEFT]:
 			self.x-=distance
 			if self.x < 0:
 				self.x = 0
-			if self.x > background_x:
-				self.x = background_x
+			if self.x > self.background_x:
+				self.x = self.background_x
+			
+			#only change the image when switch is true
 			if switch == True or self.image_index<8 or self.image_index>11:
 				self.image_index = ChangeNextIndex(self.image_index,1)
 		elif pressed_Key[K_RIGHT]:
 			self.x+=distance
 			if self.x < 0:
 				self.x = 0
-			if self.x > background_x:
-				self.x = background_x
+			if self.x > self.background_x:
+				self.x = self.background_x
 			if switch == True or self.image_index<12:
 				self.image_index = ChangeNextIndex(self.image_index,3)
 		elif pressed_Key[K_UP]:
 			self.y-=distance
 			if self.y < 0:
 				self.y = 0
-			if self.y > background_y:
-				self.y = background_y
+			if self.y > self.background_y:
+				self.y = self.background_y
 			if switch == True or self.image_index>3:
 				self.image_index =ChangeNextIndex(self.image_index,2)
 		elif pressed_Key[K_DOWN]:
 			self.y+=distance
 			if self.y < 0:
 				self.y = 0
-			if self.y > background_y:
-				self.y = background_y
+			if self.y > self.background_y:
+				self.y = self.background_y
 			if switch == True or self.image_index<4 or self.image_index>7:
 				self.image_index = ChangeNextIndex(self.image_index,4)
 		else:
