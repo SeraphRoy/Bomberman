@@ -46,7 +46,6 @@ mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
 			   mage_left1,mage_left2,mage_left3,mage_left4,
 			   mage_right1,mage_right2,mage_right3,mage_right4]
 
-p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
 
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 e2 = Duck(512,256,50,150, duck_images, 20,20)
@@ -77,6 +76,7 @@ opening_bg = pygame.image.load(open_image).convert()
 gameover   = pygame.image.load(gameover_image).convert()
 normal_face = pygame.image.load(normal_face_image).convert()
 hurt_face = pygame.image.load(hurt_face_image).convert()
+dead_face = pygame.image.load(dead_face_image).convert()
 menu = pygame.image.load(menu).convert()
 #back1 = pygame.image.load(back1).convert()
 #back2 = pygame.image.load(back2).convert()
