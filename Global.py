@@ -9,6 +9,7 @@ from Bomb import BombMatrix
 from Enemy import Enemy
 from Ghost import Ghost
 from Duck import Duck
+from Mage import Mage
 from Item import *
 import random
 
@@ -40,11 +41,16 @@ duck_images = [duck_up1,duck_up2,duck_up3,duck_up4,
 			   duck_left1,duck_left2,duck_left3,duck_left4,
 			   duck_right1,duck_right2,duck_right3,duck_right4]
 
+mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
+			   mage_down1,mage_down2,mage_down3,mage_down4,
+			   mage_left1,mage_left2,mage_left3,mage_left4,
+			   mage_right1,mage_right2,mage_right3,mage_right4]
+
 p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
 
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 e2 = Duck(512,256,50,150, duck_images, 20,20)
-e3 = Duck(256,512,50,150, duck_images, 20,20)
+e3 = Mage(400,220,50,50, player_images, 300, 300)
 
 enemys = {e1,e2,e3}
 
