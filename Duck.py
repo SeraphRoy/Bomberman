@@ -22,8 +22,8 @@ class Duck(Enemy):
 			else:
 				self.timetochange = 4
 
-			if abs(xDistance)<self.speed/2 and abs(yDistance)<self.speed/2:
-			        player.GetDamge(self.damage)
+			if abs(xDistance)<self.speed/2 and abs(yDistance)<self.speed/2 and player.GetInvincible()<=0:
+				player.GetDamge(self.damage)
 				player.KnockBack(self.chargeDirection)
 
 			#distance that this move is going to travel
@@ -82,7 +82,7 @@ class Duck(Enemy):
 							self.y= 0
 					else:
 						self.image_index = ChangeNextIndex(self.image_index,4)
-					 	if self.y+distance+self.image_y<self.map_y:
+						if self.y+distance+self.image_y<self.map_y:
 							self.y+=distance
 						else:
 							self.y = (self.map_y-self.image_y)

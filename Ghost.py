@@ -75,7 +75,7 @@ class Ghost(Enemy):
 									self.y = 0
 								self.lastcommand = 2
 							self.image_index = ChangeNextIndex(self.image_index,self.lastcommand)
-				else:
+				elif player.GetInvincible()<=0:
 					player.GetDamge(self.damage)
 					player.KnockBack(self.lastcommand)
 			else:
