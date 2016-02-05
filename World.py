@@ -59,10 +59,11 @@ while True:
        if pressed_Key[pygame.K_ESCAPE]:
            stage_num = 3
 
-       blocks.PutsOnScreen(screen)
+       for block in all_blocks:
+           block.PutsOnScreen(screen)
 
        #third argument pass how many time hada passed since last tiem
-       p.Action(screen,pressed_Key,current_time, bomb_map, blocks)
+       p.Action(screen,pressed_Key,current_time, bomb_map, all_blocks)
 
 #       for e in enemys:
 #            e.Action(screen, p, current_time)
