@@ -18,7 +18,7 @@ from SelectMode import *
 from Menu import *
 pygame.init()
 
-p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
+p = Player(player_images,bomb_image,250,10,20,1,1,hp_image)
 
 while True:
     ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
@@ -62,11 +62,11 @@ while True:
        blocks.PutsOnScreen(screen)
 
        #third argument pass how many time hada passed since last tiem
-       p.Action(screen,pressed_Key,current_time, bomb_map)
+       p.Action(screen,pressed_Key,current_time, bomb_map, blocks)
 
-       for e in enemys:
-            e.Action(screen, p, current_time)
-       collectItem(p)
+#       for e in enemys:
+#            e.Action(screen, p, current_time)
+#       collectItem(p)
 
        #Reset current time
        current_time = 0.0

@@ -5,8 +5,8 @@ from sets import Set
 from Img import *
 
 class Block:
-    image_x = 32
-    image_y = 32
+    image_x = 51
+    image_y = 51
 
     #posSet is a set of positions, e.g. [(2,1), (4,3)]
     #default value of image_name is for TEST ONLY

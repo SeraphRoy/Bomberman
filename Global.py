@@ -54,7 +54,7 @@ e3 = Mage(400,220,50,50, player_images, 300, 300)
 enemys = {e1,e2,e3}
 
 
-setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
+setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]
 blocks = Block(block_image, setOfBlocks)
 
 X_INDEX = 13

@@ -74,7 +74,7 @@ hp_image = 'img/hp.png'
 bomb_image = 'img/bomb.png'
 burst_iamge = 'img/burst.png'
 back_ground_name = 'img/bg.png'
-block_image = 'img/block2.png'
+block_image = 'img/bomb.png'
 transparent_image = 'img/transparent.png'
 gameover_image = 'img/gameover.png'
 

@@ -2,6 +2,7 @@ import pygame
 import math
 from pygame.locals import *
 from Bomb import *
+from Block import *
 
 #1->left is pressed, 2->up, 3->right, 4->down
 def ChangeNextIndex(current, key):
@@ -52,7 +53,7 @@ def ChangeNextIndex(current, key):
 class Player:
 	image_x = 42
 	image_y = 73
-	background_x = 700
+	background_x = 720
 	background_y = 615
 	#image in the order of up, down, left, right
 	def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage, hp_image):
@@ -126,7 +127,7 @@ class Player:
 		self.knock = 3
 		self.knockDirection = direction
 
-	def Action(self, screen, pressed_Key,seconds, bomb_map):
+	def Action(self, screen, pressed_Key,seconds, bomb_map, block):
 		#check if player is invincible 
 		if self.invincible_turn>0:
 			#flashing affect
@@ -196,34 +197,50 @@ class Player:
 		# 1 = left, 2 = up, 3 = right, 4 = down
 		if pressed_Key[K_LEFT]:
 			self.x-=distance
+                        for point in block.GetSet():
+                                if self.x + distance >= point[0] + block.image_x and self.x - point[0] - block.image_x <= 0 and self.y - point[1] <= block.image_y and point[1] - self.image_y - self.y <= 0:
+                                        self.x += distance
+                                        break
 			if self.x < 0:
 				self.x = 0
-			if self.x > self.background_x:
-				self.x = self.background_x
+			#if self.x > self.background_x:
+			#	self.x = self.background_x
 			
 			#only change the image when switch is true
 			if switch == True or self.image_index<8 or self.image_index>11:
 				self.image_index = ChangeNextIndex(self.image_index,1)
 		elif pressed_Key[K_RIGHT]:
 			self.x+=distance
-			if self.x < 0:
-				self.x = 0
+                        for point in block.GetSet():
+                                if self.x - distance <= point[0] and point[0] - self.x - self.image_x <= 0 and self.y - point[1] <= block.image_y and point[1] - self.image_y - self.y <= 0:
+                                        self.x -= distance
+                                        break
+			#if self.x < 0:
+			#	self.x = 0
 			if self.x > self.background_x:
 				self.x = self.background_x
 			if switch == True or self.image_index<12:
 				self.image_index = ChangeNextIndex(self.image_index,3)
 		elif pressed_Key[K_UP]:
 			self.y-=distance
+                        for point in block.GetSet():
+                                if self.y + distance >= point[1] + block.image_y and self.y - point[1] - block.image_y <= 0 and self.x - point[0] - block.image_x <= 0 and point[0] - self.image_x - self.x <= 0:
+                                        self.y += distance
+                                        break
 			if self.y < 0:
 				self.y = 0
-			if self.y > self.background_y:
-				self.y = self.background_y
+			#if self.y > self.background_y:
+			#	self.y = self.background_y
 			if switch == True or self.image_index>3:
 				self.image_index =ChangeNextIndex(self.image_index,2)
 		elif pressed_Key[K_DOWN]:
 			self.y+=distance
-			if self.y < 0:
-				self.y = 0
+                        for point in block.GetSet():
+                                if self.y - distance <= point[1] and point[0] - self.y - self.image_y <= 0 and self.x - point[0] - block.image_x <= 0 and point[0] - self.image_x - self.x <= 0:
+                                        self.y -= distance
+                                        break
+			#if self.y < 0:
+	                #    self.y = 0
 			if self.y > self.background_y:
 				self.y = self.background_y
 			if switch == True or self.image_index<4 or self.image_index>7:
