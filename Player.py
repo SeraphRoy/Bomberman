@@ -198,7 +198,7 @@ class Player:
 		if pressed_Key[K_LEFT]:
 			self.x-=distance
                         for point in block.GetSet():
-                                if self.x + distance >= point[0] + block.image_x and self.x - point[0] - block.image_x <= 0 and self.y - point[1] <= block.image_y and point[1] - self.image_y - self.y <= 0:
+                                if self.x + distance >= point[0] + block.image_x*2/3 and self.x - point[0] - block.image_x*3/4 <= 0 and self.y - point[1] <= block.image_y*2/3 and point[1] - self.image_y*2/3 - self.y <= 0:
                                         self.x += distance
                                         break
 			if self.x < 0:
@@ -212,7 +212,7 @@ class Player:
 		elif pressed_Key[K_RIGHT]:
 			self.x+=distance
                         for point in block.GetSet():
-                                if self.x - distance <= point[0] and point[0] - self.x - self.image_x <= 0 and self.y - point[1] <= block.image_y and point[1] - self.image_y - self.y <= 0:
+                                if self.x - distance <= point[0] and point[0] - self.x - self.image_x*3/5 <= 0 and self.y - point[1] <= block.image_y*2/3 and point[1] - self.image_y*2/3 - self.y <= 0:
                                         self.x -= distance
                                         break
 			#if self.x < 0:
@@ -224,19 +224,19 @@ class Player:
 		elif pressed_Key[K_UP]:
 			self.y-=distance
                         for point in block.GetSet():
-                                if self.y + distance >= point[1] + block.image_y and self.y - point[1] - block.image_y <= 0 and self.x - point[0] - block.image_x <= 0 and point[0] - self.image_x - self.x <= 0:
+                                if self.y + distance >= point[1] + block.image_y*2/3 and self.y - point[1] - block.image_y*3/5 <= 0 and self.x - point[0] - block.image_x*3/5 <= 0 and point[0] - self.image_x*3/5 - self.x <= 0:
                                         self.y += distance
                                         break
 			if self.y < 0:
 				self.y = 0
-			#if self.y > self.background_y:
+			#If self.y > self.background_y:
 			#	self.y = self.background_y
 			if switch == True or self.image_index>3:
 				self.image_index =ChangeNextIndex(self.image_index,2)
 		elif pressed_Key[K_DOWN]:
 			self.y+=distance
                         for point in block.GetSet():
-                                if self.y - distance <= point[1] and point[0] - self.y - self.image_y <= 0 and self.x - point[0] - block.image_x <= 0 and point[0] - self.image_x - self.x <= 0:
+                                if self.y - distance <= point[1] and point[0] - self.y - self.image_y*3/5 <= 0 and self.x - point[0] - block.image_x*3/5 <= 0 and point[0] - self.image_x*3/5 - self.x <= 0:
                                         self.y -= distance
                                         break
 			#if self.y < 0:

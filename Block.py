@@ -6,7 +6,7 @@ from Img import *
 
 class Block:
     image_x = 51
-    image_y = 51
+    image_y = 46
 
     #posSet is a set of positions, e.g. [(2,1), (4,3)]
     #default value of image_name is for TEST ONLY
