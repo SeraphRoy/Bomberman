@@ -47,12 +47,6 @@ mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
 			   mage_right1,mage_right2,mage_right3,mage_right4]
 
 
-e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-e2 = Duck(512,256,50,150, duck_images, 250,250)
-e3 = Mage(400,220,50,50, mage_images, 300, 300)
-
-enemys = {e1,e2,e3}
-
 
 setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]
 all_blocks = pygame.sprite.Group()

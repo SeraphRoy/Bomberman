@@ -204,8 +204,8 @@ class Player(pygame.sprite.Sprite):
                         self.rect.x-=distance
                         if self.rect.x < 0:
 				self.rect.x = 0
-			#if self.rect.x > self.background_x:
-			#	self.rect.x = self.background_x
+			if self.rect.x > self.background_x:
+				self.rect.x = self.background_x
 			
 			#only change the image when switch is true
 			if switch == True or self.image_index<8 or self.image_index>11:
@@ -213,8 +213,8 @@ class Player(pygame.sprite.Sprite):
 		elif pressed_Key[K_RIGHT]:
                         #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
                         self.rect.x+=distance
-			#if self.rect.x < 0:
-			#	self.rect.x = 0
+			if self.rect.x < 0:
+				self.rect.x = 0
 			if self.rect.x > self.background_x:
 				self.rect.x = self.background_x
 			if switch == True or self.image_index<12:
@@ -224,15 +224,15 @@ class Player(pygame.sprite.Sprite):
 			self.rect.y-=distance
 			if self.rect.y < 0:
 				self.rect.y = 0
-			#If self.rect.y > self.background_y:
-			#	self.rect.y = self.background_y
+			if self.rect.y > self.background_y:
+				self.rect.y = self.background_y
 			if switch == True or self.image_index>3:
 				self.image_index =ChangeNextIndex(self.image_index,2)
 		elif pressed_Key[K_DOWN]:
                         #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
 			self.rect.y+=distance
-			#if self.rect.y < 0:
-	                #    self.rect.y = 0
+			if self.rect.y < 0:
+	                    self.rect.y = 0
 			if self.rect.y > self.background_y:
 				self.rect.y = self.background_y
 			if switch == True or self.image_index<4 or self.image_index>7:
