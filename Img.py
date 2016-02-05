@@ -51,22 +51,22 @@ duck_right3 = 'img/d_right3.png';
 duck_right4 = 'img/d_right4.png';
 
 
-mage_up1 = 'img/n_up1.png';
-mage_up2 = 'img/n_up2.png';
-mage_up3 = 'img/n_up3.png';
-mage_up4 = 'img/n_up4.png';
-mage_down1 = 'img/n_down1.png';
-mage_down2 = 'img/n_down2.png';
-mage_down3 = 'img/n_down3.png';
-mage_down4 = 'img/n_down4.png';
-mage_left1 = 'img/n_left1.png';
-mage_left2 = 'img/n_left2.png';
-mage_left3 = 'img/n_left3.png';
-mage_left4 = 'img/n_left4.png';
-mage_right1 = 'img/n_right1.png';
-mage_right2 = 'img/n_right2.png';
-mage_right3 = 'img/n_right3.png';
-mage_right4 = 'img/n_right4.png';
+mage_up1 = 'img/m_up1.png';
+mage_up2 = 'img/m_up2.png';
+mage_up3 = 'img/m_up3.png';
+mage_up4 = 'img/m_up4.png';
+mage_down1 = 'img/m_down1.png';
+mage_down2 = 'img/m_down2.png';
+mage_down3 = 'img/m_down4.png';
+mage_down4 = 'img/m_down3.png';
+mage_left1 = 'img/m_left1.png';
+mage_left2 = 'img/m_left2.png';
+mage_left3 = 'img/m_left3.png';
+mage_left4 = 'img/m_left4.png';
+mage_right1 = 'img/m_right1.png';
+mage_right2 = 'img/m_right2.png';
+mage_right3 = 'img/m_right3.png';
+mage_right4 = 'img/m_right4.png';
 
 
 hp_image = 'img/hp.png'

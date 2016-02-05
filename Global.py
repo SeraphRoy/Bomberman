@@ -49,8 +49,8 @@ mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
 p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
 
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-e2 = Duck(512,256,50,150, duck_images, 20,20)
-e3 = Mage(400,220,50,50, player_images, 300, 300)
+e2 = Duck(512,256,50,150, duck_images, 250,250)
+e3 = Mage(400,220,50,50, mage_images, 300, 300)
 
 enemys = {e1,e2,e3}
 

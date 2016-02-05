@@ -10,6 +10,7 @@ class Duck(Enemy):
 		self.chargeleft = 20
 		self.chargeDirection =1
 		self.damage = 25
+		self.bias = 20
 
 	def Action(self, screen, player, seconds):
 		#distance in x direction between player and enemy
@@ -29,7 +30,7 @@ class Duck(Enemy):
 			#distance that this move is going to travel
 			distance =0;
 			self.time+=seconds
-			if (abs(xDistance)<self.radarx or abs(yDistance)<self.radary) and self.charging == False:
+			if ((abs(xDistance)<self.radarx and abs(yDistance)<self.bias) or (abs(yDistance)<self.radary and (abs(xDistance)<self.bias))) and self.charging == False:
 				self.charging = True
 				#chare to x direction
 				if abs(xDistance)>abs(yDistance):

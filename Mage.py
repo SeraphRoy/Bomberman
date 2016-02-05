@@ -40,7 +40,7 @@ class Mage(Enemy):
 			if self.timetochange>0:
 				self.timetochange-=1
 			else:
-				self.timetochange = 4
+				self.timetochange = 3
 
 
 			if self.charging == True and self.chargetime ==0 and abs(self.magex-player.GetX())<self.images[5].get_width()/2 and abs(self.magey -player.GetY())<self.images[5].get_height()/2 and player.GetInvincible()<=0:
@@ -56,14 +56,18 @@ class Mage(Enemy):
 				if abs(xDistance)>abs(yDistance):
 					if player.GetX()>self.x:
 						self.chargeDirection = 3
+						self.image_index = 12
 					else:
 						self.chargeDirection = 1
+						self.image_index = 8
 				#charge to y direction
 				else:
 					if player.GetY()>self.y:
 						self.chargeDirection = 4
+						self.image_index = 4
 					else:
 						self.chargeDirection = 2
+						self.image_index = 0
 
 				self.magex = player.GetX()+21
 				self.magey = player.GetY()+36
