@@ -4,6 +4,9 @@ from pygame.locals import *
 from Bomb import *
 from Block import *
 
+
+#USE A SPRITE CLASS
+
 #1->left is pressed, 2->up, 3->right, 4->down
 def ChangeNextIndex(current, key):
 	if current<0 or current>15:
