@@ -48,8 +48,8 @@ class Sadako(Item):
         player.speed *= (-1)
 
 def collectItem(player):
-    x=(player.x+player.image_x/2)//50
-    y=(player.y+player.image_y/2)//50
+    x=(player.rect.x+player.image_x/2)//50
+    y=(player.rect.y+player.image_y/2)//50
     if (x,y) in item_pos:
         item_pos[(x,y)].display=False
         item_pos[(x,y)].invoked(player)

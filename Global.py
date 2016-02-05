@@ -54,8 +54,11 @@ e3 = Mage(400,220,50,50, player_images, 300, 300)
 enemys = {e1,e2,e3}
 
 
-setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
-blocks = Block(block_image, setOfBlocks)
+setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]
+all_blocks = pygame.sprite.Group()
+for point in setOfBlocks:
+   block = Block(block_image, point[0], point[1])
+   all_blocks.add(block)
 
 X_INDEX = 13
 Y_INDEX = 15
