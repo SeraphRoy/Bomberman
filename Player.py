@@ -2,6 +2,10 @@ import pygame
 import math
 from pygame.locals import *
 from Bomb import *
+from Block import *
+
+
+#USE A SPRITE CLASS
 
 #1->left is pressed, 2->up, 3->right, 4->down
 def ChangeNextIndex(current, key):
@@ -49,13 +53,14 @@ def ChangeNextIndex(current, key):
 		
 		
 
-class Player:
+class Player(pygame.sprite.Sprite):
 	image_x = 42
 	image_y = 73
-	background_x = 700
+	background_x = 720
 	background_y = 615
 	#image in the order of up, down, left, right
 	def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage, hp_image):
+                pygame.sprite.Sprite.__init__(self)
 		if(len(image_names)!=16):
 			print "incorrect size of the iamge_names\n"
 		
@@ -65,12 +70,12 @@ class Player:
 			temp = pygame.transform.scale(temp, (temp.get_width(),
 												 temp.get_height()))
 			self.images.append(temp)
-		
+		self.rect = self.images[0].get_rect()
 		self.bomb_name = bomb_name
 
 		self.speed = speed
-		self.x = x;
-		self.y =y;
+		self.rect.x = x;
+		self.rect.y = y;
 		self.max_bomb = max_bomb
 		self.bomb_damage = bomb_damage
 		self.current_image = self.images[4]
@@ -101,10 +106,10 @@ class Player:
 		return self.alive
 
 	def GetX(self):
-		return self.x
+		return self.rect.x
 
 	def GetY(self):
-		return self.y
+		return self.rect.y
 
 	def GetInvincible(self):
 		return self.invincible_turn
@@ -126,7 +131,7 @@ class Player:
 		self.knock = 3
 		self.knockDirection = direction
 
-	def Action(self, screen, pressed_Key,seconds, bomb_map):
+	def Action(self, screen, pressed_Key,seconds, bomb_map, all_blocks):
 		#check if player is invincible 
 		if self.invincible_turn>0:
 			#flashing affect
@@ -149,26 +154,26 @@ class Player:
 
 			#check knock direction
 			if self.knockDirection == 1:
-				if self.x - distance >0:
-					self.x-=distance
+				if self.rect.x - distance >0:
+					self.rect.x-=distance
 				else:
-					self.x = 0
+					self.rect.x = 0
 			elif self.knockDirection == 3:
-				if self.x + distance <self.background_x:
-					self.x+=distance
+				if self.rect.x + distance <self.background_x:
+					self.rect.x+=distance
 				else:
-					self.x = self.image_x
+					self.rect.x = self.image_x
 			elif self.knockDirection == 2:
-				if self.y - distance>0:
-					self.y-=distance
+				if self.rect.y - distance>0:
+					self.rect.y-=distance
 				else:
-					self.y = 0
+					self.rect.y = 0
 			elif self.knockDirection == 4:
-				if self.y+distance<self.background_y:
-					self.y+=distance
+				if self.rect.y+distance<self.background_y:
+					self.rect.y+=distance
 				else:
-					self.y = self.background_y
-			screen.blit(self.images[self.image_index],(self.x,self.y))
+					self.rect.y = self.background_y
+			screen.blit(self.images[self.image_index],(self.rect.x,self.rect.y))
 			return;
 
 		self.time+=seconds
@@ -186,51 +191,55 @@ class Player:
 			self.bomb_since_last = 0
 
 			# Becareful with this line, need to check index out of bound exception
-			new_bomb = Bomb(self.bomb_name,int(self.x+23),int(self.y+23))
+			new_bomb = Bomb(self.bomb_name,int(self.rect.x+23),int(self.rect.y+23))
 
 			bomb_map.AddBomb(new_bomb)
-			#print (self.x)
+			#print (self.rect.x)
 			#print (",")
-			#print (self.y)
+			#print (self.rect.y)
 
 		# 1 = left, 2 = up, 3 = right, 4 = down
 		if pressed_Key[K_LEFT]:
-			self.x-=distance
-			if self.x < 0:
-				self.x = 0
-			if self.x > self.background_x:
-				self.x = self.background_x
+                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
+                        self.rect.x-=distance
+                        if self.rect.x < 0:
+				self.rect.x = 0
+			#if self.rect.x > self.background_x:
+			#	self.rect.x = self.background_x
 			
 			#only change the image when switch is true
 			if switch == True or self.image_index<8 or self.image_index>11:
 				self.image_index = ChangeNextIndex(self.image_index,1)
 		elif pressed_Key[K_RIGHT]:
-			self.x+=distance
-			if self.x < 0:
-				self.x = 0
-			if self.x > self.background_x:
-				self.x = self.background_x
+                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
+                        self.rect.x+=distance
+			#if self.rect.x < 0:
+			#	self.rect.x = 0
+			if self.rect.x > self.background_x:
+				self.rect.x = self.background_x
 			if switch == True or self.image_index<12:
 				self.image_index = ChangeNextIndex(self.image_index,3)
 		elif pressed_Key[K_UP]:
-			self.y-=distance
-			if self.y < 0:
-				self.y = 0
-			if self.y > self.background_y:
-				self.y = self.background_y
+                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
+			self.rect.y-=distance
+			if self.rect.y < 0:
+				self.rect.y = 0
+			#If self.rect.y > self.background_y:
+			#	self.rect.y = self.background_y
 			if switch == True or self.image_index>3:
 				self.image_index =ChangeNextIndex(self.image_index,2)
 		elif pressed_Key[K_DOWN]:
-			self.y+=distance
-			if self.y < 0:
-				self.y = 0
-			if self.y > self.background_y:
-				self.y = self.background_y
+                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
+			self.rect.y+=distance
+			#if self.rect.y < 0:
+	                #    self.rect.y = 0
+			if self.rect.y > self.background_y:
+				self.rect.y = self.background_y
 			if switch == True or self.image_index<4 or self.image_index>7:
 				self.image_index = ChangeNextIndex(self.image_index,4)
 		else:
 			self.image_index = (self.image_index/4)*4
 		if self.invincible_turn<=0 or self.show == 1: 
-			screen.blit(self.hp_image,(self.x,self.y-13))
-			screen.blit(self.images[self.image_index],(self.x-5,self.y))
+			screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
+			screen.blit(self.images[self.image_index],(self.rect.x-5,self.rect.y))
 	
