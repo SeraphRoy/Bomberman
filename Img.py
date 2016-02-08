@@ -82,6 +82,8 @@ sadako_image = 'img/sadako.png'
 low_speed_image = 'img/speed down.png'
 nike_image = 'img/speed up.png'
 heart_image = 'img/heart.png'
+tool1_image = 'img/tool1.png'
+tool2_image = 'img/tool2.png'
 
 open_image = 'img/opening2.png'
 upimage = 'img/boom1.png'

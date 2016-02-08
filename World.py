@@ -39,7 +39,8 @@ while True:
         e2 = Duck(512,256,50,150, duck_images, 250,250)
         e3 = Mage(400,220,50,50, mage_images, 300, 300)
         enemys = {e1,e2,e3}
-        Item.item_pos = {}
+        Item.pos = {}
+        toolbar.dict = {}
         for i in range(10):
             item_x = random.randint(0,14)
             item_y = random.randint(0,12)
@@ -72,8 +73,8 @@ while True:
        screen.blit(normal_face, (665, 665))
        bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst)
 
-       for i in item_pos:
-           item_pos[i].draw(screen)
+       for i in Item.pos:
+           Item.pos[i].draw(screen)
 
        pressed_Key = pygame.key.get_pressed()
        if pressed_Key[pygame.K_ESCAPE]:
@@ -87,8 +88,10 @@ while True:
 
        for e in enemys:
             e.Action(screen, p, current_time)
-       collectItem(p)
 
+       collectItem(p)
+       toolbar.draw(screen)
+       
        #Reset current time
        current_time = 0.0
 
