@@ -115,14 +115,19 @@ class Player(pygame.sprite.Sprite):
 		return self.invincible_turn
 
 	def GetDamge(self, damage):
-		#turn to invincible
-		self.invincible_turn = 15;
-		if(self.HP-damage<=0):
-			self.hp = 0
-			self.alive = False
-		else:
-			self.HP-=damage
-		self.hurt_turn = 10;
+                if damage < 0:
+                        self.HP -= damage
+                        if self.HP > 100:
+                                self.HP = 100
+                else:
+                        #turn to invincible
+                        self.invincible_turn = 15;
+                        if(self.HP-damage<=0):
+                                self.HP = 0
+                                self.alive = False
+                        else:
+                                self.HP-=damage
+                        self.hurt_turn = 10;
 		new_width = (self.HP / 100.0) * (self.image_x-4)
 		self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
 

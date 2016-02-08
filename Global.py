@@ -23,7 +23,7 @@ bomb = pygame.image.load(bomb_image).convert_alpha()
 bomb = pygame.transform.scale(bomb, (32,32))
 burst = pygame.image.load(burst_iamge).convert_alpha()
 burst = pygame.transform.scale(burst,(64,59))
-item_images = [nike_image,low_speed_image,sadako_image]
+item_images = [nike_image, low_speed_image, sadako_image, heart_image]
 
 
 player_images = [player_up1,player_up2,player_up3,player_up4,
@@ -61,11 +61,6 @@ bomb_map = BombMatrix(X_INDEX,Y_INDEX)
 total_time = 0.05
 current_time = 0.0
 exploded_queue = []
-
-for i in range(7):
-   item_x = random.randint(0,14)
-   item_y = random.randint(0,12)
-   Item(item_x,item_y,item_images)
 
 
 stage_num = 0

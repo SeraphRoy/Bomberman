@@ -78,9 +78,11 @@ block_image = 'img/bomb.png'
 transparent_image = 'img/transparent.png'
 gameover_image = 'img/gameover.png'
 
-sadako_image = 'img/sadako2.png'
-low_speed_image = 'img/low_speed_temp.bmp'
+sadako_image = 'img/sadako.png'
+low_speed_image = 'img/speed down.png'
 nike_image = 'img/speed up.png'
+heart_image = 'img/heart.png'
+
 open_image = 'img/opening2.png'
 upimage = 'img/boom1.png'
 downimage = 'img/boom2.png'

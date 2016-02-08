@@ -25,6 +25,10 @@ e3 = Mage(400,220,50,50, mage_images, 300, 300)
 
 enemys = {e1,e2,e3}
 
+for i in range(10):
+   item_x = random.randint(0,14)
+   item_y = random.randint(0,12)
+   Item(item_x,item_y,item_images)
 
 while True:
     ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
@@ -35,6 +39,11 @@ while True:
         e2 = Duck(512,256,50,150, duck_images, 250,250)
         e3 = Mage(400,220,50,50, mage_images, 300, 300)
         enemys = {e1,e2,e3}
+        Item.item_pos = {}
+        for i in range(10):
+            item_x = random.randint(0,14)
+            item_y = random.randint(0,12)
+            Item(item_x,item_y,item_images)
 
         
     opening = Opening(upimage, downimage, (380,400))
