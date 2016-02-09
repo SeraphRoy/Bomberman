@@ -22,7 +22,10 @@ p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 e2 = Duck(512,256,50,150, duck_images, 250,250)
 e3 = Mage(400,220,50,50, mage_images, 300, 300)
-
+all_enemies = pygame.sprite.Group()
+all_enemies.add(e1)
+all_enemies.add(e2)
+all_enemies.add(e3)
 enemys = {e1,e2,e3}
 
 for i in range(10):
@@ -71,7 +74,7 @@ while True:
 
        screen.blit(background, (0,0))
        screen.blit(normal_face, (665, 665))
-       bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst)
+       bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst, p, 10, all_enemies)
 
        for i in Item.pos:
            Item.pos[i].draw(screen)

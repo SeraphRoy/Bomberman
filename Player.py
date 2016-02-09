@@ -191,7 +191,7 @@ class Player(pygame.sprite.Sprite):
 			self.time = 0
 
 		distance = seconds * self.speed
-
+                
 		if pressed_Key[K_SPACE] and self.bomb_since_last>=0.2:
 			self.bomb_since_last = 0
 
@@ -204,9 +204,9 @@ class Player(pygame.sprite.Sprite):
 			#print (self.rect.y)
 
 		# 1 = left, 2 = up, 3 = right, 4 = down
+                #collide = pygame.sprite.spritecollideany(self, all_blocks, False);
 		if pressed_Key[K_LEFT]:
-                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
-                        self.rect.x-=distance
+                        self.rect.x -= distance
                         if self.rect.x < 0:
 				self.rect.x = 0
 			if self.rect.x > self.background_x:
@@ -216,8 +216,7 @@ class Player(pygame.sprite.Sprite):
 			if switch == True or self.image_index<8 or self.image_index>11:
 				self.image_index = ChangeNextIndex(self.image_index,1)
 		elif pressed_Key[K_RIGHT]:
-                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
-                        self.rect.x+=distance
+                        self.rect.x += distance
 			if self.rect.x < 0:
 				self.rect.x = 0
 			if self.rect.x > self.background_x:
@@ -225,8 +224,7 @@ class Player(pygame.sprite.Sprite):
 			if switch == True or self.image_index<12:
 				self.image_index = ChangeNextIndex(self.image_index,3)
 		elif pressed_Key[K_UP]:
-                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
-			self.rect.y-=distance
+                        self.rect.y -= distance
 			if self.rect.y < 0:
 				self.rect.y = 0
 			if self.rect.y > self.background_y:
@@ -234,8 +232,7 @@ class Player(pygame.sprite.Sprite):
 			if switch == True or self.image_index>3:
 				self.image_index =ChangeNextIndex(self.image_index,2)
 		elif pressed_Key[K_DOWN]:
-                        #if not pygame.sprite.spritecollide(self, all_blocks, False, pygame.sprite.collide_circle):
-			self.rect.y+=distance
+                        self.rect.y += distance
 			if self.rect.y < 0:
 	                    self.rect.y = 0
 			if self.rect.y > self.background_y:

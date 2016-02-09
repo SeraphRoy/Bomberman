@@ -21,7 +21,7 @@ class ToolBar:
             image = pygame.transform.scale(item.image, (self.GRID, self.GRID))
             screen.blit(image, (x,y))
             x += self.GRID
-        print(self.dict)
+        #print(self.dict)
             
 toolbar = ToolBar()
 

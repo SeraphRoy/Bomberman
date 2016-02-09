@@ -46,13 +46,14 @@ def ChangeNextIndex(current, key):
 
 
 
-class Enemy:
+class Enemy(pygame.sprite.Sprite):
 		image_x = 51
 		image_y = 51 
 		map_x = 768
 		map_y = 666
 
 		def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
+                        pygame.sprite.Sprite.__init__(self)
 
 			if len(imagenames)!=16:
 				print("Number of images is wrong")
@@ -67,9 +68,9 @@ class Enemy:
 			self.speed = speed
 			self.rushingSpeed = rushingSpeed
 			self.rushing = False
-
-			self.x = x
-			self.y = y
+                        self.rect = self.images[0].get_rect()
+			self.rect.x = x
+			self.rect.y = y
 			self.time = 0.5
 			self.timeChange = 0.5
 			self.radary = radary

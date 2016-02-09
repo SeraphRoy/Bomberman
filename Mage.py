@@ -33,9 +33,9 @@ class Mage(Enemy):
 
 	def Action(self, screen, player, seconds):
 		#distance in x direction between player and enemy
-			xDistance = player.GetX()-self.x
+			xDistance = player.GetX()-self.rect.x
 			#distance in y direction between player and enemy
-			yDistance = player.GetY()-self.y
+			yDistance = player.GetY()-self.rect.y
 
 			if self.timetochange>0:
 				self.timetochange-=1
@@ -54,7 +54,7 @@ class Mage(Enemy):
 				self.charging = True
 				#chare to x direction
 				if abs(xDistance)>abs(yDistance):
-					if player.GetX()>self.x:
+					if player.GetX()>self.rect.x:
 						self.chargeDirection = 3
 						self.image_index = 12
 					else:
@@ -62,7 +62,7 @@ class Mage(Enemy):
 						self.image_index = 8
 				#charge to y direction
 				else:
-					if player.GetY()>self.y:
+					if player.GetY()>self.rect.y:
 						self.chargeDirection = 4
 						self.image_index = 4
 					else:
@@ -98,8 +98,8 @@ class Mage(Enemy):
 			else:
 				distance = seconds * self.speed
 				if self.down==True :
-					if (self.y+distance)<(self.map_y-self.images[0].get_height()):
-						self.y+=distance
+					if (self.rect.y+distance)<(self.map_y-self.images[0].get_height()):
+						self.rect.y+=distance
 						self.lastcommand = 4
 						if self.timetochange==0:
 							self.image_index = ChangeNextIndex(self.image_index,4)
@@ -108,8 +108,8 @@ class Mage(Enemy):
 						self.up = True
 						self.image_index = 0
 				else:
-					if (self.y-distance)>0:
-						self.y-=distance
+					if (self.rect.y-distance)>0:
+						self.rect.y-=distance
 						self.lastcommand=2
 						if self.timetochange==0:
 							self.image_index = ChangeNextIndex(self.image_index,2)
@@ -119,4 +119,4 @@ class Mage(Enemy):
 						self.image_index = 4
 
 			
-			screen.blit(self.images[self.image_index], (self.x, self.y))
+			screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
