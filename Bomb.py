@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 from Img import transparent_image
 from sys import *
-import delete
 class Bomb:
 
 
