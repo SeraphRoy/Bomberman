@@ -12,6 +12,10 @@ class Duck(Enemy):
 		self.damage = 25
 		self.bias = 20
 
+        def LiveAction(self, screen, player, seconds):
+                if self.isAlive:
+                        self.Action(screen, player, seconds)
+        
 	def Action(self, screen, player, seconds):
 		#distance in x direction between player and enemy
 			xDistance = player.GetX()-self.rect.x

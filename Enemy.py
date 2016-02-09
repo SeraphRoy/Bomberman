@@ -88,7 +88,14 @@ class Enemy(pygame.sprite.Sprite):
 
 			#damge when touch the player
 			self.damage = 20
+                        self.isAlive = True
 
-
+                def LiveAction():
+                        print("it is origin's action, you should not call this function")
+                                
+                
 		def Action(self, screen, player, seconds):
 			print("it is origin's action, you should not call this function")
+
+                def SetAlive(self, value):
+                        self.isAlive = value

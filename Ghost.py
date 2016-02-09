@@ -4,7 +4,11 @@ class Ghost(Enemy):
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
 
-	def Action(self, screen, player, seconds):
+        def LiveAction(self, screen, player, seconds):
+                if self.isAlive:
+                        self.Action(screen, player, seconds)
+
+        def Action(self, screen, player, seconds):
 			#distance in x direction between player and enemy
 			xDistance = player.GetX()-self.rect.x
 			#distance in y direction between player and enemy

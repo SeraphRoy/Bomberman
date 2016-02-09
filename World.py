@@ -90,7 +90,7 @@ while True:
        p.Action(screen,pressed_Key,current_time, bomb_map, all_blocks)
 
        for e in enemys:
-            e.Action(screen, p, current_time)
+            e.LiveAction(screen, p, current_time)
 
        collectItem(p)
        toolbar.draw(screen)
