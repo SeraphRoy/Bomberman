@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from Img import transparent_image
 from sys import *
-
+import delete
 class Bomb:
 
 
@@ -91,10 +91,9 @@ class BombMatrix:
             screen.blit(burst, (explodes.GetX(), explodes.GetY()))
         if pygame.sprite.spritecollide(player, all_explodes, False, pygame.sprite.collide_rect_ratio(0.6)):
             player.GetDamge(damage)
-#        deadDic = pygame.sprite.groupcollide(all_enemies, all_explodes, True, True, pygame.sprite.collide_rect_ratio(0.6))
-#        for e in deadDic:
-#            while e != None:
-#                Py_XDECREF(e)
+        #deadDic = pygame.sprite.groupcollide(all_enemies, all_explodes, True, True, pygame.sprite.collide_rect_ratio(0.6))
+        #Do someting to make the sprites die
+
         #screen.blit(burst,(self.bombMatrix[y_Index][x_Index].GetX(),self.bombMatrix[y_Index][x_Index].GetY()))
         self.bombMatrix[y_Index][x_Index] = self.null_Bomb
 
