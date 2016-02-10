@@ -114,7 +114,6 @@ class Stimpack(Item):
         pass
     def invoked(self,player):
         player.bomb_damage += 1
-        print player.bomb_damage
             
 def collectItem(player):
     x=(player.rect.x+player.image_x/2)//grid
