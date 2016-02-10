@@ -28,7 +28,7 @@ toolbar = ToolBar()
 class Item:
     pos = {}
     def __init__(self,x,y,images):
-        a = random.randint(1,6)
+        a = random.randint(1,7)
         if a == 1:
             item = Nike()
         if a == 2:
@@ -41,6 +41,8 @@ class Item:
             item = Tool1()
         if a == 6:
             item = Tool2()
+        if a == 7:
+            item = Stimpack()
         temp = pygame.image.load(images[a-1]).convert_alpha()
         item.image = pygame.transform.scale(temp,(grid,grid))
         item.x=x
@@ -107,7 +109,13 @@ class Heart(Item):
     def invoked(self, player):
         player.GetDamge(-30)
 
-
+class Stimpack(Item):
+    def __init__(self):
+        pass
+    def invoked(self,player):
+        player.bomb_damage += 1
+        print player.bomb_damage
+            
 def collectItem(player):
     x=(player.rect.x+player.image_x/2)//grid
     y=(player.rect.y+player.image_y/2)//grid

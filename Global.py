@@ -24,7 +24,7 @@ bomb = pygame.transform.scale(bomb, (32,32))
 burst = pygame.image.load(burst_iamge).convert_alpha()
 burst = pygame.transform.scale(burst,(64,59))
 item_images = [nike_image, low_speed_image, sadako_image, heart_image,
-               tool1_image, tool2_image]
+               tool1_image, tool2_image, stimpack_image]
 
 
 player_images = [player_up1,player_up2,player_up3,player_up4,

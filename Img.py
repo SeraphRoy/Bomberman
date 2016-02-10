@@ -82,6 +82,7 @@ sadako_image = 'img/sadako.png'
 low_speed_image = 'img/speed down.png'
 nike_image = 'img/speed up.png'
 heart_image = 'img/heart.png'
+stimpack_image = 'img/stimpack.png'
 tool1_image = 'img/tool1.png'
 tool2_image = 'img/tool2.png'
 

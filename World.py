@@ -18,7 +18,7 @@ from SelectMode import *
 from Menu import *
 pygame.init()
 
-p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
+p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 e2 = Duck(512,256,50,150, duck_images, 250,250)
 e3 = Mage(400,220,50,50, mage_images, 300, 300)
@@ -37,7 +37,7 @@ while True:
     ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
     if p.CheckAlive() == False and stage_num == 2:
         stage_num = ending.OpeningScene(screen)
-        p = Player(player_images,bomb_image,150,10,20,1,1,hp_image)
+        p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
         e1 = Ghost(256,256,50,150, ghost_images, 200,200)
         e2 = Duck(512,256,50,150, duck_images, 250,250)
         e3 = Mage(400,220,50,50, mage_images, 300, 300)

@@ -196,7 +196,7 @@ class Player(pygame.sprite.Sprite):
 			self.bomb_since_last = 0
 
 			# Becareful with this line, need to check index out of bound exception
-			new_bomb = Bomb(self.bomb_name,int(self.rect.x+23),int(self.rect.y+23))
+			new_bomb = Bomb(self.bomb_name,int(self.rect.x+23),int(self.rect.y+23),self.bomb_damage)
 
 			bomb_map.AddBomb(new_bomb)
 			#print (self.rect.x)
