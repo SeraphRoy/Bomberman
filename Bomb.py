@@ -96,7 +96,7 @@ class BombMatrix:
 
         #screen.blit(burst,(self.bombMatrix[y_Index][x_Index].GetX(),self.bombMatrix[y_Index][x_Index].GetY()))
         self.bombMatrix[y_Index][x_Index] = self.null_Bomb
-
+        dmg = self.bombMatrix[y_Index][x_Index].GetDamageLength()
         if (x_Index >= 1) and (self.bombMatrix[y_Index][x_Index-1].IsNull() == False):
             self.RemoveBomb(screen,x_Index-1,y_Index,burst, player, damage, all_enemies)
         if (y_Index >= 1) and (self.bombMatrix[y_Index-1][x_Index].IsNull() == False):

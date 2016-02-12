@@ -42,6 +42,9 @@ while True:
         e2 = Duck(512,256,50,150, duck_images, 250,250)
         e3 = Mage(400,220,50,50, mage_images, 300, 300)
         enemys = {e1,e2,e3}
+        all_enemies.add(e1)
+        all_enemies.add(e2)
+        all_enemies.add(e3)
         Item.pos = {}
         toolbar.dict = {}
         for i in range(10):
