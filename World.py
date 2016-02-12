@@ -28,6 +28,7 @@ all_enemies.add(e2)
 all_enemies.add(e3)
 enemys = {e1,e2,e3}
 
+## generate 10 items randomly
 for i in range(10):
    item_x = random.randint(0,14)
    item_y = random.randint(0,12)
@@ -37,6 +38,7 @@ while True:
     ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
     if p.CheckAlive() == False and stage_num == 2:
         stage_num = ending.OpeningScene(screen)
+        ## reinitialize the game
         p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
         e1 = Ghost(256,256,50,150, ghost_images, 200,200)
         e2 = Duck(512,256,50,150, duck_images, 250,250)
