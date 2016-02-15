@@ -16,6 +16,10 @@ class Mage(Enemy):
 		self.chargeDirection =1
 		self.damage = 50
 
+		#slef defense purpose variables
+		self.defense = False
+		self.defensetime = 18
+
 		#where the mage is placed
 		self.magex = 0
 		self.magey = 0
@@ -49,7 +53,15 @@ class Mage(Enemy):
 
 			if self.charging == True and self.chargetime ==0 and abs(self.magex-player.GetX())<self.images[5].get_width()/2 and abs(self.magey -player.GetY())<self.images[5].get_height()/2 and player.GetInvincible()<=0:
 				player.GetDamge(self.damage)
-				player.KnockBack(self.chargeDirection)
+				player.KnockBack(self.chargeDirection) 
+
+
+			if self.defense == True and abs(self.rect.x-player.GetX())<75 and abs(self.rect.y-player.GetY())<75 and player.GetInvincible()<=0:
+				player.GetDamge(5)
+				if (self.rect.x-player.GetX())>0:
+					player.KnockBack(3)
+				else:
+					player.KnockBack(1) 
 
 			#distance that this move is going to travel
 			distance =0;
@@ -85,6 +97,23 @@ class Mage(Enemy):
 					self.image_index = 4
 				else:
 					self.image_index = 0
+
+			if self.defense == False and abs(xDistance)<100 and abs(yDistance)<100:
+				self.defense = True
+				self.defensetime = 18
+
+			if self.defense ==True:
+				if self.defensetime == 0:
+					self.defense = False
+				else:
+					self.defensetime-=1;
+					defense_image = self.flameImages[17 - self.defensetime]
+					screen.blit(defense_image, (self.rect.x-50,self.rect.y))
+					screen.blit(defense_image, (self.rect.x+50,self.rect.y))
+					screen.blit(defense_image, (self.rect.x,self.rect.y-50))
+					screen.blit(defense_image, (self.rect.x,self.rect.y+50))
+
+
 
 			#if still prepare charging or charging
 			if self.charging == True:
