@@ -20,7 +20,7 @@ screen = pygame.display.set_mode((768,768),0,32)
 
 background = pygame.image.load(back_ground_name).convert()
 bomb = pygame.image.load(bomb_image).convert_alpha()
-bomb = pygame.transform.scale(bomb, (32,32))
+bomb = pygame.transform.scale(bomb, (51,51))
 burst = pygame.image.load(burst_iamge).convert_alpha()
 burst = pygame.transform.scale(burst,(64,59))
 item_images = [nike_image, low_speed_image, sadako_image, heart_image,
