@@ -81,7 +81,7 @@ class Enemy(pygame.sprite.Sprite):
 			self.image_index = 5
 			self.timetochange = 4
 			self.changeedDirection = False
-
+                        self.hp = 1
 			#for patrol
 			self.down = True
 			self.up = False
@@ -99,7 +99,12 @@ class Enemy(pygame.sprite.Sprite):
 
                 def SetAlive(self, value):
                         self.isAlive = value
+                        
                 def GetDamage(self, value):
-                        self.isAlive = False;
+                        self.hp -= value
+                        if self.hp <= 0:
+                                self.hp = 0
+                                self.isAlive = False
+
                 def CheckAlive(self):
                         return self.isAlive
