@@ -2,20 +2,22 @@ import pygame
 from pygame.locals import *
 from Img import transparent_image
 from sys import *
-class Bomb:
-
+class Bomb(pygame.sprite.Sprite):
+ 
 
     def __init__(self,image, x = -50, y = -50,damageLength = 2, isNull = False):
+        pygame.sprite.Sprite.__init__(self)
         BOMB_IMG_X = 51
         BOMB_IMG_Y = 51
         temp = pygame.image.load(image).convert_alpha()
         self.damageLength = damageLength
         self.image = pygame.transform.scale(temp,(BOMB_IMG_X,BOMB_IMG_Y))
         self.time = 2.0
+        self.rect = self.image.get_rect()
         self.x_Index = int(x//BOMB_IMG_X)
-        self.x = self.x_Index * BOMB_IMG_X
+        self.rect.x = self.x_Index * BOMB_IMG_X
         self.y_Index = int(y//BOMB_IMG_Y)
-        self.y = self.y_Index * BOMB_IMG_Y
+        self.rect.y = self.y_Index * BOMB_IMG_Y
         self.isNull = isNull
         
 
@@ -30,10 +32,10 @@ class Bomb:
         return self.image
 
     def SetX(self,x):
-        self.x = x
+        self.rect.x = x
 
     def SetY(self,y):
-        self.y = y
+        self.rect.y = y
 
     def SetDamageLength(self,damageLength):
         self.damageLength = damageLength
@@ -46,10 +48,10 @@ class Bomb:
         return self.damageLength
 
     def GetX(self):
-        return self.x
+        return self.rect.x
     
     def GetY(self):
-        return self.y
+        return self.rect.y
 
     def GetX_Index(self):
         return self.x_Index
@@ -65,13 +67,15 @@ class Bomb:
 class BombMatrix:
 
     def __init__(self,X_MAX=13,Y_MAX=15):
-        self.X_MAX = X_MAX
-        self.Y_MAX = Y_MAX
+        self.x_MAX = X_MAX
+        self.y_MAX = Y_MAX
         self.null_Bomb = Bomb(transparent_image,-50,-50,0,True)
         self.bombMatrix = [[self.null_Bomb for x in range(X_MAX)] for y in range(Y_MAX)]
-
+        self.all_bombs = pygame.sprite.Group()
+        
     def AddBomb(self, newBomb):
         self.bombMatrix[newBomb.GetX_Index()][newBomb.GetY_Index()] = newBomb
+        self.all_bombs.add(self.bombMatrix[newBomb.GetX_Index()][newBomb.GetY_Index()])
 
     def RemoveBomb(self,screen, x_Index, y_Index,burst, player, damage, all_enemies):
         explode = Explode(burst, y_Index, x_Index, self.bombMatrix[y_Index][x_Index].GetDamageLength())
@@ -92,20 +96,29 @@ class BombMatrix:
             player.GetDamge(damage)
         deadDic = pygame.sprite.groupcollide(all_enemies, all_explodes, True, True, pygame.sprite.collide_rect_ratio(0.6))
         for e in deadDic:
-            e.SetAlive(False)
+            e.GetDamage(10)
+            if e.CheckAlive() == True:
+                all_enemies.add(e)
+
 
         #screen.blit(burst,(self.bombMatrix[y_Index][x_Index].GetX(),self.bombMatrix[y_Index][x_Index].GetY()))
         self.bombMatrix[y_Index][x_Index] = self.null_Bomb
+        self.all_bombs.remove(self.bombMatrix[y_Index][x_Index])
+        # affected_bombs = pygame.sprite.groupcollide(self.all_bombs, all_explodes, False, False, pygame.sprite.collide_rect_ratio(0.8))
+        # for b in affected_bombs:
+        #     if b.GetX_Index() != x_Index and b.GetY_Index() != y_Index:
+        #         self.RemoveBomb(screen, b.GetX_Index(), b.GetY_Index(), burst, player, damage, all_enemies)
+        
         dmg = self.bombMatrix[y_Index][x_Index].GetDamageLength()
         if (x_Index >= 1) and (self.bombMatrix[y_Index][x_Index-1].IsNull() == False):
             self.RemoveBomb(screen,x_Index-1,y_Index,burst, player, damage, all_enemies)
         if (y_Index >= 1) and (self.bombMatrix[y_Index-1][x_Index].IsNull() == False):
             self.RemoveBomb(screen,x_Index,y_Index-1,burst, player, damage, all_enemies)
-        if (x_Index <= self.X_MAX-2) and (self.bombMatrix[y_Index][x_Index+1].IsNull() == False):
+        if (x_Index <= self.x_MAX-2) and (self.bombMatrix[y_Index][x_Index+1].IsNull() == False):
             self.RemoveBomb(screen,x_Index+1,y_Index,burst, player, damage, all_enemies)
-        if (y_Index <= self.Y_MAX-2) and (self.bombMatrix[y_Index+1][x_Index].IsNull() == False):
+        if (y_Index <= self.y_MAX-2) and (self.bombMatrix[y_Index+1][x_Index].IsNull() == False):
             self.RemoveBomb(screen,x_Index,y_Index+1,burst, player, damage, all_enemies)
-
+        
     def CheckAllBombs(self, screen, current_time, X_INDEX, Y_INDEX,burst, player, damage, all_enemies):
         for x in range(X_INDEX):
             for y in range(Y_INDEX):

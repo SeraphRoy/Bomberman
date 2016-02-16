@@ -99,3 +99,7 @@ class Enemy(pygame.sprite.Sprite):
 
                 def SetAlive(self, value):
                         self.isAlive = value
+                def GetDamage(self, value):
+                        self.isAlive = False;
+                def CheckAlive(self):
+                        return self.isAlive

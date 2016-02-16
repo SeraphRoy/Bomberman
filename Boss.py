@@ -10,7 +10,7 @@ flame_image_names = [flame01,flame02,flame03,flame04,flame05,
 class Boss(Enemy):
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
-		
+		self.hp = 100
 		#throwing bomb in random position
 		self.bomb_each_time = 4
 		self.bomb_damge = 5
@@ -28,7 +28,10 @@ class Boss(Enemy):
 			temp = pygame.image.load(name).convert_alpha()
 			self.flameImages.append(temp)
 
-
+        def LiveAction(self, screen, player, seconds, bomb_map):
+                if self.isAlive:
+                        self.Action(screen, player, seconds, bomb_map)
+                        
 	def Action(self, screen, player, seconds,bomb_map):
 		xDistance = player.GetX()-self.rect.x
 		#distance in y direction between player and enemy
@@ -151,3 +154,9 @@ class Boss(Enemy):
 		if(self.throwing>0):
 			for i in range(self.bomb_each_time):
 				screen.blit(bomb, (self.current_bomb_x_array[i], self.current_bomb_y_array[i]))
+
+        def GetDamage(self, value):
+                self.hp -= value
+                if self.hp <= 0:
+                        self.hp = 0
+                        self.isAlive = False
