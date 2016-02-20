@@ -7,7 +7,8 @@ from Block import *
 
 #USE A SPRITE CLASS
 
-#1->left is pressed, 2->up, 3->right, 4->down
+#1->left is pressed, 2->up, 3->right, 4->down function to get the
+#correspond image index for player 
 def ChangeNextIndex(current, key):
 	if current<0 or current>15:
 		print "incorrect current image index"
@@ -54,10 +55,14 @@ def ChangeNextIndex(current, key):
 		
 
 class Player(pygame.sprite.Sprite):
+	#size of the player image
 	image_x = 42
 	image_y = 73
+
+	#size of the background image
 	background_x = 720
 	background_y = 615
+
 	#image in the order of up, down, left, right
 	def __init__(self, image_names, bomb_name,speed,x,y, max_bomb, bomb_damage, hp_image):
                 pygame.sprite.Sprite.__init__(self)
@@ -102,18 +107,23 @@ class Player(pygame.sprite.Sprite):
 
 		self.invincible_turn = 0
 
+	#check if player is still alive
 	def CheckAlive(self):
 		return self.alive
 
+	#get the players x position
 	def GetX(self):
 		return self.rect.x
 
+	#get the player's y position
 	def GetY(self):
 		return self.rect.y
 
+	#return the turns that player can not be damaged
 	def GetInvincible(self):
 		return self.invincible_turn
 
+	#player take damage from bomb or enemy
 	def GetDamge(self, damage):
                 if damage < 0:
                         self.HP -= damage
@@ -131,11 +141,13 @@ class Player(pygame.sprite.Sprite):
 		new_width = (self.HP / 100.0) * (self.image_x-4)
 		self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
 
-
+	#move player in the opposite direction that player is hitted
 	def KnockBack(self,direction):
 		self.knock = 3
 		self.knockDirection = direction
 
+	#most important method for player, it takes care of player's behavior at each turn
+	#the method to display player's image and take input from keyboard
 	def Action(self, screen, pressed_Key,seconds, bomb_map, all_blocks):
 		#check if player is invincible 
 		if self.invincible_turn>0:

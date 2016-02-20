@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+#function to change Enemy's image index
 def ChangeNextIndex(current, key):
 	if current<0 or current>15:
 		print "incorrect current image index"
@@ -47,8 +48,10 @@ def ChangeNextIndex(current, key):
 
 
 class Enemy(pygame.sprite.Sprite):
+		#Enemy's image size
 		image_x = 51
 		image_y = 51 
+		#background size
 		map_x = 768
 		map_y = 666
 
@@ -66,7 +69,9 @@ class Enemy(pygame.sprite.Sprite):
 				self.images.append(temp)
 
 			self.speed = speed
+			#enemy will switch to rushing speed when certain requirment is fullfilled
 			self.rushingSpeed = rushingSpeed
+
 			self.rushing = False
                         self.rect = self.images[0].get_rect()
 			self.rect.x = x
@@ -81,6 +86,7 @@ class Enemy(pygame.sprite.Sprite):
 			self.image_index = 5
 			self.timetochange = 4
 			self.changeedDirection = False
+			
                         self.hp = 1
 			#for patrol
 			self.down = True
@@ -93,7 +99,7 @@ class Enemy(pygame.sprite.Sprite):
                 def LiveAction():
                         print("it is origin's action, you should not call this function")
                                 
-                
+        #it is origin's action, you should not call this function        
 		def Action(self, screen, player, seconds):
 			print("it is origin's action, you should not call this function")
 

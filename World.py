@@ -54,10 +54,10 @@ while True:
 				e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 				e2 = Duck(512,256,50,150, duck_images, 250,250)
 				e3 = Mage(400,220,50,50, mage_images, 300, 300)
-                                e4 = Ghost(150,375,50,150, ghost_images, 200,200)
-                                e5 = Ghost(358,256,50,150, ghost_images, 200,200)
-                                e6 = Mage(600,440,50,50, mage_images, 300, 300)
-                                enemys = {e1,e2,e3,e4,e5,e6,b}
+				e4 = Ghost(150,375,50,150, ghost_images, 200,200)
+				e5 = Ghost(358,256,50,150, ghost_images, 200,200)
+				e6 = Mage(600,440,50,50, mage_images, 300, 300)
+				enemys = {e1,e2,e3,e4,e5,e6,b}
 				all_enemies.add(e1)
 				all_enemies.add(e2)
 				all_enemies.add(e3)
@@ -112,10 +112,10 @@ while True:
 			 p.Action(screen,pressed_Key,current_time, bomb_map, all_blocks)
 
 			 for e in enemys:
-                                  if type(e) is not Boss:
-			                   e.LiveAction(screen, p, current_time)
-                                  else:
-		                           e.LiveAction(screen, p, current_time,bomb_map)
+				if type(e) is not Boss:
+					e.LiveAction(screen, p, current_time)
+				else:
+					e.LiveAction(screen, p, current_time,bomb_map)
 
 
 			 collectItem(p)

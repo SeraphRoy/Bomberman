@@ -1,13 +1,15 @@
 from Enemy import *
 
 class Ghost(Enemy):
+	#same init as Enemy
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
 
+		#check to see if this enemy is still alive
         def LiveAction(self, screen, player, seconds):
                 if self.isAlive:
                         self.Action(screen, player, seconds)
-
+        #respond for ghost's action in each term including display the image
         def Action(self, screen, player, seconds):
 			#distance in x direction between player and enemy
 			xDistance = player.GetX()-self.rect.x

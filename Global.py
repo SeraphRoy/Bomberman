@@ -48,7 +48,7 @@ mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
 			   mage_right1,mage_right2,mage_right3,mage_right4]
 
 
-
+#display blocks
 setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]
 all_blocks = pygame.sprite.Group()
 for point in setOfBlocks:

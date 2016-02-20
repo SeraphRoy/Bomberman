@@ -11,12 +11,13 @@ class Mage(Enemy):
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
 		self.charging = False
+		#time to charge for attack
 		self.chargetime = 10
 		self.damgetime = 18
 		self.chargeDirection =1
 		self.damage = 50
 
-		#slef defense purpose variables
+		#self defense purpose variables
 		self.defense = False
 		self.defensetime = 18
 
@@ -125,6 +126,7 @@ class Mage(Enemy):
 				else:
 					self.damgetime-=1
 					current_iamge = self.flameImages[17 - self.damgetime]
+					#display flame's iamge
 					screen.blit(current_iamge , (self.magex-current_iamge.get_width()/2,self.magey-current_iamge.get_height()/2))
 
 			#warning is false, just move up and down
@@ -151,5 +153,5 @@ class Mage(Enemy):
 						self.down = True
 						self.image_index = 4
 
-			
+			#displaye image on screen
 			screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
