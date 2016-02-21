@@ -60,9 +60,9 @@ class Mage(Enemy):
 			if self.defense == True and abs(self.rect.x-player.GetX())<75 and abs(self.rect.y-player.GetY())<75 and player.GetInvincible()<=0:
 				player.GetDamge(5)
 				if (self.rect.x-player.GetX())>0:
-					player.KnockBack(3)
+					player.KnockBack(1)
 				else:
-					player.KnockBack(1) 
+					player.KnockBack(3) 
 
 			#distance that this move is going to travel
 			distance =0;

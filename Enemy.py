@@ -86,7 +86,7 @@ class Enemy(pygame.sprite.Sprite):
 			self.image_index = 5
 			self.timetochange = 4
 			self.changeedDirection = False
-			
+
                         self.hp = 1
 			#for patrol
 			self.down = True
