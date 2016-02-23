@@ -16,7 +16,7 @@ class Menu(Opening):
             	pygame.quit()
             	exit()
             if (self.isOver() and pygame.mouse.get_pressed()[0]) or pygame.key.get_pressed()[K_ESCAPE] :
-            	stage_num = 2
+            	stage_num = 11
                 time.sleep(0.15)
                 return stage_num
         pygame.display.update()

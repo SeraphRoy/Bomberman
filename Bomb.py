@@ -97,6 +97,7 @@ class BombMatrix:
         deadDic = pygame.sprite.groupcollide(all_enemies, all_explodes, True, True, pygame.sprite.collide_rect_ratio(0.6))
         for e in deadDic:
             e.GetDamage(10)
+            all_enemies.remove(e)
             if e.CheckAlive() == True:
                 all_enemies.add(e)
 

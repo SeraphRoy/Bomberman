@@ -21,4 +21,4 @@ class Ending(Opening):
                 if self.isOver() and pygame.mouse.get_pressed()[0]:
                     stage_num = 0
                     return stage_num
-            pygame.display.update()                
+            pygame.display.update()

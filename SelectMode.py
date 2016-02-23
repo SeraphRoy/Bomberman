@@ -13,7 +13,7 @@ class SelectMode(Opening):
             	pygame.quit()
             	exit()
             if self.isOver() and pygame.mouse.get_pressed()[0]:
-            	stage_num = 2
+            	stage_num = 11
                 return stage_num
         pygame.display.update()
         return 1
