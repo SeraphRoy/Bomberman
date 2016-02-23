@@ -23,87 +23,49 @@ def GameReinitialization(stage_num):
 	 p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
 	 Item.pos = {}
 	 toolbar.dict = {}
+         enemys.clear()
 	 for i in range(10):
 		  item_x = random.randint(0,14)
 		  item_y = random.randint(0,12)
 		  Item(item_x,item_y,item_images)
 
-         if stage_num == 11:
-                  e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-		  e2 = Duck(512,256,50,150, duck_images, 250,250)
-		  e3 = Mage(400,220,50,50, mage_images, 300, 300)
-		  # e4 = Ghost(150,375,50,150, ghost_images, 200,200)
-		  # e5 = Ghost(358,256,50,150, ghost_images, 200,200)
-		  e6 = Mage(600,440,50,50, mage_images, 300, 300)
-                  b = Boss(0,375,50,150, player_images, 200,200)
-		  enemys = {e1,e2,e3,e6,b}
-		  all_enemies.add(e1)
-		  all_enemies.add(e2)
-		  all_enemies.add(e3)
-		  # all_enemies.add(e4)
-		  # all_enemies.add(e5)
-		  all_enemies.add(e6)
+         for i in range(stage_num/5):
+                  g = Ghost(random.randint(50,730), random.randint(50,730),50,150, ghost_images, 200,200)
+                  d = Duck(random.randint(50, 730), random.randint(50,730), 50,150, duck_images,250,250)
+                  enemys.add(g)
+                  enemys.add(d)
+                  all_enemies.add(g)
+                  all_enemies.add(d)
+
+         for i in range(stage_num/6):
+                  m = Mage(random.randint(50,730), random.randint(50,730),50,150, mage_images, 300,300)
+                  enemys.add(m)
+                  all_enemies.add(m)
+
+         for i in range(stage_num/7):
+                  b = Boss(random.randint(50,730), random.randint(50,730),50,150, player_images, 200,200)
+                  enemys.add(b)
                   all_enemies.add(b)
-         elif stage_num == 12:
-                  e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-		  e2 = Duck(512,256,50,150, duck_images, 250,250)
-		  e3 = Mage(400,220,50,50, mage_images, 300, 300)
-		  e4 = Ghost(150,375,50,150, ghost_images, 200,200)
-		  e5 = Ghost(358,256,50,150, ghost_images, 200,200)
-		  e6 = Mage(600,440,50,50, mage_images, 300, 300)
-                  b1 = Boss(0,375,50,150, player_images, 200,200)
-                  b2 = Boss(100,475,50,150, player_images, 200,200)
-		  enemys = {e1,e2,e3,e4,e5,e6,b1,b2}
-		  all_enemies.add(e1)
-		  all_enemies.add(e2)
-		  all_enemies.add(e3)
-		  all_enemies.add(e4)
-		  all_enemies.add(e5)
-		  all_enemies.add(e6)
-                  all_enemies.add(b1)
-                  all_enemies.add(b2)
-         else:
-                  e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-		  e2 = Duck(512,256,50,150, duck_images, 250,250)
-		  e3 = Mage(400,220,50,50, mage_images, 300, 300)
-		  e4 = Ghost(150,375,50,150, ghost_images, 200,200)
-		  e5 = Ghost(358,256,50,150, ghost_images, 200,200)
-		  e6 = Mage(600,440,50,50, mage_images, 300, 300)
-                  e7 = Mage(300,440,50,50, mage_images, 300, 300)
-                  b1 = Boss(0,375,50,150, player_images, 200,200)
-                  b2 = Boss(100,575,50,150, player_images, 200,200)
-                  b3 = Boss(400,375,50,150, player_images, 200,200)
-		  enemys = {e1,e2,e3,e4,e5,e6,b1,b2}
-		  all_enemies.add(e1)
-		  all_enemies.add(e2)
-		  all_enemies.add(e3)
-		  all_enemies.add(e4)
-		  all_enemies.add(e5)
-		  all_enemies.add(e6)
-                  all_enemies.add(e7)
-                  all_enemies.add(b1)
-                  all_enemies.add(b2)
-                  all_enemies.add(b3)
 
 
 pygame.init()
 p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
-e2 = Duck(512,256,50,150, duck_images, 250,250)
-e3 = Mage(400,220,50,50, mage_images, 300, 300)
-e4 = Ghost(150,375,50,150, ghost_images, 200,200)
-e5 = Ghost(358,256,50,150, ghost_images, 200,200)
-e6 = Mage(600,440,50,50, mage_images, 300, 300)
-b = Boss(0,375,50,150, player_images, 200,200)
+# e2 = Duck(512,256,50,150, duck_images, 250,250)
+# e3 = Mage(400,220,50,50, mage_images, 300, 300)
+# e4 = Ghost(150,375,50,150, ghost_images, 200,200)
+# e5 = Ghost(358,256,50,150, ghost_images, 200,200)
+# e6 = Mage(600,440,50,50, mage_images, 300, 300)
+# b = Boss(0,375,50,150, player_images, 200,200)
 all_enemies = pygame.sprite.Group()
 all_enemies.add(e1)
-all_enemies.add(e2)
-all_enemies.add(e3)
-all_enemies.add(e4)
-all_enemies.add(e5)
-all_enemies.add(e6)
-all_enemies.add(b)
-enemys = {e1,e2,e3,e4,e5,e6,b}
+# all_enemies.add(e2)
+# all_enemies.add(e3)
+# all_enemies.add(e4)
+# all_enemies.add(e5)
+# all_enemies.add(e6)
+# all_enemies.add(b)
+enemys = {e1}
 
 ## generate 10 items randomly
 for i in range(10):
@@ -118,7 +80,7 @@ while True:
                          if e.CheckAlive() == True:
                                   flag = True
                 if not flag:
-                           GameReinitialization(stage_num+1)
+                           GameReinitialization(stage_num+3)
 
 		if p.CheckAlive() == False and stage_num == 11:
                                 GameReinitialization(stage_num)
