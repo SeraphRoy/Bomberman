@@ -19,8 +19,8 @@ class Bomb(pygame.sprite.Sprite):
         self.y_Index = int(y//BOMB_IMG_Y)
         self.rect.y = self.y_Index * BOMB_IMG_Y
         self.isNull = isNull
-        
 
+    #check if time is over
     def TimePassed(self,t):
         self.time-=t
         if self.time<=0:
@@ -41,7 +41,7 @@ class Bomb(pygame.sprite.Sprite):
         self.damageLength = damageLength
 
     # Call this method when player recieved an increase-bomb-power item
-    def IncrDamageLength(self):             
+    def IncrDamageLength(self):
         self.damageLength += 1
 
     def GetDamageLength(self):
@@ -49,7 +49,7 @@ class Bomb(pygame.sprite.Sprite):
 
     def GetX(self):
         return self.rect.x
-    
+
     def GetY(self):
         return self.rect.y
 
@@ -72,11 +72,13 @@ class BombMatrix:
         self.null_Bomb = Bomb(transparent_image,-50,-50,0,True)
         self.bombMatrix = [[self.null_Bomb for x in range(X_MAX)] for y in range(Y_MAX)]
         self.all_bombs = pygame.sprite.Group()
-        
+
+    #add bomb into the bomb matrix
     def AddBomb(self, newBomb):
         self.bombMatrix[newBomb.GetX_Index()][newBomb.GetY_Index()] = newBomb
         self.all_bombs.add(self.bombMatrix[newBomb.GetX_Index()][newBomb.GetY_Index()])
 
+    #remove bomb from the matrix and explode
     def RemoveBomb(self,screen, x_Index, y_Index,burst, player, damage, all_enemies):
         explode = Explode(burst, y_Index, x_Index, self.bombMatrix[y_Index][x_Index].GetDamageLength())
         all_explodes = pygame.sprite.Group()
@@ -109,7 +111,7 @@ class BombMatrix:
         # for b in affected_bombs:
         #     if b.GetX_Index() != x_Index and b.GetY_Index() != y_Index:
         #         self.RemoveBomb(screen, b.GetX_Index(), b.GetY_Index(), burst, player, damage, all_enemies)
-        
+
         dmg = self.bombMatrix[y_Index][x_Index].GetDamageLength()
         if (x_Index >= 1) and (self.bombMatrix[y_Index][x_Index-1].IsNull() == False):
             self.RemoveBomb(screen,x_Index-1,y_Index,burst, player, damage, all_enemies)
@@ -119,7 +121,8 @@ class BombMatrix:
             self.RemoveBomb(screen,x_Index+1,y_Index,burst, player, damage, all_enemies)
         if (y_Index <= self.y_MAX-2) and (self.bombMatrix[y_Index+1][x_Index].IsNull() == False):
             self.RemoveBomb(screen,x_Index,y_Index+1,burst, player, damage, all_enemies)
-        
+
+    #check all the bombs to see if they need to explode
     def CheckAllBombs(self, screen, current_time, X_INDEX, Y_INDEX,burst, player, damage, all_enemies):
         for x in range(X_INDEX):
             for y in range(Y_INDEX):
@@ -128,6 +131,8 @@ class BombMatrix:
                 else:
                    screen.blit(self.bombMatrix[y][x].GetImage(),(self.bombMatrix[y][x].GetX(),self.bombMatrix[y][x].GetY()))
 
+
+#class for explode and damage for bombs
 class Explode(pygame.sprite.Sprite):
 
     def __init__(self, image, x_index, y_index, damageLength):
@@ -145,7 +150,7 @@ class Explode(pygame.sprite.Sprite):
         self.img_y = self.y_index * BOMB_IMG_Y
         self.rect.x = self.img_x
         self.rect.y = self.img_y
-                
+
 
     def GetXIndex(self):
         return self.x_index

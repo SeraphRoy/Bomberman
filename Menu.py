@@ -4,13 +4,14 @@ from pygame.locals import *
 from Global import *
 from Opening import *
 class Menu(Opening):
+
+    #overwrite it for menu
     def OpeningScene(self, screen):
     	screen.blit(menu, (0,0))
         select_exit = Opening(menu_exit_1, menu_exit_2, (380, 500))
         select_help = Opening(help1, help2, (380, 600))
     	self.render()
         select_exit.render()
-        #time.sleep(0.05)
     	for event in pygame.event.get():
             if event.type == pygame.QUIT or (select_exit.isOver() and pygame.mouse.get_pressed()[0]):
             	pygame.quit()

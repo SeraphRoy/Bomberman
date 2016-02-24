@@ -6,6 +6,7 @@ from Opening import *
 
 class Ending(Opening):
 
+    #overwrite it for ending
     def OpeningScene(self, screen):
         while True:
             screen.blit(gameover, (290, 150))

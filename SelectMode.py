@@ -3,6 +3,8 @@ from pygame.locals import *
 from Global import *
 from Opening import *
 class SelectMode(Opening):
+
+    #overwrite it for mode-selection
     def OpeningScene(self, screen):
     	screen.blit(opening_bg, (0,0))
         select_exit = Opening(exit_1, exit_2, (380, 500))

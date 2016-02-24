@@ -1,3 +1,4 @@
+#import pickle
 import time
 from Player import Player
 from Img import *
@@ -18,6 +19,7 @@ from SelectMode import *
 from Menu import *
 from Boss import Boss
 
+#re-initialize the game
 def GameReinitialization(stage_num):
          global enemys, all_enemies, p
 	 p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)

@@ -11,6 +11,7 @@ class Opening(object):
         self.imageDown = pygame.image.load(downimage).convert_alpha()
         self.position = position
 
+    #check if mouse is on the button
     def isOver(self):
         point_x, point_y = pygame.mouse.get_pos()
         x, y = self.position
@@ -21,6 +22,7 @@ class Opening(object):
 
         return in_x and in_y
 
+    #rendering for the button
     def render(self):
         w, h = self.imageUp.get_size()
         x, y = self.position
@@ -30,7 +32,8 @@ class Opening(object):
 
         else:
             screen.blit(self.imageUp, (x-w/2, y-h/2))
-                        
+
+    #UI for a certain scene
     def OpeningScene(self, screen):
     	screen.blit(opening_bg, (0,0))
     	self.render()
@@ -43,6 +46,6 @@ class Opening(object):
                 return stage_num
         pygame.display.update()
         return 0
-	
+
 
 
