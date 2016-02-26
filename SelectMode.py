@@ -1,4 +1,5 @@
 import pygame
+import pickle
 from pygame.locals import *
 from Global import *
 from Opening import *
@@ -15,7 +16,7 @@ class SelectMode(Opening):
             	pygame.quit()
             	exit()
             if self.isOver() and pygame.mouse.get_pressed()[0]:
-            	stage_num = 11
+            	stage_num = pickle.load(open("save_file", "rb"))
                 return stage_num
         pygame.display.update()
         return 1

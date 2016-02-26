@@ -1,4 +1,4 @@
-#import pickle
+import pickle
 import time
 from Player import Player
 from Img import *
@@ -73,6 +73,7 @@ while True:
                                   break
                 if not flag:
                          stage_num += 3
+                         pickle.dump(stage_num, open("save_file", "wb"))
                          GameReinitialization(stage_num)
 
 		if p.CheckAlive() == False and stage_num >= 11:
