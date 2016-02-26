@@ -32,20 +32,20 @@ def GameReinitialization(stage_num):
 		  Item(item_x,item_y,item_images)
 
          for i in range(stage_num/5):
-                  g = Ghost(random.randint(50,730), random.randint(50,730),50,150, ghost_images, 200,200)
-                  d = Duck(random.randint(50, 730), random.randint(50,730), 50,150, duck_images,250,250)
+                  g = Ghost(random.randint(50,680), random.randint(50,680),50,150, ghost_images, 200,200)
+                  d = Duck(random.randint(50, 680), random.randint(50,680), 50,150, duck_images,250,250)
                   enemys.add(g)
                   enemys.add(d)
                   all_enemies.add(g)
                   all_enemies.add(d)
 
          for i in range(stage_num/6):
-                  m = Mage(random.randint(50,730), random.randint(50,730),50,150, mage_images, 300,300)
+                  m = Mage(random.randint(50,680), random.randint(50,680),50,150, mage_images, 300,300)
                   enemys.add(m)
                   all_enemies.add(m)
 
          for i in range(stage_num/7):
-                  b = Boss(random.randint(50,730), random.randint(50,730),50,150, player_images, 200,200)
+                  b = Boss(random.randint(50,680), random.randint(50,680),50,150, player_images, 200,200)
                   enemys.add(b)
                   all_enemies.add(b)
 
@@ -56,7 +56,7 @@ e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 all_enemies = pygame.sprite.Group()
 all_enemies.add(e1)
 enemys = {e1}
-GameReinitialization(11)
+
 
 ## generate 10 items randomly
 for i in range(10):
@@ -73,7 +73,7 @@ while True:
                                   break
                 if not flag:
                          stage_num += 3
-                         pickle.dump(stage_num, open("save_file", "wb"))
+                         pickle.dump(stage_num, open("./save/save_file", "wb"))
                          GameReinitialization(stage_num)
 
 		if p.CheckAlive() == False and stage_num >= 11:
@@ -91,7 +91,8 @@ while True:
                                 clock.tick()
 		elif stage_num == 1:
 				stage_num = mode_select.OpeningScene(screen)
-                                #GameReinitialization(stage_num)
+                                if stage_num != 1:
+                                         GameReinitialization(stage_num)
                                 clock.tick()
                                 #print stage_num
 		elif stage_num == 3:
