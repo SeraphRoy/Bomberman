@@ -111,6 +111,9 @@ class Player(pygame.sprite.Sprite):
 	def CheckAlive(self):
 		return self.alive
 
+        def SetAlive(self, value):
+                self.alive = value
+
 	#get the players x position
 	def GetX(self):
 		return self.rect.x

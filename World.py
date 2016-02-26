@@ -70,12 +70,15 @@ while True:
                 for e in enemys:
                          if e.CheckAlive() == True:
                                   flag = True
+                                  break
                 if not flag:
-                           GameReinitialization(stage_num+3)
+                         stage_num += 3
+                         GameReinitialization(stage_num)
 
-		if p.CheckAlive() == False and stage_num == 11:
+		if p.CheckAlive() == False and stage_num >= 11:
                                 GameReinitialization(stage_num)
 				stage_num = ending.OpeningScene(screen)
+                                p.SetAlive(True)
 				## reinitialize the game
 
 
