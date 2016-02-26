@@ -84,14 +84,16 @@ while True:
 
 
 		opening = Opening(upimage, downimage, (380,400))
-		mode_select = SelectMode(adventure_mode1, adventure_mode2, (380,200))
+		mode_select = SelectMode(new_game1, new_game2, (380,200))
 		menu = Menu(back1, back2, (70, 30))
 		if stage_num == 0:
 				stage_num = opening.OpeningScene(screen)
                                 clock.tick()
 		elif stage_num == 1:
 				stage_num = mode_select.OpeningScene(screen)
+                                #GameReinitialization(stage_num)
                                 clock.tick()
+                                #print stage_num
 		elif stage_num == 3:
 				stage_num = menu.OpeningScene(screen)
                                 clock.tick()
