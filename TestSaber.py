@@ -32,7 +32,7 @@ all_bio.add(p)
 #setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
 #blocks = Block(block_image, setOfBlocks)
 
-object_map = ObjectMatrix(X_INDEX,Y_INDEX)
+object_map = ObjectMatrix()
 
 #display blocks
 setOfBlocks = [(2,2), (3,4), (3, 5), (3, 6), (3, 7)]

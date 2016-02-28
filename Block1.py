@@ -13,4 +13,4 @@ class Block(Object):
         super(Block,self).__init__(False,2,blockImage,x_index*OBJECT_X,y_index*OBJECT_Y)
         
     def Explode(self):
-        pass
+        return False

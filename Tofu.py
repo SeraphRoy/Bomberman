@@ -13,12 +13,15 @@ class Tofu(Object):
     # Type num = 3
     def __init__(self,image=block_image,x_index=5,y_index=5):
         super(Tofu,self).__init__(False,3,block_image,x_index*OBJECT_X,y_index*OBJECT_Y)
-        self.containItem = randint(0,1)
-        if (self.containItem == 1):
+        self.isContainItem = randint(0,1)
+        if (self.isContainItem == 1):
             self.itemType = random.randint(1,7)
             self.item =  self.GenerateItem(self.itemType)
-            
+        #elif (self.isContainItem == 0):
+        #    self.item = Object(True,0,transparent_image)
     def GenerateItem(self,rand):
+        #if rand == 0:
+        #    return Object(True,0,transparent_image,self.GetX(),self.GetY())
         if rand == 1:
             return Nike(self.x_Index,self.y_Index)
         if rand == 2:
@@ -33,7 +36,11 @@ class Tofu(Object):
             return Tool2(self.x_Index,self.y_Index)
         if rand == 7:
             return Stimpack(self.x_Index,self.y_Index)
-    
+    def Explode(self):
+        self.image = burst
+        self.type = 4
+        if self.isContainItem == 0:
+            self.type = 0
 '''
     def GetItemImage(self,itemType):
         if itemType == 1:
