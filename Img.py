@@ -68,6 +68,36 @@ mage_right2 = 'img/m_right2.png';
 mage_right3 = 'img/m_right3.png';
 mage_right4 = 'img/m_right4.png';
 
+archer_up1 = 'img/a_up1.png'
+archer_up2 = 'img/a_up2.png'
+archer_up3 = 'img/a_up3.png'
+archer_up4 = 'img/a_up4.png'
+archer_left1 = 'img/a_left1.png'
+archer_left2 = 'img/a_left2.png'
+archer_left3 = 'img/a_left3.png'
+archer_left4 = 'img/a_left4.png'
+archer_right1 = 'img/a_right1.png'
+archer_right2 = 'img/a_right2.png'
+archer_right3 = 'img/a_right3.png'
+archer_right4 = 'img/a_right4.png'
+archer_down1 = 'img/a_down1.png'
+archer_down2 = 'img/a_down2.png'
+archer_down3 = 'img/a_down3.png'
+archer_down4 = 'img/a_down4.png'
+
+arrow1 = 'img/arrow1.png'
+arrow2 = 'img/arrow2.png'
+arrow3 = 'img/arrow3.png'
+arrow4 = 'img/arrow4.png'
+arrow5 = 'img/arrow5.png'
+arrow6 = 'img/arrow6.png'
+arrow7 = 'img/arrow7.png'
+arrow8 = 'img/arrow8.png'
+arrow9 = 'img/arrow9.png'
+arrow10 = 'img/arrow10.png'
+arrow11 = 'img/arrow11.png'
+arrow12 = 'img/arrow12.png'
+
 
 hp_image = 'img/hp.png'
 

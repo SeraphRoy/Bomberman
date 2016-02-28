@@ -47,6 +47,11 @@ mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
 			   mage_left1,mage_left2,mage_left3,mage_left4,
 			   mage_right1,mage_right2,mage_right3,mage_right4]
 
+archer_images = [archer_up1,archer_up2,archer_up3,archer_up4,
+				archer_down1,archer_down2,archer_down3,archer_down4,
+				archer_left1,archer_left2,archer_left3,archer_left4,
+				archer_right1,archer_right2,archer_right3,archer_right4]
+
 
 #display blocks
 setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]

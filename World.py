@@ -18,6 +18,7 @@ from Global import *
 from SelectMode import *
 from Menu import *
 from Boss import Boss
+from Archer import Archer
 
 #re-initialize the game
 def GameReinitialization(stage_num):
@@ -31,13 +32,17 @@ def GameReinitialization(stage_num):
 		  item_y = random.randint(0,12)
 		  Item(item_x,item_y,item_images)
 
+
          for i in range(stage_num/5):
                   g = Ghost(random.randint(50,730), random.randint(50,730),50,150, ghost_images, 200,200)
                   d = Duck(random.randint(50, 730), random.randint(50,730), 50,150, duck_images,250,250)
+                  a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
                   enemys.add(g)
                   enemys.add(d)
+                  enemys.add(a);
                   all_enemies.add(g)
                   all_enemies.add(d)
+                  all_enemies.add(a)
 
          for i in range(stage_num/6):
                   m = Mage(random.randint(50,730), random.randint(50,730),50,150, mage_images, 300,300)
