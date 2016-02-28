@@ -132,7 +132,6 @@ class Boss(Enemy):
 			for i in range(self.bomb_each_time):
 				new_bomb = Bomb(bomb_image,self.bomb_x_array[i]*51,self.bomb_y_array[i]*51,4)
 				bomb_map.AddBomb(new_bomb)
-		else:
 			self.bomb_x_array = []
 			self.bomb_y_array = []
 			self.current_bomb_x_array = []
