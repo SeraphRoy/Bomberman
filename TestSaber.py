@@ -74,7 +74,7 @@ while True:
     #    everyObject.Display(screen)
     
     object_map.Display(screen,current_time)
-    object_map.Update(screen,current_time)
+    object_map.Update(screen,current_time,p, pygame.sprite.Group())
     
     pressed_Key = pygame.key.get_pressed()
 
