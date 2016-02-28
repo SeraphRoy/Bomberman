@@ -6,60 +6,56 @@ from sets import Set
 from NumBomb import NumBomb
 from BombDmg import BombDmg
 from Img import *
+from Object import *
+from Item import *
 
-def randItem(randNum):
-    switcher = {
-        0: Shoe(),
-        1: NumBomb(),
-        2: BombDmg(),
-        }
-    return switcher.get(randNum)
+class Tofu(Object):
+    # Type num = 3
+    def __init__(self,image=block_image,x_index=5,y_index=5):
+        super(Tofu,self).__init__(False,3,block_image,transparent_image,x_index*OBJECT_X,y_index*OBJECT_Y)
+        self.containItem = randint(0,1)
+        if (self.containItem == 1):
+            self.itemType = random.randint(1,7) 
+            self.nextImage = self.GetItemImage(self.itemType)
+            
+    def GenerateItem(self,rand):
+        if rand == 1:
+            self.item = Nike(self.x_Index,self.y_Index)
+        if rand == 2:
+            self.item = Low_speed_field(self.x_Index,self.y_Index)
+        if rand == 3:
+            self.item = Sadako(self.x_Index,self.y_Index)
+        if rand == 4:
+            self.item = Heart(self.x_Index,self.y_Index)
+        if rand == 5:
+            self.item = Tool1(self.x_Index,self.y_Index)
+        if rand == 6:
+            self.item = Tool2(self.x_Index,self.y_Index)
+        if rand == 7:
+            self.item = Stimpack(self.x_Index,self.y_Index)
 
-class Tofu:
-    image_x = 32
-    image_y = 32
-
-    #posSet is a set of positions, e.g. [(2,1), (4,3)]
-    def __init__(self, image_name, x, y):
-        temp = pygame.image.load(image_name).convert_alpha()
-        self.image = pygame.transform.scale(temp, (self.image_x, self.image_y))
-        temp = randint(0,1)
-	#0<->shoe, 1<->numbomb, 2<->bombdmg
-        if(temp):
-            temp = randint(0,2)
-            self.item = randItem(temp)
-            self.isItem = true
-        else:
-            self.isItem = false
-	self.x = x
-        self.y = y
-        
-
-    def SetImage(self, image_name):
-        temp = pygame.image.load(image_name).convert_alpha()
-        self.image = pygame.transfrom.scale(temp, (self.image_x, self.image_y))
-
-    def SetX(self, x):
-        self.x = x
-
-    def SetY(self, y):
-        self.y = y
+    def GetItemImage(self,itemType):
+        if itemType == 1:
+            return nike_image
+        if itemType == 2:
+            return low_speed_image
+        if itemType == 3:
+            return sadako_image
+        if itemType == 4:
+            return heart_image
+        if itemType == 5:
+            return tool1_image
+        if itemType == 6:
+            return tool2_image
+        if itemType == 7:
+            return stimpack_image
     
-    def SetItem(self, item):
-        self.item = item
-        self.isItem = true
-
-    def GetItem(self):
-    	return self.item
-
-    def GetX():
-    	return self.x
-
-    def GetY():
-        return self.y
+    def SwitchToItem(self):
+    # Type num for item = 4
+        self.type = 4
+        temp = self.GenerateItem(self.itemType)
+        self.currentImage = temp.GetImage()
+        self.nextImage = transparent
+        self.time = 1000000
         
-    def GetImage(self):
-    	return self.image
-
-
-
+        

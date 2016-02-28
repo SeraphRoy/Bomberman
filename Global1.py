@@ -50,7 +50,7 @@ mage_images = [mage_up1,mage_up2,mage_up3,mage_up4,
 
 #display blocks
 setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]
-all_blocks = pygame.sprite.Group()
+#all_blocks = pygame.sprite.Group()
 for point in setOfBlocks:
    block = Block(block_image, point[0], point[1])
    all_blocks.add(block)
@@ -58,7 +58,7 @@ for point in setOfBlocks:
 X_INDEX = 13
 Y_INDEX = 15
 
-object_map = ObjectMatrix(X_INDEX,Y_INDEX)
+bomb_map = BombMatrix(X_INDEX,Y_INDEX)
 total_time = 0.05
 current_time = 0.0
 exploded_queue = []
