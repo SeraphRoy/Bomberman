@@ -150,7 +150,7 @@ class Player(pygame.sprite.Sprite):
 
     #most important method for player, it takes care of player's behavior at each turn
     #the method to display player's image and take input from keyboard
-    def Action(self, screen, pressed_Key,seconds, object_map, all_blocks):
+    def Action(self, screen, pressed_Key,seconds, object_map, all_obstacles):
         #check if player is invincible 
         if self.invincible_turn>0:
             #flashing affect
@@ -259,3 +259,4 @@ class Player(pygame.sprite.Sprite):
             screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
             screen.blit(self.images[self.image_index],(self.rect.x-5,self.rect.y))
     
+        

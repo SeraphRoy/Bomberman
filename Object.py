@@ -24,7 +24,8 @@ class Object(pygame.sprite.Sprite):
             2 = Block
             3 = Tofu
             4 = item
-            5 = exploded bomb          
+            5 = exploded bomb
+            6 = transparent       
         '''
         self.type = objectType
         #self.x = x
@@ -79,12 +80,13 @@ class Object(pygame.sprite.Sprite):
         if (self.isVisible == True):
             screen.blit(self.image, (self.rect.x, self.rect.y))
             
-    def Explode():
-        pass
+    def Explode(self):
+        self.image = self.ConstructSurface(burst_image)
+        self.type = 5
         
 class ObjectMatrix:
 
-    def __init__(self,X_MAX=13,Y_MAX=15):
+    def __init__(self,X_MAX=15,Y_MAX=13):
         self.X_MAX = X_MAX
         self.Y_MAX = Y_MAX
         self.blank = Object(True,0,transparent_image)
@@ -93,45 +95,70 @@ class ObjectMatrix:
         self.all_bombs = pygame.sprite.Group()
         
     def Add(self,newObject):
-        self.objectMatrix[newObject.GetY_Index()][newObject.GetX_Index()] = newObject
-        self.all_bombs.add(self.objectMatrix[newObject.GetX_Index()][newObject.GetY_Index()])
         #print "Displayed at X = "
-        #print self.objectMatrix[newObject.GetY_Index()][newObject.GetX_Index()].rect.x
+        #print newObject.GetX_Index()
         #print " y = " 
-        #print self.objectMatrix[newObject.GetY_Index()][newObject.GetX_Index()].rect.y
+        #print newObject.GetY_Index()
+        self.objectMatrix[newObject.GetY_Index()][newObject.GetX_Index()] = newObject
+        #self.all_bombs.add(self.objectMatrix[newObject.GetX_Index()][newObject.GetY_Index()])
+        
 
     def Update(self,screen,current_time):
         for x in range(self.X_MAX):
             for y in range(self.Y_MAX):
                 if (self.objectMatrix[y][x].type != 0):
                     if (self.objectMatrix[y][x].type == 1):
-                        self.RemoveBomb(x,y,current_time)
+                        if self.objectMatrix[y][x].TimePassed(current_time):
+                            self.RemoveBomb(x,y,current_time)
                     else:
                         self.objectMatrix[y][x].Update()
 
         
-    def Display(self,screen):
+    def Display(self,screen,current_time):
         for x in range(self.X_MAX):
             for y in range(self.Y_MAX):
+                if (self.objectMatrix[y][x].type == 6):
+                    print "666 x= ",x,"y= ",y
+                    if self.objectMatrix[y][x].time-current_time<=0:
+                        self.objectMatrix[y][x] = self.blank
+                if (self.objectMatrix[y][x].type == 5):
+                    print "5 to 6 x= ",x,"y= ",y
+                    self.objectMatrix[y][x].time = 0.5
+                    self.objectMatrix[y][x].type = 6
+                    
                 if (self.objectMatrix[y][x].isNull == False):
                     self.objectMatrix[y][x].Display(screen)
-                if (self.objectMatrix[y][x].type == 5):
-                    self.objectMatrix[y][x] = self.blank
-                    #self.objectMatrix[y][x] = transparent
+
+
 
     def RemoveBomb(self,x_index,y_index,current_time):
+        if self.objectMatrix[y_index][x_index].type == 5 or self.objectMatrix[y_index][x_index].type == 6:
+            return
         xmax = x_index + self.objectMatrix[y_index][x_index].damageLength if (x_index + self.objectMatrix[y_index][x_index].damageLength < self.X_MAX) else X_MAX
         ymax = y_index + self.objectMatrix[y_index][x_index].damageLength if (y_index + self.objectMatrix[y_index][x_index].damageLength < self.Y_MAX) else Y_MAX
         xmin = x_index - self.objectMatrix[y_index][x_index].damageLength if (x_index - self.objectMatrix[y_index][x_index].damageLength >= 0) else 0
         ymin = y_index - self.objectMatrix[y_index][x_index].damageLength if (y_index - self.objectMatrix[y_index][x_index].damageLength >= 0) else 0
-        for x in range(xmin-1,xmax):
-            for y in range(ymin-1,ymax):
-                if self.objectMatrix[y][x].type == 2:
-                    return
-                if self.objectMatrix[y][x].type == 1:
-                    if self.objectMatrix[y][x].TimePassed(current_time):
-                        self.objectMatrix[y][x].Explode()
-                        print "x= ",x,"y= ",y 
+        self.objectMatrix[y_index][x_index].Explode()
+        for x in range(x_index,xmin,-1):
+            #self.Check(x,y_index)
+            self.RemoveBomb(x,y_index,3)
+        for y in range(y_index,ymin,-1):
+            #self.Check(x_index,y)
+            self.RemoveBomb(x_index,y,3)
+        for x in range(x_index-1,xmax):
+            #self.Check(x,y_index)
+            self.RemoveBomb(x,y_index,3)
+        for y in range(y_index-1,ymax):
+            #self.Check(x_index,y)
+            self.RemoveBomb(x_index,y,3)
+            
+    def Check(self,x,y):
+        if self.objectMatrix[y][x].type == 2:
+            return
+        if self.objectMatrix[y][x].type == 1:
+            #if self.objectMatrix[y][x].TimePassed(current_time):
+            self.RemoveBomb(x,y,3)
+            print "x= ",x,"y= ",y 
                     
     
 '''

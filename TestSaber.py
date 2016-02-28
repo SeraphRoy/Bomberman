@@ -27,7 +27,8 @@ player_images = [player_up1,player_up2,player_up3,player_up4,
                  player_right1,player_right2,player_right3,player_right4]
 '''
 p = Player(player_images,bomb_image,150,10,20,9,1,hp_image)
-
+all_bio = pygame.sprite.Group()
+all_bio.add(p)
 #setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
 #blocks = Block(block_image, setOfBlocks)
 
@@ -35,16 +36,17 @@ object_map = ObjectMatrix(X_INDEX,Y_INDEX)
 
 #display blocks
 setOfBlocks = [(2,2), (3,4), (3, 5), (3, 6), (3, 7)]
-all_objects = pygame.sprite.Group()
+all_obstacles = pygame.sprite.Group()
+
 for point in setOfBlocks:
    block = Block(block_image, point[0], point[1])
-   all_objects.add(block)
+   all_obstacles.add(block)
    object_map.Add(block)
 
-setOfTofu = [(4,5),(7,6),(12,5),(6,14)]
-for point in setOfBlocks:
+setOfTofu = [(4,5),(7,6),(11,5),(6,11)]
+for point in setOfTofu:
    tofu = Tofu(block_image, point[0], point[1])
-   all_objects.add(tofu)
+   #all_objects.add(tofu)
    object_map.Add(tofu)
    
 
@@ -68,10 +70,10 @@ while True:
 
     screen.blit(background, (0,0))
 
-    for everyObject in all_objects:
-        everyObject.Display(screen)
+    #for everyObject in all_objects:
+    #    everyObject.Display(screen)
     
-    object_map.Display(screen)
+    object_map.Display(screen,current_time)
     object_map.Update(screen,current_time)
     
     pressed_Key = pygame.key.get_pressed()
@@ -79,7 +81,7 @@ while True:
     #blocks.PutsOnScreen(screen)
     
     #third argument pass how much time passed since last tiem
-    p.Action(screen,pressed_Key,current_time, object_map,hp_image)
+    p.Action(screen,pressed_Key,current_time, object_map,all_obstacles)
 
     #Reset current time
     current_time = 0.0

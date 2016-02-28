@@ -30,9 +30,7 @@ class Bomb(Object):
     def GetDamageLength(self):
         return self.damageLength
 
-    def Explode(self):
-        self.image = self.ConstructSurface(burst_image)
-        self.type = 5
+
              
     #def Update(self):
        #super(Bomb, self).Update()
