@@ -10,7 +10,7 @@ burst = pygame.transform.scale(pygame.image.load(burst_image),(OBJECT_X,OBJECT_Y
 class Object(pygame.sprite.Sprite):
     
     
-    def __init__(self,isNull,objectType,image,x=500,y=600):
+    def __init__(self,isNull,objectType,image,x=500,y=600,isVisible=True):
         pygame.sprite.Sprite.__init__(self)
         
 
@@ -38,7 +38,7 @@ class Object(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x_Index * OBJECT_X
         self.rect.y = self.y_Index * OBJECT_Y
-        self.isVisible = True
+        self.isVisible = isVisible
         self.damageLength = 0
 
     def SetX(self,x):
@@ -96,9 +96,9 @@ class ObjectMatrix:
     def __init__(self,X_MAX=15,Y_MAX=13):
         self.X_MAX = X_MAX
         self.Y_MAX = Y_MAX
-        self.blank = Object(True,0,transparent_image)
-        self.blank.SetVisible(False)
-        self.objectMatrix = [[self.blank for x in range(X_MAX)] for y in range(Y_MAX)]
+        #self.blank = Object(True,0,transparent_image)
+        #self.blank.SetVisible(False)
+        self.objectMatrix = [[Object(True,0,transparent_image,0,0,False) for x in range(X_MAX)] for y in range(Y_MAX)]
         self.all_bombs = pygame.sprite.Group()
         self.all_explodes = pygame.sprite.Group()
         self.all_need_check = pygame.sprite.Group()
@@ -125,38 +125,38 @@ class ObjectMatrix:
             if bomb.TimePassed(current_time):
                 self.all_explodes.add(bomb)
                 #print "add to explode list"
-            for x in range(bomb.GetX_Index(),xmin,-1):
-                if self.objectMatrix[bomb.GetY_Index()][x].type == 2:
-                    print "break from left"
-                    break
-                else:
-                    #print "left add"
-                    self.all_explodes.add(self.objectMatrix[bomb.GetY_Index()][x])
-            for y in range(bomb.GetY_Index(),ymin,-1):
-                if self.objectMatrix[y][bomb.GetX_Index()].type == 2:
-                    print "break from up" 
-                    break
-                else: 
-                    #print "right add"
-                    self.all_explodes.add(self.objectMatrix[y][bomb.GetX_Index()])
-            for x in range(bomb.GetX_Index(),xmax):
-                if self.objectMatrix[bomb.GetY_Index()][x].type == 2:
-                    print "break from right"
-                    break
-                else:
-                    #print "up add"
-                    self.all_explodes.add(self.objectMatrix[bomb.GetY_Index()][x])
-            for y in range(bomb.GetY_Index(),ymax):
-                if self.objectMatrix[y][bomb.GetX_Index()].type == 2:
-                    print "break from down"
-                    break
-                else:
-                    #print "down add"
-                    self.all_explodes.add(self.objectMatrix[y][bomb.GetX_Index()])
+                for x in range(bomb.GetX_Index(),xmin,-1):
+                    if self.objectMatrix[bomb.GetY_Index()][x].type == 2:
+                        print "break from left"
+                        break
+                    else:
+                        print "left add"
+                        self.all_explodes.add(self.objectMatrix[bomb.GetY_Index()][x])
+                for y in range(bomb.GetY_Index(),ymin,-1):
+                    if self.objectMatrix[y][bomb.GetX_Index()].type == 2:
+                        print "break from up" 
+                        break
+                    else: 
+                        print "right add"
+                        self.all_explodes.add(self.objectMatrix[y][bomb.GetX_Index()])
+                for x in range(bomb.GetX_Index(),xmax):
+                    if self.objectMatrix[bomb.GetY_Index()][x].type == 2:
+                        print "break from right"
+                        break
+                    else:
+                        print "up add"
+                        self.all_explodes.add(self.objectMatrix[bomb.GetY_Index()][x])
+                for y in range(bomb.GetY_Index(),ymax):
+                    if self.objectMatrix[y][bomb.GetX_Index()].type == 2:
+                        print "break from down"
+                        break
+                    else:
+                        print "down add"
+                        self.all_explodes.add(self.objectMatrix[y][bomb.GetX_Index()])
             
         for explode in self.all_explodes:
             explode.Explode()
-            self.all_explodes.remove(explode)
+            #self.all_explodes.remove(explode)
             
         
         '''
@@ -181,7 +181,7 @@ class ObjectMatrix:
                 if (self.objectMatrix[y][x].isNull == False):
                     self.objectMatrix[y][x].Display(screen)
                     if (self.objectMatrix[y][x].type == 5 or self.objectMatrix[y][x].type == 0):
-                        self.objectMatrix[y][x] = self.blank
+                        self.objectMatrix[y][x] = Object(True,0,transparent_image,0,0,False)
                     #if (self.objectMatrix[y][x].type == 4)
 
 
