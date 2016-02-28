@@ -1,4 +1,4 @@
-#import pickle
+import pickle
 import time
 from Player import Player
 from Img import *
@@ -37,6 +37,7 @@ def GameReinitialization(stage_num):
                   g = Ghost(random.randint(50,730), random.randint(50,730),50,150, ghost_images, 200,200)
                   d = Duck(random.randint(50, 730), random.randint(50,730), 50,150, duck_images,250,250)
                   a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
+
                   enemys.add(g)
                   enemys.add(d)
                   enemys.add(a);
@@ -45,12 +46,12 @@ def GameReinitialization(stage_num):
                   all_enemies.add(a)
 
          for i in range(stage_num/6):
-                  m = Mage(random.randint(50,730), random.randint(50,730),50,150, mage_images, 300,300)
+                  m = Mage(random.randint(50,680), random.randint(50,680),50,150, mage_images, 300,300)
                   enemys.add(m)
                   all_enemies.add(m)
 
          for i in range(stage_num/7):
-                  b = Boss(random.randint(50,730), random.randint(50,730),50,150, player_images, 200,200)
+                  b = Boss(random.randint(50,680), random.randint(50,680),50,150, player_images, 200,200)
                   enemys.add(b)
                   all_enemies.add(b)
 
@@ -61,7 +62,7 @@ e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 all_enemies = pygame.sprite.Group()
 all_enemies.add(e1)
 enemys = {e1}
-GameReinitialization(11)
+
 
 ## generate 10 items randomly
 for i in range(10):
@@ -75,24 +76,31 @@ while True:
                 for e in enemys:
                          if e.CheckAlive() == True:
                                   flag = True
+                                  break
                 if not flag:
-                           GameReinitialization(stage_num+3)
+                         stage_num += 3
+                         pickle.dump(stage_num, open("./save/save_file", "wb"))
+                         GameReinitialization(stage_num)
 
-		if p.CheckAlive() == False and stage_num == 11:
+		if p.CheckAlive() == False and stage_num >= 11:
                                 GameReinitialization(stage_num)
 				stage_num = ending.OpeningScene(screen)
+                                p.SetAlive(True)
 				## reinitialize the game
 
 
 		opening = Opening(upimage, downimage, (380,400))
-		mode_select = SelectMode(adventure_mode1, adventure_mode2, (380,200))
+		mode_select = SelectMode(new_game1, new_game2, (380,200))
 		menu = Menu(back1, back2, (70, 30))
 		if stage_num == 0:
 				stage_num = opening.OpeningScene(screen)
                                 clock.tick()
 		elif stage_num == 1:
 				stage_num = mode_select.OpeningScene(screen)
+                                if stage_num != 1:
+                                         GameReinitialization(stage_num)
                                 clock.tick()
+                                #print stage_num
 		elif stage_num == 3:
 				stage_num = menu.OpeningScene(screen)
                                 clock.tick()
