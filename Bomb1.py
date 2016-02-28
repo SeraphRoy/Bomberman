@@ -13,13 +13,7 @@ class Bomb(Object):
         #print ("place bomb")
         self.damageLength = damageLength
         self.time = 2.0
-    
-    def TimePassed(self,t):
-        self.time-=t
-        if self.time<=0:
-            return True
-        else:
-            return False
+        #self.isExploded = False
     
     def SetDamageLength(self,damageLength):
         self.damageLength = damageLength

@@ -15,7 +15,7 @@ class Object(pygame.sprite.Sprite):
         
 
         
-        #self.time = 10000000
+        self.time = 100000000
         self.isNull = isNull
 
         ''' Object Type
@@ -83,6 +83,13 @@ class Object(pygame.sprite.Sprite):
     def Explode(self):
         self.image = self.ConstructSurface(burst_image)
         self.type = 5
+    
+    def TimePassed(self,t):
+        self.time-=t
+        if self.time<=0:
+            return True
+        else:
+            return False
         
 class ObjectMatrix:
 
@@ -117,28 +124,20 @@ class ObjectMatrix:
     def Display(self,screen,current_time):
         for x in range(self.X_MAX):
             for y in range(self.Y_MAX):
-                if (self.objectMatrix[y][x].type == 6):
-                    print "666 x= ",x,"y= ",y
-                    if self.objectMatrix[y][x].time-current_time<=0:
-                        self.objectMatrix[y][x] = self.blank
-                if (self.objectMatrix[y][x].type == 5):
-                    print "5 to 6 x= ",x,"y= ",y
-                    self.objectMatrix[y][x].time = 0.5
-                    self.objectMatrix[y][x].type = 6
-                    
                 if (self.objectMatrix[y][x].isNull == False):
                     self.objectMatrix[y][x].Display(screen)
 
 
 
     def RemoveBomb(self,x_index,y_index,current_time):
-        if self.objectMatrix[y_index][x_index].type == 5 or self.objectMatrix[y_index][x_index].type == 6:
+        if self.objectMatrix[y_index][x_index].type == 2 or self.objectMatrix[y_index][x_index].type == 6:# or self.objectMatrix[y_index][x_index].type == 2:
             return
         xmax = x_index + self.objectMatrix[y_index][x_index].damageLength if (x_index + self.objectMatrix[y_index][x_index].damageLength < self.X_MAX) else X_MAX
         ymax = y_index + self.objectMatrix[y_index][x_index].damageLength if (y_index + self.objectMatrix[y_index][x_index].damageLength < self.Y_MAX) else Y_MAX
         xmin = x_index - self.objectMatrix[y_index][x_index].damageLength if (x_index - self.objectMatrix[y_index][x_index].damageLength >= 0) else 0
         ymin = y_index - self.objectMatrix[y_index][x_index].damageLength if (y_index - self.objectMatrix[y_index][x_index].damageLength >= 0) else 0
-        self.objectMatrix[y_index][x_index].Explode()
+        if self.objectMatrix[y_index][x_index].TimePassed(current_time):
+            self.objectMatrix[y_index][x_index].Explode()
         for x in range(x_index,xmin,-1):
             #self.Check(x,y_index)
             self.RemoveBomb(x,y_index,3)
