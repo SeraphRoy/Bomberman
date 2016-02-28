@@ -31,19 +31,23 @@ p = Player(player_images,bomb_image,150,10,20,9,1,hp_image)
 #setOfBlocks = [(100,100), (52,52), (240,240), (49, 203), (500, 20)]
 #blocks = Block(block_image, setOfBlocks)
 
+object_map = ObjectMatrix(X_INDEX,Y_INDEX)
+
 #display blocks
 setOfBlocks = [(2,2), (3,4), (3, 5), (3, 6), (3, 7)]
 all_objects = pygame.sprite.Group()
 for point in setOfBlocks:
    block = Block(block_image, point[0], point[1])
    all_objects.add(block)
+   object_map.Add(block)
 
 setOfTofu = [(4,5),(7,6),(12,5),(6,14)]
 for point in setOfBlocks:
    tofu = Tofu(block_image, point[0], point[1])
    all_objects.add(tofu)
+   object_map.Add(tofu)
    
-object_map = ObjectMatrix(X_INDEX,Y_INDEX)
+
 total_time = 0.05
 current_time = 0.0
 exploded_queue = []

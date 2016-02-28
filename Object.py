@@ -10,12 +10,12 @@ transparent = pygame.transform.scale(pygame.image.load(transparent_image),(OBJEC
 class Object(pygame.sprite.Sprite):
     
     
-    def __init__(self,isNull,objectType,currentImage,nextImage = transparent,x=-100,y=-100):
+    def __init__(self,isNull,objectType,image,x=500,y=600):
         pygame.sprite.Sprite.__init__(self)
         
 
         
-        self.time = 10000000
+        #self.time = 10000000
         self.isNull = isNull
 
         ''' Object Type
@@ -27,23 +27,18 @@ class Object(pygame.sprite.Sprite):
             5 = exploded bomb          
         '''
         self.type = objectType
-        self.x = x
-        self.y = y
-        self.currentImage = self.ConstructSurface(currentImage)
-        self.nextImage = pygame.transform.scale(pygame.image.load(nextImage).convert_alpha(),(OBJECT_X,OBJECT_Y))
+        #self.x = x
+        #self.y = y
+        self.image = self.ConstructSurface(image)
+        #self.nextImage = pygame.transform.scale(pygame.image.load(nextImage).convert_alpha(),(OBJECT_X,OBJECT_Y))
         self.x_Index = int(x//OBJECT_X)
         self.y_Index = int(y//OBJECT_Y)
-        self.rect = self.currentImage.get_rect()
+        self.rect = self.image.get_rect()
         self.rect.x = self.x_Index * OBJECT_X
         self.rect.y = self.y_Index * OBJECT_Y
-        
-    def TimePassed(self,t):
-        self.time-=t
-        if self.time<=0:
-            return True
-        else:
-            return False
-    
+        self.isVisible = True
+        self.damageLength = 0
+
     def SetX(self,x):
         self.rect.x = x
 
@@ -62,42 +57,38 @@ class Object(pygame.sprite.Sprite):
     def GetY_Index(self):
         return self.y_Index
 
-    def IsNull():
+    def IsNull(self):
         return self.isNull
+    
+    def SetVisible(self,boolval):
+        self.isVisible = boolval
         
     def SetDamageLength(self,damageLength):
         self.damageLength = damageLength
     
+    def SetImage(self,image):
+        self.image = image
+    
     def ConstructSurface(self,image):
         return pygame.transform.scale(pygame.image.load(image).convert_alpha(),(OBJECT_X,OBJECT_Y))
         
-    def Update(self,nextImage = transparent):
-        if (self.type == 0 or self.type == 2 or self.type == 4):
-            return
-        self.currentImage = self.nextImage
-        self.nextImage = nextImage
-        if self.type == 5:
-            self.currentImage = self.nextImage
-            self.time = 10000000
-            self.type = 0
-        if (self.type == 1):
-            self.type = 5
-        if (self.type == 3):
-            self.SwitchToItem()
-            
-            
-
-        #print "Update!"
+    def Update(self):
+        pass
     
     def Display(self, screen):
-        screen.blit(self.currentImage, (self.rect.x, self.rect.y))
+        if (self.isVisible == True):
+            screen.blit(self.image, (self.rect.x, self.rect.y))
+            
+    def Explode():
+        pass
         
 class ObjectMatrix:
 
     def __init__(self,X_MAX=13,Y_MAX=15):
         self.X_MAX = X_MAX
         self.Y_MAX = Y_MAX
-        self.blank = Object(True,0,transparent_image,transparent_image)
+        self.blank = Object(True,0,transparent_image)
+        self.blank.SetVisible(False)
         self.objectMatrix = [[self.blank for x in range(X_MAX)] for y in range(Y_MAX)]
         self.all_bombs = pygame.sprite.Group()
         
@@ -112,8 +103,11 @@ class ObjectMatrix:
     def Update(self,screen,current_time):
         for x in range(self.X_MAX):
             for y in range(self.Y_MAX):
-                if (self.objectMatrix[y][x].TimePassed(current_time) == True):
-                    self.objectMatrix[y][x].Update()
+                if (self.objectMatrix[y][x].type != 0):
+                    if (self.objectMatrix[y][x].type == 1):
+                        self.RemoveBomb(x,y,current_time)
+                    else:
+                        self.objectMatrix[y][x].Update()
 
         
     def Display(self,screen):
@@ -121,7 +115,26 @@ class ObjectMatrix:
             for y in range(self.Y_MAX):
                 if (self.objectMatrix[y][x].isNull == False):
                     self.objectMatrix[y][x].Display(screen)
+                if (self.objectMatrix[y][x].type == 5):
+                    self.objectMatrix[y][x] = self.blank
+                    #self.objectMatrix[y][x] = transparent
 
+    def RemoveBomb(self,x_index,y_index,current_time):
+        xmax = x_index + self.objectMatrix[y_index][x_index].damageLength if (x_index + self.objectMatrix[y_index][x_index].damageLength < self.X_MAX) else X_MAX
+        ymax = y_index + self.objectMatrix[y_index][x_index].damageLength if (y_index + self.objectMatrix[y_index][x_index].damageLength < self.Y_MAX) else Y_MAX
+        xmin = x_index - self.objectMatrix[y_index][x_index].damageLength if (x_index - self.objectMatrix[y_index][x_index].damageLength >= 0) else 0
+        ymin = y_index - self.objectMatrix[y_index][x_index].damageLength if (y_index - self.objectMatrix[y_index][x_index].damageLength >= 0) else 0
+        for x in range(xmin-1,xmax):
+            for y in range(ymin-1,ymax):
+                if self.objectMatrix[y][x].type == 2:
+                    return
+                if self.objectMatrix[y][x].type == 1:
+                    if self.objectMatrix[y][x].TimePassed(current_time):
+                        self.objectMatrix[y][x].Explode()
+                        print "x= ",x,"y= ",y 
+                    
+    
+'''
     def RemoveBomb(self,screen, x_Index, y_Index,burst, player, damage, all_enemies):
         explode = Explode(burst, y_Index, x_Index, self.bombMatrix[y_Index][x_Index].GetDamageLength())
         all_explodes = pygame.sprite.Group()
@@ -189,3 +202,4 @@ class Explode(pygame.sprite.Sprite):
         self.img_y = self.y_index * BOMB_IMG_Y
         self.rect.x = self.img_x
         self.rect.y = self.img_y
+        '''

@@ -8,12 +8,19 @@ class Bomb(Object):
     OBJECT_Y = 51
     transparent = pygame.transform.scale(pygame.image.load(transparent_image),(OBJECT_X,OBJECT_Y))
     
-    def __init__(self,x,y,currentImage,nextImage,damageLength=1):
-        super(Bomb,self).__init__(False,1,currentImage,nextImage,x,y)
+    def __init__(self,x,y,image,damageLength=1):
+        super(Bomb,self).__init__(False,1,image,x,y)
         #print ("place bomb")
         self.damageLength = damageLength
         self.time = 2.0
-
+    
+    def TimePassed(self,t):
+        self.time-=t
+        if self.time<=0:
+            return True
+        else:
+            return False
+    
     def SetDamageLength(self,damageLength):
         self.damageLength = damageLength
 
@@ -22,7 +29,11 @@ class Bomb(Object):
         
     def GetDamageLength(self):
         return self.damageLength
-        
+
+    def Explode(self):
+        self.image = self.ConstructSurface(burst_image)
+        self.type = 5
+             
     #def Update(self):
        #super(Bomb, self).Update()
         #self = Object(True,0,transparent_image,transparent_image)
@@ -31,3 +42,12 @@ class Bomb(Object):
         # I think we should still use recurrsion even though we can now use iteration
         # to trigger bombs based on the type(int)
         # Because python does not offer passing by reference
+'''
+    def Update(self,time):
+        if self.type == 5:
+            self.isNull = True
+            return
+        if self.TimePassed(time):
+            self.image = self.SetImage(burst_image)
+            self.type = 5
+'''

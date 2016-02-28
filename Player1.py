@@ -210,7 +210,7 @@ class Player(pygame.sprite.Sprite):
             self.bomb_since_last = 0
             #print ("press space")
             # Becareful with this line, need to check index out of bound exception
-            new_bomb = Bomb(int(self.rect.x+23),int(self.rect.y+23),self.bomb_name,burst_image,self.bomb_damage)
+            new_bomb = Bomb(int(self.rect.x+23),int(self.rect.y+23),self.bomb_name,self.bomb_damage)
             object_map.Add(new_bomb)
             #print (self.rect.x)
             #print (",")
