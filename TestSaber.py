@@ -49,7 +49,6 @@ for point in setOfTofu:
    #all_objects.add(tofu)
    object_map.Add(tofu)
    
-
 total_time = 0.05
 current_time = 0.0
 exploded_queue = []
