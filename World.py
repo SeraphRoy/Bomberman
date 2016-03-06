@@ -24,6 +24,9 @@ from Archer import Archer
 def GameReinitialization(stage_num):
          global enemys, all_enemies, p
 	 p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
+         # p.SetPos(40, 40)
+         # p.GetDamge(-100)
+         # p.SetAlive(True)
 	 Item.pos = {}
 	 toolbar.dict = {}
          enemys.clear()
@@ -32,6 +35,7 @@ def GameReinitialization(stage_num):
 		  item_y = random.randint(0,12)
 		  Item(item_x,item_y,item_images)
 
+         level = stage_num - 10
 
          for i in range(stage_num/5):
 
@@ -50,10 +54,10 @@ def GameReinitialization(stage_num):
                   enemys.add(m)
                   all_enemies.add(m)
 
-         for i in range(stage_num/7):
-                  b = Boss(random.randint(50,680), random.randint(50,680),50,150, player_images, 200,200)
-                  enemys.add(b)
-                  all_enemies.add(b)
+         # for i in range(stage_num/7):
+         #          b = Boss(random.randint(50,680), random.randint(50,680),50,150, player_images, 200,200)
+         #          enemys.add(b)
+         #          all_enemies.add(b)
 
 
 pygame.init()
@@ -62,7 +66,7 @@ e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 all_enemies = pygame.sprite.Group()
 all_enemies.add(e1)
 enemys = {e1}
-
+isBoss = False
 
 ## generate 10 items randomly
 for i in range(10):
@@ -77,14 +81,25 @@ while True:
                          if e.CheckAlive() == True:
                                   flag = True
                                   break
-                if not flag:
+
+                if not flag and not isBoss:
+                         b = Boss(random.randint(50,680), random.randint(50,680),50,150,player_images,200,200)
+                         enemys.add(b)
+                         all_enemies.add(b)
+                         flag = True
+                         isBoss = True
+
+
+                if not flag and isBoss:
                          stage_num += 3
                          pickle.dump(stage_num, open("./save/save_file", "wb"))
                          GameReinitialization(stage_num)
+                         isBoss = False
 
 		if p.CheckAlive() == False and stage_num >= 11:
                                 GameReinitialization(stage_num)
 				stage_num = ending.OpeningScene(screen)
+                                isBoss = False
                                 p.SetAlive(True)
 				## reinitialize the game
 
