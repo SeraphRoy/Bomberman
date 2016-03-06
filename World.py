@@ -70,7 +70,6 @@ all_enemies.add(e1)
 enemys = {e1}
 isBoss = False
 data = p.GetValuableData()
-print data
 pickle.dump(data, open("./save/save_player", "wb"))
 
 
@@ -81,8 +80,9 @@ for i in range(10):
 	 Item(item_x,item_y,item_images)
 
 background_music = pygame.mixer.Sound("music/background.wav")
-background_music.play(-1)
-
+lose_sound = pygame.mixer.Sound("music/lose.wav")
+lose_sound.set_volume(0.7)
+background_music.set_volume(0.1)
 while True:
 		ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
                 flag = False
@@ -108,11 +108,13 @@ while True:
                          isBoss = False
 
 		if p.CheckAlive() == False and stage_num >= 11:
-                                GameReinitialization(stage_num)
-				stage_num = ending.OpeningScene(screen)
-                                isBoss = False
-                                p.SetAlive(True)
-				## reinitialize the game
+                         GameReinitialization(stage_num)
+                         lose_sound.play()
+                         background_music.fadeout(1500)
+			 stage_num = ending.OpeningScene(screen)
+                         isBoss = False
+                         p.SetAlive(True)
+			 ## reinitialize the game
 
 
 		opening = Opening(upimage, downimage, (380,400))
@@ -124,6 +126,7 @@ while True:
 		elif stage_num == 1:
 				stage_num = mode_select.OpeningScene(screen)
                                 if stage_num != 1:
+                                         background_music.play(-1)
                                          GameReinitialization(stage_num)
                                 clock.tick()
                                 #print stage_num
