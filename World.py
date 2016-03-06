@@ -61,6 +61,8 @@ def GameReinitialization(stage_num):
 
 
 pygame.init()
+pygame.mixer.pre_init(44100, 16, 2, 1024*4)
+pygame.mixer.set_num_channels(8)
 p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
 e1 = Ghost(256,256,50,150, ghost_images, 200,200)
 all_enemies = pygame.sprite.Group()
@@ -77,6 +79,9 @@ for i in range(10):
 	 item_x = random.randint(0,14)
 	 item_y = random.randint(0,12)
 	 Item(item_x,item_y,item_images)
+
+background_music = pygame.mixer.Sound("music/background.wav")
+background_music.play(-1)
 
 while True:
 		ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
