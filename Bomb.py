@@ -85,7 +85,7 @@ class BombMatrix:
         all_explodes.add(explode)
         explode_sound = pygame.mixer.Sound("music/explode.wav")
         explode_sound.play()
-        explode_sound.set_volume(0.4)
+        explode_sound.set_volume(0.1)
         for i in range(1, self.bombMatrix[y_Index][x_Index].GetDamageLength()):
             explode1 = Explode(burst, y_Index+i, x_Index, self.bombMatrix[y_Index][x_Index].GetDamageLength())
             explode2 = Explode(burst, y_Index-i, x_Index, self.bombMatrix[y_Index][x_Index].GetDamageLength())

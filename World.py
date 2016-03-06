@@ -70,7 +70,6 @@ all_enemies.add(e1)
 enemys = {e1}
 isBoss = False
 data = p.GetValuableData()
-pickle.dump(data, open("./save/save_player", "wb"))
 
 
 ## generate 10 items randomly
