@@ -111,10 +111,24 @@ class Player(pygame.sprite.Sprite):
 	def CheckAlive(self):
 		return self.alive
 
+        def GetValuableData(self):
+                data = []
+                data.append(self.speed)
+                data.append(self.max_bomb)
+                data.append(self.bomb_damage)
+                return data
+
+        def SetValuableData(self, data):
+                self.bomb_damage = data.pop()
+                self.max_bomb = data.pop()
+                self.speed = data.pop()
+
         def SetPos(self, x, y):
                 self.rect.x = x
                 self.rect.y = y
 
+        def SetHP(self, value):
+                self.HP = value
         def SetAlive(self, value):
                 self.alive = value
 

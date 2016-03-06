@@ -19,14 +19,14 @@ from SelectMode import *
 from Menu import *
 from Boss import Boss
 from Archer import Archer
-
+import pdb
 #re-initialize the game
 def GameReinitialization(stage_num):
          global enemys, all_enemies, p
-	 p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
-         # p.SetPos(40, 40)
-         # p.GetDamge(-100)
-         # p.SetAlive(True)
+         p = Player(player_images,bomb_image,150,10,20,1,2,hp_image)
+         if(stage_num != 11):
+                  data = pickle.load(open("./save/save_player", "rb"))
+                  p.SetValuableData(data)
 	 Item.pos = {}
 	 toolbar.dict = {}
          enemys.clear()
@@ -67,6 +67,10 @@ all_enemies = pygame.sprite.Group()
 all_enemies.add(e1)
 enemys = {e1}
 isBoss = False
+data = p.GetValuableData()
+print data
+pickle.dump(data, open("./save/save_player", "wb"))
+
 
 ## generate 10 items randomly
 for i in range(10):
@@ -92,7 +96,9 @@ while True:
 
                 if not flag and isBoss:
                          stage_num += 3
-                         pickle.dump(stage_num, open("./save/save_file", "wb"))
+                         pickle.dump(stage_num, open("./save/save_stage", "wb"))
+                         data = p.GetValuableData()
+                         pickle.dump(data, open("./save/save_player", "wb"))
                          GameReinitialization(stage_num)
                          isBoss = False
 

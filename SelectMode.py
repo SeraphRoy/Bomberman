@@ -21,7 +21,7 @@ class SelectMode(Opening):
             	stage_num = 11
                 return stage_num
             if load_game.isOver() and pygame.mouse.get_pressed()[0]:
-            	stage_num = pickle.load(open("./save/save_file", "rb"))
+            	stage_num = pickle.load(open("./save/save_stage", "rb"))
                 #GameReinitialization(stage_num)
                 return stage_num
 
