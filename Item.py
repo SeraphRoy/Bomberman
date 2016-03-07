@@ -63,11 +63,10 @@ class Tool(Item):       ## the kind of items that can be stored in toolbar
     def name(self):
         return self.__class__.__name__
 
-class Nike(Tool):       ## increases player's speed
+class Nike(Item):       ## increases player's speed
     def __init__(self):
         pass
     def invoked(self,player):
-        Tool.invoked(self, player)
         if player.speed > 0:
             player.speed += 50
         else:
