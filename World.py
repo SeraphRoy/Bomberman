@@ -77,7 +77,8 @@ for i in range(10):
 	 item_x = random.randint(0,14)
 	 item_y = random.randint(0,12)
 	 Item(item_x,item_y,item_images)
-
+#pygame.mixer.music.load("music/OnlyMyRailgun.ogg");
+#pygame.mixer.music.play()
 background_music = pygame.mixer.Sound("music/background.wav")
 lose_sound = pygame.mixer.Sound("music/lose.wav")
 lose_sound.set_volume(0.7)
