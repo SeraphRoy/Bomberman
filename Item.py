@@ -40,6 +40,9 @@ class ToolBar:
                 item = self.dict[self.li[i]][1]
                 image = pygame.transform.scale(item.image, (self.GRID, self.GRID))
                 screen.blit(image, (x,y))
+                font = pygame.font.Font(None, 45)
+                text = font.render(str(self.dict[self.li[i]][0]),1,(255,0,0))
+                screen.blit(text, (x+8,y))
             x += self.GRID
             
 toolbar = ToolBar()
