@@ -71,6 +71,7 @@ class Boss(Enemy):
 
 
 		#defense flame
+		self.defense_countdown = 0;
 		self.defense_flame_turn =0;
 		self.defense_second_flame_turn =0;
 
@@ -91,7 +92,7 @@ class Boss(Enemy):
 			if self.hp <25 and self.rage_burst == False:
 				self.rage_burst = True
 				self.thunder_turn = 14
-			if self.hp <60:
+			if self.hp <60 and self.rage == False:
 				self.rage = True
 			if self.rage == True and self.defense_flame_turn <=0 and self.defense_second_flame_turn <=0:
 				self.defense_flame_turn = 13;
@@ -115,6 +116,13 @@ class Boss(Enemy):
 			else:
 				self.show = 1
 			self.invincible_turn-=1
+
+		if self.rage == True and self.defense_countdown<=0 and self.defense_flame_turn <=0 and self.defense_second_flame_turn<=0:
+			self.defense_countdown = 120;
+			self.defense_flame_turn = 13;
+		else:
+			self.defense_countdown-=1;
+
 		xDistance = player.GetX()-25-self.rect.x
 		#distance in y direction between player and enemy
 		yDistance = player.GetY()-25-self.rect.y
