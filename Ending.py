@@ -8,9 +8,6 @@ class Ending(Opening):
 
     #overwrite it for ending
     def OpeningScene(self, screen):
-        lose_sound = pygame.mixer.Sound("music/lose.wav")
-        lose_sound.play()
-        lose_sound.set_volume(1.0)
         while True:
             screen.blit(gameover, (290, 150))
             select_exit = Opening(ending_exit_1, ending_exit_2, (390, 500))
