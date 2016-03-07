@@ -67,14 +67,18 @@ class Nike(Item):       ## increases player's speed
     def __init__(self):
         pass
     def invoked(self,player):
-        if player.speed > 0:
-            player.speed += 50
-            if player.speed > 250:
-                player.speed = 250
+        if player.slowed:
+            player.speed = player.initial_speed
+            player.slowed = False
         else:
-            player.speed -=50
-            if player.speed < -250:
-                player.speed = -250
+            if player.speed > 0:
+                player.speed += 50
+                if player.speed > 250:
+                    player.speed = 250
+            else:
+                player.speed -=50
+                if player.speed < -250:
+                    player.speed = -250
 
 class Tool1(Tool):      ## for testing, does nothing
     def __init__(self):
@@ -93,16 +97,27 @@ class Low_speed_field(Item):        ## decreases player's speed
     def __init__(self):
         pass
     def invoked(self,player):
-        if player.speed > 0:
-            player.speed -= 50
-        else:
-            player.speed += 50
+        if not (player.slowed):
+            player.initial_speed = player.speed
+            if player.speed > 0:
+                player.speed -= 50
+            else:
+                player.speed += 50
+            player.slowed = True
+        player.slow_time = 10
 
 class Sadako(Item):     ## reverts key input, player goes opposite directions
     def __init__(self):
         pass
     def invoked(self, player):
+        if player.inversed:
+            player.inversed = False
+            player.inverse_time = 0
+        else:
+            player.inversed = True
+            player.inverse_time = 10
         player.speed *= (-1)
+        player.initial_speed *= (-1)
 
 class Heart(Item):      ## recovers player's HP
     def __init__(self):

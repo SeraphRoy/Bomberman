@@ -94,6 +94,12 @@ class Player(pygame.sprite.Sprite):
 		#used to restirct putting too many bomb at a moment
 		self.bomb_since_last = 0
 
+		self.slow_time = 0
+		self.slowed = False
+		self.inverse_time = 0
+		self.inversed = False
+		self.initial_speed = speed
+
 		#knock turn, indicate how many turns the player will be knock back
 		self.knock = 0
 		self.knockDirection = 0
@@ -217,6 +223,24 @@ class Player(pygame.sprite.Sprite):
 		self.time+=seconds
 		self.bomb_since_last+=seconds
 		switch = False
+
+                if self.slowed:
+                        self.slow_time -= seconds
+                        
+		if self.slow_time < 0:
+                        self.slow_time = 0
+                        self.speed = self.initial_speed
+                        self.slowed = False
+
+                if self.inversed:
+                        self.inverse_time -= seconds
+
+                if self.inverse_time < 0:
+                        self.inverse_time = 0
+                        self.speed *= (-1)
+                        self.initial_speed *= (-1)
+                        self.inversed = False
+                        
 
 		#check if it is time to change the image index 
 		if self.time >= 0.2:

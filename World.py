@@ -31,7 +31,7 @@ def GameReinitialization(stage_num):
 	 toolbar.dict = {}
          enemys.clear()
          item_time = 0
-	 randomItem(10, item_images)
+	 randomItem(20, item_images)
 
          for i in range(stage_num/7):
 
@@ -73,7 +73,7 @@ data = p.GetValuableData()
 item_time = 0
 
 ## generate 10 items randomly
-randomItem(10, item_images)
+randomItem(20, item_images)
 
 #pygame.mixer.music.load("music/OnlyMyRailgun.ogg");
 #pygame.mixer.music.play()
@@ -180,7 +180,7 @@ while True:
 			 bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst, p, 10, all_enemies)
 
 			 item_time += time_passed_seconds
-			 if item_time > 10:
+			 if item_time > 5:
                              randomItem(1, item_images)
                              item_time = 0
                              
