@@ -12,6 +12,12 @@ rise_flame_names = [rflame01,rflame02,rflame03,rflame04,
 					rflame09,rflame10,rflame11,rflame12,
 					rflame13,]
 
+thunder_names = [thunder01,thunder02,thunder03,thunder04,
+				 thunder05,thunder06,thunder07,thunder08,
+				 thunder09,thunder10,thunder11,thunder12,
+				 thunder13,thunder14]
+
+
 class Boss(Enemy):
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
@@ -24,6 +30,7 @@ class Boss(Enemy):
 
 		#throwing bomb in random position
 		self.bomb_each_time = 4
+		self.bomb_last_time = 4
 		self.bomb_damge = 5
 		self.bomb_countdown = 20
 		self.throwing = 0
@@ -40,10 +47,17 @@ class Boss(Enemy):
 			temp = pygame.image.load(name).convert_alpha()
 			self.flameImages.append(temp)
 
+		#rise flame image
 		self.rise_flame_images = []
 		for name in rise_flame_names:
 			temp = pygame.image.load(name).convert_alpha()
 			self.rise_flame_images.append(temp)
+
+		#thunder image
+		self.thunder_images = []
+		for name in thunder_names:
+			temp = pygame.image.load(name).convert_alpha()
+			self.thunder_images.append(temp)
 
 		#use flame image in time
 		self.flame_countdown = 30;
@@ -57,8 +71,13 @@ class Boss(Enemy):
 
 
 		#defense flame
-		self.defense_flame_turn =13;
-		self.defense_second_flame_turn =13;
+		self.defense_flame_turn =0;
+		self.defense_second_flame_turn =0;
+
+		#thunder
+		self.thunder_turn = 0;
+		self.thunder_offset_x =0
+		self.thunder_offset_y =0
 
 	def GetDamage(self, value):
 		if(self.invincible_turn<=0):
@@ -69,8 +88,9 @@ class Boss(Enemy):
 				self.isAlive = False
 			new_width = (self.hp / 100.0) * (self.image_x-4)
 			self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
-			if self.hp <25:
+			if self.hp <25 and self.rage_burst == False:
 				self.rage_burst = True
+				self.thunder_turn = 14
 			if self.hp <60:
 				self.rage = True
 			if self.rage == True and self.defense_flame_turn <=0 and self.defense_second_flame_turn <=0:
@@ -85,7 +105,7 @@ class Boss(Enemy):
 		if self.rage_burst == True:
 			self.bomb_each_time = 7
 			self.speed = 110
-		if self.rage == True:
+		elif self.rage == True:
 			self.bomb_each_time = 6
 			self.speed = 70
 		if self.invincible_turn>0:
@@ -95,9 +115,9 @@ class Boss(Enemy):
 			else:
 				self.show = 1
 			self.invincible_turn-=1
-		xDistance = player.GetX()-self.rect.x
+		xDistance = player.GetX()-25-self.rect.x
 		#distance in y direction between player and enemy
-		yDistance = player.GetY()-self.rect.y
+		yDistance = player.GetY()-25-self.rect.y
 
 		distance =0;
 		self.time+=seconds
@@ -117,13 +137,13 @@ class Boss(Enemy):
 			self.flame_countdown = 300
 
 		if self.flame_turn>7 and player.GetInvincible()<=0:
-			if abs(xDistance)<30 and player.GetInvincible()<=0:
+			if abs(yDistance)<30 and player.GetInvincible()<=0:
 				player.GetDamge(30)
 				if xDistance>0:
 					player.KnockBack(3)
 				else:
 					player.KnockBack(1)
-			elif abs(yDistance)<30 and player.GetInvincible()<=0:
+			elif abs(xDistance)<30 and player.GetInvincible()<=0:
 				player.GetDamge(30)
 				if yDistance>0:
 					player.KnockBack(4)
@@ -131,10 +151,10 @@ class Boss(Enemy):
 					player.KnockBack(2)
 
 		#first defense damage
-		if self.defense_flame_turn>7 :
-			if abs(xDistance)<60 and abs(yDistance)<60 and player.GetInvincible()<=0:
+		if self.defense_flame_turn>0 :
+			if abs(xDistance)<85 and abs(yDistance)<85 and player.GetInvincible()<=0:
 				player.GetDamge(30)
-				if abs(xDistance) < abs(yDistance):
+				if abs(xDistance) > abs(yDistance):
 					if xDistance>0:
 						player.KnockBack(3)
 					else:
@@ -146,13 +166,15 @@ class Boss(Enemy):
 						player.KnockBack(2)
 
 		#second defense flame
-		if self.defense_second_flame_turn>7 :
-			if abs(xDistance)<100 and abs(yDistance)<100 and player.GetInvincible()<=0:
+		if self.defense_second_flame_turn>0 :
+			if abs(xDistance)<120 and abs(yDistance)<120 and player.GetInvincible()<=0:
 				player.GetDamge(30)
-				if abs(xDistance) < abs(yDistance):
+				if abs(xDistance) > abs(yDistance):
 					if xDistance>0:
+						print(xDistance)
 						player.KnockBack(3)
 					else:
+						print(xDistance)
 						player.KnockBack(1)
 				else:
 					if yDistance>0:
@@ -176,9 +198,10 @@ class Boss(Enemy):
 				self.bomb_y_array.append(random.randint(0,12))
 				self.current_bomb_x_array.append(self.rect.x)
 				self.current_bomb_y_array.append(self.rect.y)
+			self.bomb_last_time = self.bomb_each_time
 
 		if self.throwing>0:
-			for i in range(self.bomb_each_time):
+			for i in range(self.bomb_last_time):
 				current_x = self.current_bomb_x_array[i]
 				dest_x = self.bomb_x_array[i]*51
 				change = (int)((dest_x-current_x)/self.throwing)
@@ -192,7 +215,7 @@ class Boss(Enemy):
 			self.throwing-=1
 
 		elif len(self.bomb_x_array) != 0:
-			for i in range(self.bomb_each_time):
+			for i in range(self.bomb_last_time):
 				new_bomb = Bomb(bomb_image,self.bomb_x_array[i]*51,self.bomb_y_array[i]*51,4)
 				bomb_map.AddBomb(new_bomb)
 			self.bomb_x_array = []
@@ -265,7 +288,7 @@ class Boss(Enemy):
 			screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
 			screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
 		if self.throwing>0:
-			for i in range(self.bomb_each_time):
+			for i in range(self.bomb_last_time):
 				screen.blit(bomb, (self.current_bomb_x_array[i], self.current_bomb_y_array[i]))
 		if self.flame_turn>0:
 			self.flame_turn-=1
@@ -284,26 +307,41 @@ class Boss(Enemy):
 				self.defense_second_flame_turn = 13
 			self.defense_flame_turn-=1;
 			defense_image = self.rise_flame_images[12-self.defense_flame_turn];
-			screen.blit(defense_image, (self.rect.x-60,self.rect.y))
-			screen.blit(defense_image, (self.rect.x+60,self.rect.y))
-			screen.blit(defense_image, (self.rect.x,self.rect.y-60))
-			screen.blit(defense_image, (self.rect.x,self.rect.y+60))
-			screen.blit(defense_image, (self.rect.x+60,self.rect.y+60))
-			screen.blit(defense_image, (self.rect.x-60,self.rect.y+60))
-			screen.blit(defense_image, (self.rect.x+60,self.rect.y-60))
-			screen.blit(defense_image, (self.rect.x-60,self.rect.y-60))
+			screen.blit(defense_image, (self.rect.x-30-60,self.rect.y-30))
+			screen.blit(defense_image, (self.rect.x-30+60,self.rect.y-30))
+			screen.blit(defense_image, (self.rect.x-30,self.rect.y-60-30))
+			screen.blit(defense_image, (self.rect.x-30,self.rect.y+60-30))
+			screen.blit(defense_image, (self.rect.x-30+60,self.rect.y+60-30))
+			screen.blit(defense_image, (self.rect.x-30-60,self.rect.y+60-30))
+			screen.blit(defense_image, (self.rect.x-30+60,self.rect.y-60-30))
+			screen.blit(defense_image, (self.rect.x-30-60,self.rect.y-60-30))
 
 		if self.defense_second_flame_turn > 0:
 			self.defense_second_flame_turn-=1;
 			defense_image = self.rise_flame_images[12-self.defense_second_flame_turn];
-			screen.blit(defense_image, (self.rect.x-80,self.rect.y))
-			screen.blit(defense_image, (self.rect.x+70,self.rect.y))
-			screen.blit(defense_image, (self.rect.x,self.rect.y-80))
-			screen.blit(defense_image, (self.rect.x,self.rect.y+70))
-			screen.blit(defense_image, (self.rect.x+70,self.rect.y+70))
-			screen.blit(defense_image, (self.rect.x-80,self.rect.y+70))
-			screen.blit(defense_image, (self.rect.x+70,self.rect.y-80))
-			screen.blit(defense_image, (self.rect.x-80,self.rect.y-80))
+			screen.blit(defense_image, (self.rect.x-30-80,self.rect.y-30))
+			screen.blit(defense_image, (self.rect.x-30+80,self.rect.y-30))
+			screen.blit(defense_image, (self.rect.x-30,self.rect.y-80-30))
+			screen.blit(defense_image, (self.rect.x-30,self.rect.y+80-30))
+			screen.blit(defense_image, (self.rect.x-30+80,self.rect.y+80-30))
+			screen.blit(defense_image, (self.rect.x-30-80,self.rect.y+80-30))
+			screen.blit(defense_image, (self.rect.x-30+80,self.rect.y-80-30))
+			screen.blit(defense_image, (self.rect.x-30-80,self.rect.y-80-30))
+
+		if self.thunder_turn > 0:
+			self.thunder_turn-=1;
+			thunder_image = self.thunder_images[13-self.thunder_turn]
+			thunder_x = self.rect.x +23 + self.thunder_offset_x- thunder_image.get_width()/2
+			thunder_y = self.rect.y+ 25 +self.thunder_offset_y-thunder_image.get_height()
+			screen.blit(thunder_image,(thunder_x,thunder_y))
+
+			if abs(player.GetX() +25 - (self.rect.x +23 + self.thunder_offset_x)) < 25 and abs(player.GetY()+25 - (self.rect.y+ 25 +self.thunder_offset_y))<25 and player.GetInvincible()<=0:
+				player.GetDamge(25);
+
+			if self.thunder_turn ==0:
+				self.thunder_offset_x = random.randint(-1,1)*80
+				self.thunder_offset_y = random.randint(-1,1)*80
+				self.thunder_turn =14
 
 
 
