@@ -35,6 +35,8 @@ class Mage(Enemy):
 			#bias to determine if player is in the same row as Mage
 			self.bias = 20
 
+			self.fire_sound = pygame.mixer.Sound("music/fire.wav")
+
 			#image for the flames
 			self.flameImages = []
 			for name in flame_image_names:
@@ -79,8 +81,9 @@ class Mage(Enemy):
 				player.GetDamge(self.damage)
 				player.KnockBack(self.chargeDirection)
 
-
 			if self.defense == True and abs(self.rect.x-player.GetX())<75 and abs(self.rect.y-player.GetY())<75 and player.GetInvincible()<=0:
+				self.fire_sound.play()
+				self.fire_sound.set_volume(0.5)
 				player.GetDamge(5)
 				if (self.rect.x-player.GetX())>0:
 					player.KnockBack(1)
@@ -92,6 +95,9 @@ class Mage(Enemy):
 			self.time+=seconds
 			if self.charging == False and ((abs(xDistance)<self.radarx and abs(yDistance)<self.bias) or (abs(yDistance)<self.radary and abs(xDistance)<self.bias)):
 				self.charging = True
+				#fire_sound = pygame.mixer.Sound("music/fire.wav")
+				self.fire_sound.play()
+				self.fire_sound.set_volume(0.5)
 				#chare to x direction
 				if abs(xDistance)>abs(yDistance):
 					if player.GetX()>self.rect.x:

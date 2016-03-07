@@ -205,6 +205,9 @@ class Archer(Enemy):
 			arrowDistance = self.arrowSpeed * seconds;
 			self.arrowTurn-=1;
 			currentArrowImage = self.arrowImages[11-self.arrowTurn]
+			arrow_sound = pygame.mixer.Sound("music/arrow.wav")
+			arrow_sound.play()
+			arrow_sound.set_volume(0.1)
 
 			if self.arrowDirection == 3:
 				if (self.arrowX + arrowDistance) <650:
@@ -240,7 +243,6 @@ class Archer(Enemy):
 		if self.invincible_turn<=0 or self.show == 1:
 			screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
 			screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
-
 
 
 
