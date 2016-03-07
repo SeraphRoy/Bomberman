@@ -98,6 +98,8 @@ class Player(pygame.sprite.Sprite):
 		self.slowed = False
 		self.inverse_time = 0
 		self.inversed = False
+		self.rush_time = 0
+		self.rushing = False
 		self.initial_speed = speed
 
 		#knock turn, indicate how many turns the player will be knock back
@@ -240,7 +242,14 @@ class Player(pygame.sprite.Sprite):
                         self.speed *= (-1)
                         self.initial_speed *= (-1)
                         self.inversed = False
-                        
+
+                if self.rushing:
+                        self.rush_time -= seconds
+
+                if self.rush_time < 0:
+                        self.rush_time = 0
+                        self.speed = self.initial_speed
+                        self.rushing = False
 
 		#check if it is time to change the image index 
 		if self.time >= 0.2:

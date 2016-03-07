@@ -21,8 +21,6 @@ class ToolBar:
             else:
                 self.li.append(tool.name())
         self.dict[tool.name()].append(tool)
-        print self.dict
-        print self.li
         
     def use(self, player, index):
         if (index >= len(self.li)) or (self.li[index] == 0):
@@ -33,8 +31,6 @@ class ToolBar:
         if self.dict[name][0] == 0:
             del self.dict[name]
             self.li[index] = 0
-        print self.dict
-        print self.li
             
     def draw(self, screen):
         x = 260
@@ -51,7 +47,7 @@ toolbar = ToolBar()
 class Item:
     pos = {}    ## a dictionary with position as keys and items as values
     def __init__(self,x,y,images):
-        a = random.randint(1,7)     ## randomly generate an item
+        a = random.randint(1,8)     ## randomly generate an item
         if a == 1:
             item = Nike()
         if a == 2:
@@ -63,9 +59,11 @@ class Item:
         if a == 5:
             item = Blood()
         if a == 6:
-            item = Tool2()
+            item = Rusher()
         if a == 7:
             item = Stimpack()
+        if a == 8:
+            item = Shield()
         temp = pygame.image.load(images[a-1]).convert_alpha()
         item.image = pygame.transform.scale(temp,(grid,grid))
         item.x=x
@@ -94,9 +92,12 @@ class Nike(Item):       ## increases player's speed
     def __init__(self):
         pass
     def invoked(self,player):
+        if player.rushing:
+            return
         if player.slowed:
             player.speed = player.initial_speed
             player.slowed = False
+            player.slow_time = 0
         else:
             if player.speed > 0:
                 player.speed += 50
@@ -113,18 +114,29 @@ class Blood(Tool):      ## recovers player's HP when he chooses to do so
     def used(self,player):
         player.GetDamge(-30)
 
-class Tool2(Tool):      ## for testing, does nothing
+class Rusher(Tool):      ## player rushes for 3 seconds
     def __init__(self):
         pass
-    def invoked(self,player):
-        Tool.invoked(self, player)
+    def used(self,player):
+        if (not player.slowed) and (not player.rushing):
+            player.initial_speed = player.speed
+        player.slowed = False
+        player.slow_time = 0
+        if player.speed > 0:
+            player.speed = 300
+        else:
+            player.speed = -300
+        player.rushing = True
+        player.rush_time = 5
 
 
 class Low_speed_field(Item):        ## decreases player's speed
     def __init__(self):
         pass
     def invoked(self,player):
-        if not (player.slowed):
+        if player.rushing:
+            return
+        if not player.slowed:
             player.initial_speed = player.speed
             if player.speed > 0:
                 player.speed -= 50
@@ -157,6 +169,13 @@ class Stimpack(Item):       ## adds damage of bombs player places
         pass
     def invoked(self,player):
         player.bomb_damage += 1
+
+class Shield(Tool):     ## turns player to invincible mode
+    def __init__(self):
+        pass
+    def used(self, player):
+        player.invincible_turn = 35
+    
             
 def collectItem(player):
     x=(player.rect.x+player.image_x/2)//grid

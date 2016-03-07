@@ -212,7 +212,9 @@ while True:
                              toolbar.use(p,0)
 			 if pressed_Key[K_2]:
                              toolbar.use(p,1)
-                             
+			 if pressed_Key[K_3]:
+                             toolbar.use(p,2)                             
+
 			 toolbar.draw(screen)
 
 			 #Reset current time
