@@ -8,40 +8,63 @@ flame_image_names = [flame01,flame02,flame03,flame04,flame05,
 					 flame16,flame17,flame18]
 
 class Mage(Enemy):
-	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
-		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
-		self.charging = False
-		#time to charge for attack
-		self.chargetime = 10
-		self.damgetime = 18
-		self.chargeDirection =1
-		self.damage = 50
+		def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
+			Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
+			self.invincible_turn = 0
+			self.show = 1;
+			#hp and hp image
+			self.hp_image = pygame.image.load('img/hp.png').convert_alpha()
+			self.hp_image = pygame.transform.scale(self.hp_image, (self.image_x-4,10))
+			self.hp = 100
 
-		#self defense purpose variables
-		self.defense = False
-		self.defensetime = 18
+			self.charging = False
+			#time to charge for attack
+			self.chargetime = 10
+			self.damgetime = 18
+			self.chargeDirection =1
+			self.damage = 50
 
-		#where the mage is placed
-		self.magex = 0
-		self.magey = 0
+			#self defense purpose variables
+			self.defense = False
+			self.defensetime = 18
 
-		#bias to determine if player is in the same row as Mage
-		self.bias = 20
+			#where the mage is placed
+			self.magex = 0
+			self.magey = 0
 
-		#image for the flames
-		self.flameImages = []
-		for name in flame_image_names:
-			temp = pygame.image.load(name).convert_alpha()
-			self.flameImages.append(temp)
-		self.flameIndex = 0
+			#bias to determine if player is in the same row as Mage
+			self.bias = 20
 
+			#image for the flames
+			self.flameImages = []
+			for name in flame_image_names:
+				temp = pygame.image.load(name).convert_alpha()
+				self.flameImages.append(temp)
+			self.flameIndex = 0
 
-        def LiveAction(self, screen, player, seconds):
-                if self.isAlive:
-                        self.Action(screen, player, seconds)
-                
-        def Action(self, screen, player, seconds):
-		#distance in x direction between player and enemy
+		def GetDamage(self, value):
+			if(self.invincible_turn<=0):
+				self.invincible_turn = 15;
+				self.hp -= value
+				if self.hp <= 0:
+					self.hp = 0
+					self.isAlive = False
+				new_width = (self.hp / 100.0) * (self.image_x-4)
+				self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
+
+		def LiveAction(self, screen, player, seconds):
+				if self.isAlive:
+						self.Action(screen, player, seconds)
+
+		def Action(self, screen, player, seconds):
+			if self.invincible_turn>0:
+			#flashing affect
+				if(self.show==1):
+					self.show = 0
+				else:
+					self.show = 1
+				self.invincible_turn-=1
+			#distance in x direction between player and enemy
 			xDistance = player.GetX()-self.rect.x
 			#distance in y direction between player and enemy
 			yDistance = player.GetY()-self.rect.y
@@ -54,7 +77,7 @@ class Mage(Enemy):
 
 			if self.charging == True and self.chargetime ==0 and abs(self.magex-player.GetX())<self.images[5].get_width()/2 and abs(self.magey -player.GetY())<self.images[5].get_height()/2 and player.GetInvincible()<=0:
 				player.GetDamge(self.damage)
-				player.KnockBack(self.chargeDirection) 
+				player.KnockBack(self.chargeDirection)
 
 
 			if self.defense == True and abs(self.rect.x-player.GetX())<75 and abs(self.rect.y-player.GetY())<75 and player.GetInvincible()<=0:
@@ -62,7 +85,7 @@ class Mage(Enemy):
 				if (self.rect.x-player.GetX())>0:
 					player.KnockBack(1)
 				else:
-					player.KnockBack(3) 
+					player.KnockBack(3)
 
 			#distance that this move is going to travel
 			distance =0;
@@ -154,4 +177,7 @@ class Mage(Enemy):
 						self.image_index = 4
 
 			#displaye image on screen
-			screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
+			
+			if self.invincible_turn<=0 or self.show == 1:
+				screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
+				screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))

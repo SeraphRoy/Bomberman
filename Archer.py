@@ -53,6 +53,13 @@ class Archer(Enemy):
 	#same init as Enemy
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
+		self.invincible_turn = 0
+		self.show = 1;
+		#hp and hp image
+		self.hp_image = pygame.image.load('img/hp.png').convert_alpha()
+		self.hp_image = pygame.transform.scale(self.hp_image, (self.image_x-4,10))
+		self.hp = 100
+
 		self.arrowImages = []
 		for name in arrow_image_names:
 			temp = pygame.image.load(name).convert_alpha()
@@ -72,12 +79,28 @@ class Archer(Enemy):
 
 		#bias to determine if player is in the same row as Mage
 		self.bias = 20
+	def GetDamage(self, value):
+		if(self.invincible_turn<=0):
+			self.invincible_turn = 15;
+			self.hp -= value
+			if self.hp <= 0:
+				self.hp = 0
+				self.isAlive = False
+			new_width = (self.hp / 100.0) * (self.image_x-4)
+			self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
 
 	def LiveAction(self, screen, player, seconds):
 		if self.isAlive:
 			self.Action(screen, player, seconds)
 				
 	def Action(self, screen, player, seconds):
+		if self.invincible_turn>0:
+			#flashing affect
+			if(self.show==1):
+				self.show = 0
+			else:
+				self.show = 1
+			self.invincible_turn-=1
 		#distance in x direction between player and enemy
 		xDistance = player.GetX()-self.rect.x
 		#distance in y direction between player and enemy
@@ -214,7 +237,10 @@ class Archer(Enemy):
 			screen.blit(currentArrowImage,(self.arrowX,self.arrowY));
 
 		#displaye image on screen
-		screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
+		if self.invincible_turn<=0 or self.show == 1:
+			screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
+			screen.blit(self.images[self.image_index], (self.rect.x, self.rect.y))
+
 
 
 
