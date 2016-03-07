@@ -40,20 +40,20 @@ def GameReinitialization(stage_num):
          for i in range(stage_num/5):
 
                   g = Ghost(random.randint(50,680), random.randint(50,680),50,150, ghost_images, 200,200)
-                  d = Duck(random.randint(50, 680), random.randint(50,680), 50,150, duck_images,250,250)
-                  a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
+                  # d = Duck(random.randint(50, 680), random.randint(50,680), 50,150, duck_images,250,250)
+                  # a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
 
                   enemys.add(g)
-                  enemys.add(d)
-                  enemys.add(a);
+                  #enemys.add(d)
+                  #enemys.add(a);
                   all_enemies.add(g)
-                  all_enemies.add(d)
-                  all_enemies.add(a)
+                  #all_enemies.add(d)
+                  #all_enemies.add(a)
 
-         for i in range(stage_num/6):
-                  m = Mage(random.randint(50,680), random.randint(50,680),50,150, mage_images, 300,300)
-                  enemys.add(m)
-                  all_enemies.add(m)
+         #for i in range(stage_num/6):
+                  #m = Mage(random.randint(50,680), random.randint(50,680),50,150, mage_images, 300,300)
+                  #enemys.add(m)
+                  #all_enemies.add(m)
 
          # for i in range(stage_num/7):
          #          b = Boss(random.randint(50,680), random.randint(50,680),50,150, player_images, 200,200)
@@ -82,7 +82,9 @@ for i in range(10):
 #pygame.mixer.music.play()
 background_music = pygame.mixer.Sound("music/background.wav")
 lose_sound = pygame.mixer.Sound("music/lose.wav")
+boss_sound = pygame.mixer.Sound("music/boss.wav")
 lose_sound.set_volume(0.7)
+boss_sound.set_volume(0.7)
 background_music.set_volume(0.1)
 while True:
 		ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
@@ -96,6 +98,8 @@ while True:
                          b = Boss(random.randint(50,680), random.randint(50,680),50,150,panda_images,200,200)
                          enemys.add(b)
                          all_enemies.add(b)
+                         background_music.fadeout(1500)
+                         boss_sound.play(-1)
                          flag = True
                          isBoss = True
 
@@ -106,12 +110,17 @@ while True:
                          data = p.GetValuableData()
                          pickle.dump(data, open("./save/save_player", "wb"))
                          GameReinitialization(stage_num)
+                         boss_sound.fadeout(1500)
+                         background_music.play(-1)
                          isBoss = False
 
 		if p.CheckAlive() == False and stage_num >= 11:
                          GameReinitialization(stage_num)
                          lose_sound.play()
-                         background_music.fadeout(1500)
+                         if not isBoss:
+                                  background_music.fadeout(1500)
+                         else:
+                                  boss_sound.fadeout(1500)
 			 stage_num = ending.OpeningScene(screen)
                          isBoss = False
                          p.SetAlive(True)
