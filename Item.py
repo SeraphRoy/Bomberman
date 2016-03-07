@@ -6,19 +6,44 @@ grid = 51
 class ToolBar:
     GRID = 65
     def __init__(self):
-        self.dict = {}
+        self.dict = {}      ## key: name of tool; value: list of tools of the name
+        self.li = []        ## list of names of tools in the toolbar
+        
     def register(self, tool):   ## put tools into toolbar after collecting them
         if tool.name() in self.dict:
-            self.dict[tool.name()].append(tool)
+            self.dict[tool.name()][0] += 1
         else:
-            self.dict[tool.name()] = [tool]
+            self.dict[tool.name()] = [1]
+            for i in range(len(self.li)):
+                if self.li[i] == 0:
+                    self.li[i] = tool.name()
+                    break
+            else:
+                self.li.append(tool.name())
+        self.dict[tool.name()].append(tool)
+        print self.dict
+        print self.li
+        
+    def use(self, player, index):
+        if (index >= len(self.li)) or (self.li[index] == 0):
+            return
+        name = self.li[index]
+        self.dict[name].pop().used(player)
+        self.dict[name][0] -= 1
+        if self.dict[name][0] == 0:
+            del self.dict[name]
+            self.li[index] = 0
+        print self.dict
+        print self.li
+            
     def draw(self, screen):
         x = 260
         y = 680
-        for i in self.dict:
-            item = self.dict[i][0]
-            image = pygame.transform.scale(item.image, (self.GRID, self.GRID))
-            screen.blit(image, (x,y))
+        for i in range(len(self.li)):
+            if self.li[i] != 0:
+                item = self.dict[self.li[i]][1]
+                image = pygame.transform.scale(item.image, (self.GRID, self.GRID))
+                screen.blit(image, (x,y))
             x += self.GRID
             
 toolbar = ToolBar()
@@ -36,7 +61,7 @@ class Item:
         if a == 4:
             item = Heart()
         if a == 5:
-            item = Tool1()
+            item = Blood()
         if a == 6:
             item = Tool2()
         if a == 7:
@@ -60,6 +85,8 @@ class Tool(Item):       ## the kind of items that can be stored in toolbar
         pass
     def invoked(self, player):
         toolbar.register(self)
+    def used(self, player):
+        pass
     def name(self):
         return self.__class__.__name__
 
@@ -80,11 +107,11 @@ class Nike(Item):       ## increases player's speed
                 if player.speed < -250:
                     player.speed = -250
 
-class Tool1(Tool):      ## for testing, does nothing
+class Blood(Tool):      ## recovers player's HP when he chooses to do so
     def __init__(self):
         pass
-    def invoked(self,player):
-        Tool.invoked(self, player)
+    def used(self,player):
+        player.GetDamge(-30)
 
 class Tool2(Tool):      ## for testing, does nothing
     def __init__(self):
@@ -139,7 +166,7 @@ def collectItem(player):
         Item.pos[(x,y)].invoked(player)
         del Item.pos[(x,y)]
 
-def randomItem(number, images):
+def randomItem(number, images):     ## construct number of random items
     for i in range(number):
         item_x = random.randint(0,14)
         item_y = random.randint(0,12)

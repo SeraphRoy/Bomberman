@@ -29,6 +29,7 @@ def GameReinitialization(stage_num):
                   p.SetValuableData(data)
 	 Item.pos = {}
 	 toolbar.dict = {}
+	 toolbar.li = []
          enemys.clear()
          item_time = 0
 	 randomItem(20, item_images)
@@ -206,6 +207,12 @@ while True:
 
 
 			 collectItem(p)
+
+			 if pressed_Key[K_1]:
+                             toolbar.use(p,0)
+			 if pressed_Key[K_2]:
+                             toolbar.use(p,1)
+                             
 			 toolbar.draw(screen)
 
 			 #Reset current time

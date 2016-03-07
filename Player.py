@@ -297,7 +297,8 @@ class Player(pygame.sprite.Sprite):
 			if switch == True or self.image_index<4 or self.image_index>7:
 				self.image_index = ChangeNextIndex(self.image_index,4)
 		else:
-			self.image_index = (self.image_index/4)*4
+			self.image_index = (self.image_index/4)*4                        
+			
 		if self.invincible_turn<=0 or self.show == 1: 
 			screen.blit(self.hp_image,(self.rect.x,self.rect.y-13))
 			screen.blit(self.images[self.image_index],(self.rect.x-5,self.rect.y))
