@@ -98,6 +98,23 @@ arrow10 = 'img/arrow10.png'
 arrow11 = 'img/arrow11.png'
 arrow12 = 'img/arrow12.png'
 
+panda_up1 = 'img/p_up1.png'
+panda_up2 = 'img/p_up2.png'
+panda_up3 = 'img/p_up3.png'
+panda_up4 = 'img/p_up4.png'
+panda_left1 = 'img/p_left1.png'
+panda_left2 = 'img/p_left2.png'
+panda_left3 = 'img/p_left3.png'
+panda_left4 = 'img/p_left4.png'
+panda_right1 = 'img/p_right1.png'
+panda_right2 = 'img/p_right2.png'
+panda_right3 = 'img/p_right3.png'
+panda_right4 = 'img/p_right4.png'
+panda_down1 = 'img/p_down1.png'
+panda_down2 = 'img/p_down2.png'
+panda_down3 = 'img/p_down3.png'
+panda_down4 = 'img/p_down4.png'
+
 
 hp_image = 'img/hp.png'
 

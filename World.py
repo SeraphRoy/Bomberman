@@ -42,6 +42,7 @@ def GameReinitialization(stage_num):
                   g = Ghost(random.randint(50,680), random.randint(50,680),50,150, ghost_images, 200,200)
                   d = Duck(random.randint(50, 680), random.randint(50,680), 50,150, duck_images,250,250)
                   a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
+
                   enemys.add(g)
                   enemys.add(d)
                   enemys.add(a);
@@ -91,7 +92,7 @@ while True:
                                   break
 
                 if not flag and not isBoss:
-                         b = Boss(random.randint(50,680), random.randint(50,680),50,150,player_images,200,200)
+                         b = Boss(random.randint(50,680), random.randint(50,680),50,150,panda_images,200,200)
                          enemys.add(b)
                          all_enemies.add(b)
                          flag = True

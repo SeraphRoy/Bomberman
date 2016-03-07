@@ -52,6 +52,11 @@ archer_images = [archer_up1,archer_up2,archer_up3,archer_up4,
 				archer_left1,archer_left2,archer_left3,archer_left4,
 				archer_right1,archer_right2,archer_right3,archer_right4]
 
+panda_images = [panda_up1,panda_up2,panda_up3,panda_up4,
+				panda_down1,panda_down2,panda_down3,panda_down4,
+				panda_left1,panda_left2,panda_left3,panda_left4,
+				panda_right1,panda_right2,panda_right3,panda_right4]
+
 
 #display blocks
 setOfBlocks = [(100,100), (240,240), (49, 203), (500, 20), (668, 100)]
