@@ -45,13 +45,13 @@ def GameReinitialization(stage_num):
                   all_enemies.add(g)
                   all_enemies.add(d)
 
-         for i in range(stage_num/8):
-                  a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
-                  enemys.add(a);
-                  all_enemies.add(a)
-                  m = Mage(random.randint(50,680), random.randint(50,680),50,150, mage_images, 300,300)
-                  enemys.add(m)
-                  all_enemies.add(m)
+         # for i in range(stage_num/8):
+         #          a = Archer(random.randint(50, 730), random.randint(50,730), 50,150, archer_images,250,250)
+         #          enemys.add(a);
+         #          all_enemies.add(a)
+         #          m = Mage(random.randint(50,680), random.randint(50,680),50,150, mage_images, 300,300)
+         #          enemys.add(m)
+         #          all_enemies.add(m)
 
          # for i in range(stage_num/7):
          #          b = Boss(random.randint(50,680), random.randint(50,680),50,150, player_images, 200,200)
@@ -68,6 +68,8 @@ all_enemies = pygame.sprite.Group()
 all_enemies.add(e1)
 enemys = {e1}
 isBoss = False
+isMage = False
+isArcher = False
 data = p.GetValuableData()
 
 
@@ -93,7 +95,25 @@ while True:
                                   flag = True
                                   break
 
-                if not flag and not isBoss:
+                if not flag and not isArcher:
+                         a = Archer(random.randint(50,680), random.randint(50,680),50,150,archer_images,200,200)
+                         enemys.add(a)
+                         all_enemies.add(a)
+                         #background_music.fadeout(1500)
+                         #boss_sound.play(-1)
+                         flag = True
+                         isArcher = True
+
+                if not flag and isArcher and not isMage:
+                         m = Mage(random.randint(50,680), random.randint(50,680),50,150,mage_images,200,200)
+                         enemys.add(m)
+                         all_enemies.add(m)
+                         #background_music.fadeout(1500)
+                         #boss_sound.play(-1)
+                         flag = True
+                         isMage = True
+
+                if not flag and isArcher and isMage and not isBoss:
                          b = Boss(random.randint(50,680), random.randint(50,680),50,150,panda_images,200,200)
                          enemys.add(b)
                          all_enemies.add(b)
@@ -111,6 +131,8 @@ while True:
                          GameReinitialization(stage_num)
                          boss_sound.fadeout(1500)
                          background_music.play(-1)
+                         isArcher = False
+                         isMage = False
                          isBoss = False
 
 		if p.CheckAlive() == False and stage_num >= 11:
@@ -121,6 +143,8 @@ while True:
                          else:
                                   boss_sound.fadeout(1500)
 			 stage_num = ending.OpeningScene(screen)
+                         isArcher = False
+                         isMage = False
                          isBoss = False
                          p.SetAlive(True)
 			 ## reinitialize the game
