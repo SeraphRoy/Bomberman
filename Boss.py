@@ -7,6 +7,11 @@ flame_image_names = [flame01,flame02,flame03,flame04,flame05,
 					 flame11,flame12,flame13,flame14,flame15,
 					 flame16,flame17,flame18]
 
+rise_flame_names = [rflame01,rflame02,rflame03,rflame04,
+					rflame05,rflame06,rflame07,rflame08,
+					rflame09,rflame10,rflame11,rflame12,
+					rflame13,]
+
 class Boss(Enemy):
 	def __init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary):
 		Enemy.__init__(self, x,y,speed,rushingSpeed, imagenames, radarx, radary)
@@ -35,9 +40,25 @@ class Boss(Enemy):
 			temp = pygame.image.load(name).convert_alpha()
 			self.flameImages.append(temp)
 
+		self.rise_flame_images = []
+		for name in rise_flame_names:
+			temp = pygame.image.load(name).convert_alpha()
+			self.rise_flame_images.append(temp)
+
 		#use flame image in time
 		self.flame_countdown = 30;
 		self.flame_turn = 0
+
+		#rage when damaged, 60% of health
+		self.rage = False;
+
+		#rage burst
+		self.rage_burst = False;
+
+
+		#defense flame
+		self.defense_flame_turn =13;
+		self.defense_second_flame_turn =13;
 
 	def GetDamage(self, value):
 		if(self.invincible_turn<=0):
@@ -48,12 +69,25 @@ class Boss(Enemy):
 				self.isAlive = False
 			new_width = (self.hp / 100.0) * (self.image_x-4)
 			self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
+			if self.hp <25:
+				self.rage_burst = True
+			if self.hp <60:
+				self.rage = True
+			if self.rage == True and self.defense_flame_turn <=0 and self.defense_second_flame_turn <=0:
+				self.defense_flame_turn = 13;
+
 
 	def LiveAction(self, screen, player, seconds, bomb_map):
 		if self.isAlive:
 			self.Action(screen, player, seconds, bomb_map)
 						
 	def Action(self, screen, player, seconds,bomb_map):
+		if self.rage_burst == True:
+			self.bomb_each_time = 7
+			self.speed = 110
+		if self.rage == True:
+			self.bomb_each_time = 6
+			self.speed = 70
 		if self.invincible_turn>0:
 			#flashing affect
 			if(self.show==1):
@@ -82,20 +116,49 @@ class Boss(Enemy):
 			self.flame_turn = 18;
 			self.flame_countdown = 300
 
-		if self.flame_turn>0:
+		if self.flame_turn>7 and player.GetInvincible()<=0:
 			if abs(xDistance)<30 and player.GetInvincible()<=0:
 				player.GetDamge(30)
 				if xDistance>0:
-					player.KnockBack(2)
-				else:
-					player.KnockBack(4)
-			elif abs(yDistance)<30 and player.GetInvincible()<=0:
-				player.GetDamge(30)
-				if yDistance>0:
 					player.KnockBack(3)
 				else:
 					player.KnockBack(1)
+			elif abs(yDistance)<30 and player.GetInvincible()<=0:
+				player.GetDamge(30)
+				if yDistance>0:
+					player.KnockBack(4)
+				else:
+					player.KnockBack(2)
 
+		#first defense damage
+		if self.defense_flame_turn>7 :
+			if abs(xDistance)<60 and abs(yDistance)<60 and player.GetInvincible()<=0:
+				player.GetDamge(30)
+				if abs(xDistance) < abs(yDistance):
+					if xDistance>0:
+						player.KnockBack(3)
+					else:
+						player.KnockBack(1)
+				else:
+					if yDistance>0:
+						player.KnockBack(4)
+					else:
+						player.KnockBack(2)
+
+		#second defense flame
+		if self.defense_second_flame_turn>7 :
+			if abs(xDistance)<100 and abs(yDistance)<100 and player.GetInvincible()<=0:
+				player.GetDamge(30)
+				if abs(xDistance) < abs(yDistance):
+					if xDistance>0:
+						player.KnockBack(3)
+					else:
+						player.KnockBack(1)
+				else:
+					if yDistance>0:
+						player.KnockBack(4)
+					else:
+						player.KnockBack(2)
 
 
 		if self.bomb_countdown>0:
@@ -215,5 +278,33 @@ class Boss(Enemy):
 			while(current_y+50<720):
 				screen.blit(current_iamge , (self.rect.x,current_y))
 				current_y+=50
+
+		if self.defense_flame_turn>0:
+			if self.defense_flame_turn == 1:
+				self.defense_second_flame_turn = 13
+			self.defense_flame_turn-=1;
+			defense_image = self.rise_flame_images[12-self.defense_flame_turn];
+			screen.blit(defense_image, (self.rect.x-60,self.rect.y))
+			screen.blit(defense_image, (self.rect.x+60,self.rect.y))
+			screen.blit(defense_image, (self.rect.x,self.rect.y-60))
+			screen.blit(defense_image, (self.rect.x,self.rect.y+60))
+			screen.blit(defense_image, (self.rect.x+60,self.rect.y+60))
+			screen.blit(defense_image, (self.rect.x-60,self.rect.y+60))
+			screen.blit(defense_image, (self.rect.x+60,self.rect.y-60))
+			screen.blit(defense_image, (self.rect.x-60,self.rect.y-60))
+
+		if self.defense_second_flame_turn > 0:
+			self.defense_second_flame_turn-=1;
+			defense_image = self.rise_flame_images[12-self.defense_second_flame_turn];
+			screen.blit(defense_image, (self.rect.x-80,self.rect.y))
+			screen.blit(defense_image, (self.rect.x+70,self.rect.y))
+			screen.blit(defense_image, (self.rect.x,self.rect.y-80))
+			screen.blit(defense_image, (self.rect.x,self.rect.y+70))
+			screen.blit(defense_image, (self.rect.x+70,self.rect.y+70))
+			screen.blit(defense_image, (self.rect.x-80,self.rect.y+70))
+			screen.blit(defense_image, (self.rect.x+70,self.rect.y-80))
+			screen.blit(defense_image, (self.rect.x-80,self.rect.y-80))
+
+
 
 
