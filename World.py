@@ -86,7 +86,16 @@ boss_sound.set_volume(0.7)
 background_music.set_volume(0.1)
 
 while True:
-		ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
+                for event in pygame.event.get():
+			 if pygame.key.get_pressed()[K_t]:
+                                  isStop = True
+                                  while 1 and isStop:
+                                           clock.tick()
+                                           for event in pygame.event.get():
+                                                    if pygame.key.get_pressed()[K_y]:
+                                                             isStop = False
+
+	        ending = Ending(back_to_main_1, back_to_main_2, (390, 350))
                 flag = False
                 for e in enemys:
                          if e.CheckAlive() == True:
@@ -193,8 +202,8 @@ while True:
 			 if pressed_Key[pygame.K_ESCAPE]:
 					 stage_num = 3
 
-			 for block in all_blocks:
-					 block.PutsOnScreen(screen)
+		         #for block in all_blocks:
+			#		 block.PutsOnScreen(screen)
 
 			 #third argument pass how many time hada passed since last tiem
 			 p.Action(screen,pressed_Key,current_time, bomb_map, all_blocks)
