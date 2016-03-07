@@ -15,7 +15,7 @@ class Mage(Enemy):
 			#hp and hp image
 			self.hp_image = pygame.image.load('img/hp.png').convert_alpha()
 			self.hp_image = pygame.transform.scale(self.hp_image, (self.image_x-4,10))
-			self.hp = 100
+			self.hp = 30
 
 			self.charging = False
 			#time to charge for attack
@@ -51,7 +51,7 @@ class Mage(Enemy):
 				if self.hp <= 0:
 					self.hp = 0
 					self.isAlive = False
-				new_width = (self.hp / 100.0) * (self.image_x-4)
+				new_width = (self.hp / 35.0) * (self.image_x-4)
 				self.hp_image = pygame.transform.scale(self.hp_image, (int(new_width),10))
 
 		def LiveAction(self, screen, player, seconds):
