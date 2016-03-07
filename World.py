@@ -37,7 +37,7 @@ def GameReinitialization(stage_num):
 
          for i in range(stage_num/7):
 
-                  g = Ghost(random.randint(50,680), random.randint(50,680),50,150, ghost_images, 200,200)
+                  g = Ghost(random.randint(50,680), random.randint(50,680),50,120, ghost_images, 200,200)
                   d = Duck(random.randint(50, 680), random.randint(50,680), 50,150, duck_images,250,250)
 
                   enemys.add(g)
