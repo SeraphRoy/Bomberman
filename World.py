@@ -30,10 +30,8 @@ def GameReinitialization(stage_num):
 	 Item.pos = {}
 	 toolbar.dict = {}
          enemys.clear()
-	 for i in range(10):
-		  item_x = random.randint(0,14)
-		  item_y = random.randint(0,12)
-		  Item(item_x,item_y,item_images)
+         item_time = 0
+	 randomItem(10, item_images)
 
          for i in range(stage_num/7):
 
@@ -72,12 +70,11 @@ isMage = False
 isArcher = False
 data = p.GetValuableData()
 
+item_time = 0
 
 ## generate 10 items randomly
-for i in range(10):
-	 item_x = random.randint(0,14)
-	 item_y = random.randint(0,12)
-	 Item(item_x,item_y,item_images)
+randomItem(10, item_images)
+
 #pygame.mixer.music.load("music/OnlyMyRailgun.ogg");
 #pygame.mixer.music.play()
 background_music = pygame.mixer.Sound("music/background.wav")
@@ -171,7 +168,6 @@ while True:
 			 time_passed_seconds = time_passed / 1000.0
 			 current_time+=time_passed_seconds
 
-
 			 if current_time<total_time:
 					 continue
 
@@ -182,6 +178,12 @@ while True:
 			 screen.blit(background, (0,0))
 			 screen.blit(normal_face, (665, 665))
 			 bomb_map.CheckAllBombs(screen,current_time,X_INDEX,Y_INDEX,burst, p, 10, all_enemies)
+
+			 item_time += time_passed_seconds
+			 if item_time > 10:
+                             randomItem(1, item_images)
+                             item_time = 0
+                             
 
 			 for i in Item.pos:
 					 Item.pos[i].draw(screen)

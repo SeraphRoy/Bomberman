@@ -69,8 +69,12 @@ class Nike(Item):       ## increases player's speed
     def invoked(self,player):
         if player.speed > 0:
             player.speed += 50
+            if player.speed > 250:
+                player.speed = 250
         else:
             player.speed -=50
+            if player.speed < -250:
+                player.speed = -250
 
 class Tool1(Tool):      ## for testing, does nothing
     def __init__(self):
@@ -119,3 +123,9 @@ def collectItem(player):
         Item.pos[(x,y)].display=False
         Item.pos[(x,y)].invoked(player)
         del Item.pos[(x,y)]
+
+def randomItem(number, images):
+    for i in range(number):
+        item_x = random.randint(0,14)
+        item_y = random.randint(0,12)
+        Item(item_x,item_y,images)
